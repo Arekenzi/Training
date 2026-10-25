@@ -818,6 +818,49 @@ background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
 /* меньше движения */
 @media(prefers-reduced-motion:reduce){#aura{display:none}.nind{transition:none}.cel,.cel-in,.burst{animation:none!important}}
 
+/* ===== v11: заметный визуал ===== */
+.stg{animation:stg .6s cubic-bezier(.2,.85,.25,1) both}
+@keyframes stg{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
+/* живой фон ярче */
+#aura i:first-child{background:radial-gradient(closest-side,rgba(212,248,74,.24),transparent 70%)!important;animation-duration:14s!important}
+#aura i:last-child{background:radial-gradient(closest-side,rgba(143,160,255,.14),transparent 70%)!important;animation-duration:18s!important}
+body.light #aura i:first-child{background:radial-gradient(closest-side,rgba(120,160,0,.18),transparent 70%)!important}
+/* главная карточка: фото медленно приближается, свечение дышит */
+.hero .ph img.ld{animation:kb 16s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.14) translate(-2%,-2%)}}
+.hero:before{content:"";position:absolute;inset:-1px;border-radius:30px;padding:1px;pointer-events:none;z-index:2;
+background:conic-gradient(from var(--a,0deg),transparent 0 70%,rgba(212,248,74,.9) 80%,transparent 90%);
+-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rot 5s linear infinite}
+@property --a{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes rot{to{--a:360deg}}
+.cta{animation:breath 2.6s ease-in-out infinite}
+@keyframes breath{0%,100%{box-shadow:0 16px 36px -14px rgba(212,248,74,.75),inset 0 1px 0 rgba(255,255,255,.55)}50%{box-shadow:0 18px 50px -8px rgba(212,248,74,1),0 0 0 6px rgba(212,248,74,.12),inset 0 1px 0 rgba(255,255,255,.55)}}
+body.light .cta{animation:none}
+/* кольца светятся сильнее */
+.kfg{filter:drop-shadow(0 0 14px rgba(212,248,74,.75))!important;animation:glow 3s ease-in-out infinite}
+@keyframes glow{50%{filter:drop-shadow(0 0 22px rgba(212,248,74,1))}}
+.wd b.done{animation:dpulse 3s ease-in-out infinite}
+@keyframes dpulse{50%{box-shadow:0 0 0 5px rgba(212,248,74,.18),0 6px 18px -6px rgba(212,248,74,.9)}}
+.wd b.today{animation:tring 2s ease-in-out infinite}
+@keyframes tring{50%{box-shadow:0 0 0 6px rgba(212,248,74,.2)}}
+/* окно «что нового» */
+.wn{position:fixed;inset:0;z-index:95;display:flex;align-items:flex-end;justify-content:center;background:rgba(5,6,5,.7);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:fd .3s}
+.wn.out{opacity:0;transition:opacity .3s}
+.wn-in{width:100%;max-width:520px;max-height:92vh;overflow-y:auto;border-radius:32px 32px 0 0;padding:26px 20px calc(env(safe-area-inset-bottom) + 20px);
+background:radial-gradient(90% 60% at 50% 0%,rgba(212,248,74,.25),transparent 70%),#121410;border:1px solid rgba(212,248,74,.3);border-bottom:0;animation:up .5s cubic-bezier(.2,.9,.3,1);text-align:center}
+.wn-v{width:84px;height:84px;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;background:var(--lime);box-shadow:0 0 40px rgba(212,248,74,.7),0 0 0 10px rgba(212,248,74,.12);animation:medal .9s cubic-bezier(.3,1.6,.5,1)}
+.wn-v b{font-family:var(--cond);font-weight:700;font-size:30px;color:#090A08}
+.wn-k{display:block;font-family:var(--cond);font-weight:600;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
+.wn h2{font-size:34px;margin:4px 0 14px;color:#fff}
+.wn-l{display:grid;gap:8px;text-align:left;margin-bottom:16px}
+.wn-l>div{display:flex;gap:12px;align-items:center;padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);animation:stg .55s cubic-bezier(.2,.85,.25,1) both}
+.wn-l>div:nth-child(1){animation-delay:.15s}.wn-l>div:nth-child(2){animation-delay:.22s}.wn-l>div:nth-child(3){animation-delay:.29s}
+.wn-l>div:nth-child(4){animation-delay:.36s}.wn-l>div:nth-child(5){animation-delay:.43s}.wn-l>div:nth-child(6){animation-delay:.5s}
+.wn-l i{font-style:normal;font-size:26px;width:44px;height:44px;flex:0 0 44px;border-radius:14px;display:grid;place-items:center;background:rgba(212,248,74,.12)}
+.wn-l p{margin:0;font-size:12.5px;color:var(--dim);line-height:1.35}
+.wn-l b{display:block;font-family:var(--cond);font-weight:600;font-size:16.5px;color:#fff}
+@media(prefers-reduced-motion:reduce){.stg,.hero .ph img.ld,.cta,.kfg,.wd b.done,.wd b.today,.hero:before{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -3689,9 +3732,33 @@ fxMenu=function(){_fxMenu10();const s=document.querySelector("#sheet .sheet-in")
 const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
+/* ================= v11: заметный визуал + «что нового» ================= */
+const APPV="11";
+/* каскадное появление карточек при смене вкладки */
+function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
+ els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
+ setTimeout(()=>els.forEach(e=>{e.classList.remove("stg");e.style.animationDelay="";}),1400);}
+const _render11=render;let lastTab11=null;
+render=function(){const ch=tab!==lastTab11;_render11();if(ch&&!(tab==="gym"&&session))stagger(document.getElementById("app"));lastTab11=tab;};
+/* окно «что нового» */
+function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
+ const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
+ <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
+ <div class="wn-l">
+ <div><i>✨</i><p><b>Живой интерфейс</b>экраны появляются каскадом, кольца рисуются, цифры бегут</p></div>
+ <div><i>🏅</i><p><b>Рекорд в момент подхода</b>медаль и конфетти, как только побил свой вес</p></div>
+ <div><i>👆</i><p><b>Свайпы в тренировке</b>листай упражнения пальцем влево-вправо</p></div>
+ <div><i>⏱</i><p><b>Таймер меняет цвет</b>жёлтый за 10 секунд, красный — если отдых затянулся</p></div>
+ <div><i>🎯</i><p><b>Умная прогрессия</b>вес на следующий раз подставляется сам</p></div>
+ <div><i>🫀</i><p><b>Карта мышц и награды</b>во вкладке «Прогресс»</p></div></div>
+ <button class="cta" onclick="closeWN()">Поехали</button></div>`;
+ document.body.appendChild(o);setTimeout(()=>burst(40),350);}
+function closeWN(){DB.seenV=APPV;save();const o=document.querySelector(".wn");if(o){o.classList.add("out");setTimeout(()=>o.remove(),300);}}
+setTimeout(whatsNew,700);
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
