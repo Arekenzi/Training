@@ -970,6 +970,15 @@ background:radial-gradient(90% 60% at 50% 0%,rgba(212,248,74,.2),transparent 70%
 .bt-s{grid-column:1/-1;min-height:0;flex-direction:row;align-items:center;gap:12px;padding:14px 16px}
 .bt-s .bt-k{flex:0 0 auto}.bt-s b{margin:0 0 0 auto;font-size:28px}.bt-s em{margin:0}
 
+.dl13{margin:0 0 14px;padding:14px 16px;border-radius:22px;background:radial-gradient(90% 80% at 100% 0%,rgba(108,198,255,.22),transparent 60%),var(--surface);border:1px solid rgba(108,198,255,.35)}
+.dl13 b{display:block;font-family:var(--cond);font-weight:700;font-size:20px;color:#9AD8FF}
+.dl13 span{display:block;font-size:13px;color:var(--dim);margin-top:4px;line-height:1.4}
+.pg13{padding:16px;margin-bottom:14px}
+.k13{display:block;font-family:var(--cond);font-weight:500;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.pg13 .seg7{display:flex}.pg13 .seg7 button{flex:1}
+.pg13 p{margin:10px 0 0;font-size:12.5px;color:var(--dim);line-height:1.4}
+.t13{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);z-index:99;padding:12px 18px;border-radius:16px;background:#1d201b;border:1px solid rgba(212,248,74,.4);color:#fff;font-size:14px;animation:fd .3s}
+
 </style>
 </head>
 <body>
@@ -3918,7 +3927,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="12";
+const APPV="13";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -3930,12 +3939,11 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
- <div><i>📚</i><p><b>332 упражнения с фото</b>+64 новых, у каждого пошаговая техника, ошибки и совет для твоих суставов</p></div>
- <div><i>🃏</i><p><b>Карточка упражнения</b>нажми на упражнение — шаги, анимация, график силы и вся история</p></div>
- <div><i>🔋</i><p><b>Готовность перед тренировкой</b>сон, энергия и боль — приложение облегчит или заменит упражнения</p></div>
- <div><i>📈</i><p><b>Прогноз веса и плато</b>когда дойдёшь до 95 кг и где застрял вес</p></div>
- <div><i>🍽</i><p><b>Питание за неделю</b>калории по дням против цели, средний белок</p></div>
- <div><i>🌗</i><p><b>Тема по системе</b>и обновлённый справочник: термины, боли, «почему так»</p></div></div>
+ <div><i>⏱</i><p><b>Программа 2.0</b>те же дни и сочетания мышц, та же тяжёлая и лёгкая неделя — но 7–9 упражнений и около 75 минут вместо двух часов</p></div>
+ <div><i>🦴</i><p><b>Бережнее к суставам</b>меньше жимов подряд для плеча, меньше упражнений на колени за один день</p></div>
+ <div><i>🍑</i><p><b>Ягодичный мост и французский жим</b>добавлены туда, где не хватало нагрузки</p></div>
+ <div><i>🔵</i><p><b>Разгрузка раз в 8 недель</b>приложение включит её само</p></div>
+ <div><i>↩️</i><p><b>Можно вернуть прежнюю</b>«Ещё» → Программа. История и рекорды общие</p></div></div>
  <button class="cta" onclick="closeWN()">Поехали</button></div>`;
  document.body.appendChild(o);setTimeout(()=>burst(40),350);}
 function closeWN(){DB.seenV=APPV;save();const o=document.querySelector(".wn");if(o){o.classList.add("out");setTimeout(()=>o.remove(),300);}}
@@ -4103,9 +4111,57 @@ vFood=function(){_vFood12();const t=document.querySelector("#app .tools7");if(t&
 const _vMore12=vMore;
 vMore=function(){_vMore12();const s=document.querySelector("#app .seg7");if(s){const t=DB.theme||"auto";s.innerHTML=[["auto","Авто"],["dark","Тёмная"],["light","Светлая"]].map(([k,l])=>`<button class="${t===k?"on":""}" onclick="setTheme('${k}')">${l}</button>`).join("");}};
 
+/* ===== v13: программа 2.0 (те же сплиты, меньше лишнего), переключатель, разгрузка ===== */
+const PROG_OLD=JSON.parse(JSON.stringify(WEEKS.map(w=>({desc:w.desc,days:w.days.map(d=>d.items)}))));
+const I=(id,s,lo,hi,rest,rir,ex)=>Object.assign({id,s,r:lo===hi?String(lo):lo+"–"+hi,lo,hi,rest,rir},ex||{});
+const PROG_NEW=[
+ {desc:"Штанга и свободные веса. 6–10 повторов, отдых 75–120 секунд на базе, 60 — на изоляции. Опускай вес 3 секунды. 7–9 упражнений, около 75 минут.",
+  days:[
+  [I("pullup_w",4,6,8,120,"1–2"),I("tbar",4,6,8,120,"1–2"),I("db_row",3,8,10,90,"1"),I("lat_r",3,10,12,75,"1"),I("shrug_db",3,10,12,60,"0–1"),
+   I("ez",3,6,8,90,"1–2"),I("inc_curl",3,8,10,60,"1"),I("ab_legs_hang",3,12,15,45,"0")],
+  [I("bp",4,6,8,120,"1–2"),I("inc_db",4,8,10,90,"1–2"),I("dips_tri",3,8,10,90,"1"),I("fr_press",3,8,10,75,"1"),I("rope_ext",3,12,15,45,"0",{drop:1}),
+   I("wrist_c",2,12,15,45,"0"),I("hyper_w",3,12,15,60,"1"),I("ab_bench",3,15,20,45,"0")],
+  [I("hack",4,6,8,120,"1–2"),I("leg_press",3,8,10,90,"1–2"),I("hip_thrust",3,8,10,90,"1"),I("leg_curl",4,8,12,60,"0–1"),I("calf_lp",4,10,15,45,"0"),
+   I("ohp_db",3,8,10,90,"1"),I("lat_db",4,12,15,45,"0",{drop:1}),I("rear_m",3,15,15,0,"0",{ss:1}),I("face_pull",3,15,15,45,"0")]]},
+ {desc:"Гантели, блоки и тренажёры. 12–15 повторов, отдых 45–60 секунд. Штанги нет совсем. Дроп-сет только в последнем подходе отмеченного упражнения.",
+  days:[
+  [I("lat_w",4,12,15,60,"0–1"),I("hammer_row",4,12,15,60,"0–1"),I("cable_row1",3,12,15,60,"0"),I("pullover",3,15,15,45,"0",{drop:1}),I("shrug_smith",3,15,20,45,"0"),
+   I("scott",3,12,15,60,"0"),I("hammer_rope",3,15,15,45,"0"),I("ab_legs_hang",3,12,15,45,"0")],
+  [I("inc_db",4,12,15,60,"0–1"),I("press_vert",4,12,15,60,"0"),I("cross_up",3,15,15,45,"0"),I("pec_deck",3,15,15,45,"0",{drop:1}),I("tri_m",3,12,15,60,"0"),
+   I("oh_cable",3,12,15,45,"0"),I("wrist_r",2,15,20,45,"0"),I("gm_hyper",3,15,15,45,"0"),I("crunch_m",3,15,20,45,"0")],
+  [I("leg_press_n",4,12,15,60,"0–1"),I("lunges",3,12,12,60,"0–1",{r:"12 на ногу"}),I("leg_ext",3,15,20,45,"0",{drop:1}),I("leg_curl_stand",4,12,15,45,"0"),I("hip_m",3,12,15,60,"0"),
+   I("calf_seat",4,15,20,45,"0"),I("ohp_m",3,12,15,60,"0"),I("lat_seat",4,15,20,45,"0"),I("rear_c",3,15,20,0,"0",{ss:1}),I("face_pull",3,15,15,45,"0")]]}];
+PROG_NEW.forEach(w=>w.days.forEach(d=>d.forEach(x=>{if(!EX[x.id])console.warn("нет упражнения",x.id);})));
+function applyProg(){const P=(DB.prog||"v2")==="v1"?PROG_OLD:PROG_NEW;
+ WEEKS.forEach((w,i)=>{if(!P[i])return;w.desc=P[i].desc;w.days.forEach((d,j)=>{if(P[i].days[j])d.items=JSON.parse(JSON.stringify(P[i].days[j]));});});}
+function alert0(t){const d=document.createElement("div");d.className="t13";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200);}
+function setProg(k){if(session){alert0("Сначала закончи тренировку");return;}DB.prog=k;save();applyProg();render();}
+/* разгрузка: каждая 9-я неделя */
+function isDeload(){return (DB.prog||"v2")==="v2"&&DB.start&&weekNow()%9===0;}
+const _itemsFor13=itemsFor;
+itemsFor=function(di){const a=_itemsFor13(di);if(!isDeload())return a;return a.map(x=>Object.assign({},x,{s:Math.max(1,Math.ceil(x.s/2)),drop:0,rir:"2–3"}));};
+const _rdyApply13=rdyApply;rdyApply=function(di){_rdyApply13(di);if(isDeload()){session.mode="easy";save();}};
+const _rdySkip13=rdySkip;rdySkip=function(di){_rdySkip13(di);if(isDeload()&&session){session.mode="easy";save();render();}};
+/* баннер разгрузки на главной */
+const _vGym13=vGym;
+vGym=function(){_vGym13.apply(this,arguments);if(!isDeload())return;const p=document.querySelector("#app .bento")||document.querySelector("#app .sec");
+ if(p)p.insertAdjacentHTML("beforebegin",'<div class="dl13"><b>Разгрузочная неделя</b><span>Подходов вдвое меньше, вес на 10 % ниже, без отказа. Суставы отдыхают — после неё обычно идут рекорды.</span></div>');};
+/* переключатель в «Ещё» */
+const _vMore13=vMore;
+vMore=function(){_vMore13.apply(this,arguments);const app=document.getElementById("app");if(!app||document.getElementById("prog13"))return;
+ const k=DB.prog||"v2",box=document.createElement("div");box.id="prog13";box.className="card7 pg13";
+ box.innerHTML=`<span class="k13">программа</span><div class="seg7"><button class="${k==="v2"?"on":""}" onclick="setProg('v2')">Новая 2.0</button><button class="${k==="v1"?"on":""}" onclick="setProg('v1')">Прежняя</button></div>
+ <p>${k==="v2"?"7–9 упражнений, около 75 минут. Те же дни и та же смена тяжёлой и лёгкой недели. Каждая 9-я неделя — разгрузка.":"10–12 упражнений, 1 ч 50 мин – 2 ч 10 мин. Исходный вариант."} История и рекорды общие для обеих.</p>`;
+ const first=app.querySelector(".prof")||app.querySelector(".card7");if(first&&first.parentNode)first.parentNode.insertBefore(box,first.nextSibling);else app.appendChild(box);};
+applyProg();
+let _ap13=null;const _render13=render;
+render=function(){const k=DB.prog||"v2";if(_ap13!==k){_ap13=k;applyProg();}return _render13.apply(this,arguments);};
+WHY[0]=["Почему 7–9 упражнений и 75 минут","На одну мышцу за тренировку полезно 8–12 тяжёлых подходов. Дальше рост почти не прибавляется, а усталость и нагрузка на суставы растут. 7–9 упражнений по 3–4 подхода дают 25–30 рабочих подходов: это 70–80 минут вместе с разминкой. Последние упражнения ты делаешь свежим, а не на остатках сил."];
+WHY.push(["Почему разгрузка раз в 8 недель","Мышцы восстанавливаются за дни, а связки, суставы и нервная система — дольше. Усталость копится незаметно: веса встают, ноют локти и плечи. Неделя с половиной подходов снимает эту усталость, и после неё обычно идут рекорды. Приложение включает её само на 9-й, 18-й, 27-й неделе."]);
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
