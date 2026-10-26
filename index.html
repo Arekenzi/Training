@@ -3927,7 +3927,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="13";
+const APPV="14";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -3939,6 +3939,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>➕</i><p><b>+1 упражнение на каждую мышцу</b>пуловер, молотки, сведения, сгибания ног сидя, махи на блоке и другие — по два в день</p></div>
  <div><i>⏱</i><p><b>Программа 2.0</b>те же дни и сочетания мышц, та же тяжёлая и лёгкая неделя — но 7–9 упражнений и около 75 минут вместо двух часов</p></div>
  <div><i>🦴</i><p><b>Бережнее к суставам</b>меньше жимов подряд для плеча, меньше упражнений на колени за один день</p></div>
  <div><i>🍑</i><p><b>Ягодичный мост и французский жим</b>добавлены туда, где не хватало нагрузки</p></div>
@@ -4132,12 +4133,21 @@ const PROG_NEW=[
   [I("leg_press_n",4,12,15,60,"0–1"),I("lunges",3,12,12,60,"0–1",{r:"12 на ногу"}),I("leg_ext",3,15,20,45,"0",{drop:1}),I("leg_curl_stand",4,12,15,45,"0"),I("hip_m",3,12,15,60,"0"),
    I("calf_seat",4,15,20,45,"0"),I("ohp_m",3,12,15,60,"0"),I("lat_seat",4,15,20,45,"0"),I("rear_c",3,15,20,0,"0",{ss:1}),I("face_pull",3,15,15,45,"0")]]}];
 PROG_NEW.forEach(w=>w.days.forEach(d=>d.forEach(x=>{if(!EX[x.id])console.warn("нет упражнения",x.id);})));
-function applyProg(){const P=(DB.prog||"v2")==="v1"?PROG_OLD:PROG_NEW;
+const PLUS=[[[["lat_r",I("pullover",3,12,15,60,"0")],["inc_curl",I("hammer_db",3,10,12,45,"0–1")]],
+  [["inc_db",I("cross_dn",3,12,15,45,"0")],["rope_ext",I("ext_one",3,12,15,45,"0")]],
+  [["leg_curl",I("seated_leg_curl",3,10,12,60,"0–1")],["lat_db",I("lat_c1",3,12,15,45,"0")]]],
+ [[["cable_row1",I("lat_narrow",3,12,15,45,"0")],["scott",I("curl_rope",3,12,15,45,"0")]],
+  [["cross_up",I("inc_cable_fly",3,15,15,45,"0")],["oh_cable",I("ext_one",3,15,15,45,"0")]],
+  [["leg_curl_stand",I("seated_leg_curl",3,12,15,45,"0")],["lat_seat",I("inc_lat",3,15,15,45,"0")]]]];
+const PROG_PLUS=JSON.parse(JSON.stringify(PROG_NEW));
+PROG_PLUS.forEach((w,wi)=>{w.desc=w.desc.replace("7–9 упражнений, около 75 минут","9–11 упражнений, около 85 минут");w.days.forEach((d,di)=>PLUS[wi][di].forEach(([after,it])=>{if(!EX[it.id]){console.warn("нет",it.id);return;}const k=d.findIndex(x=>x.id===after);d.splice(k<0?d.length:k+1,0,it);}));});
+function progKey(){return DB.prog||"v2p";}
+function applyProg(){const k=progKey(),P=k==="v1"?PROG_OLD:k==="v2"?PROG_NEW:PROG_PLUS;
  WEEKS.forEach((w,i)=>{if(!P[i])return;w.desc=P[i].desc;w.days.forEach((d,j)=>{if(P[i].days[j])d.items=JSON.parse(JSON.stringify(P[i].days[j]));});});}
 function alert0(t){const d=document.createElement("div");d.className="t13";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200);}
 function setProg(k){if(session){alert0("Сначала закончи тренировку");return;}DB.prog=k;save();applyProg();render();}
 /* разгрузка: каждая 9-я неделя */
-function isDeload(){return (DB.prog||"v2")==="v2"&&DB.start&&weekNow()%9===0;}
+function isDeload(){return progKey()!=="v1"&&DB.start&&weekNow()%9===0;}
 const _itemsFor13=itemsFor;
 itemsFor=function(di){const a=_itemsFor13(di);if(!isDeload())return a;return a.map(x=>Object.assign({},x,{s:Math.max(1,Math.ceil(x.s/2)),drop:0,rir:"2–3"}));};
 const _rdyApply13=rdyApply;rdyApply=function(di){_rdyApply13(di);if(isDeload()){session.mode="easy";save();}};
@@ -4149,13 +4159,13 @@ vGym=function(){_vGym13.apply(this,arguments);if(!isDeload())return;const p=docu
 /* переключатель в «Ещё» */
 const _vMore13=vMore;
 vMore=function(){_vMore13.apply(this,arguments);const app=document.getElementById("app");if(!app||document.getElementById("prog13"))return;
- const k=DB.prog||"v2",box=document.createElement("div");box.id="prog13";box.className="card7 pg13";
- box.innerHTML=`<span class="k13">программа</span><div class="seg7"><button class="${k==="v2"?"on":""}" onclick="setProg('v2')">Новая 2.0</button><button class="${k==="v1"?"on":""}" onclick="setProg('v1')">Прежняя</button></div>
- <p>${k==="v2"?"7–9 упражнений, около 75 минут. Те же дни и та же смена тяжёлой и лёгкой недели. Каждая 9-я неделя — разгрузка.":"10–12 упражнений, 1 ч 50 мин – 2 ч 10 мин. Исходный вариант."} История и рекорды общие для обеих.</p>`;
+ const k=progKey(),box=document.createElement("div");box.id="prog13";box.className="card7 pg13";
+ box.innerHTML=`<span class="k13">программа</span><div class="seg7"><button class="${k==="v2p"?"on":""}" onclick="setProg('v2p')">2.0 +</button><button class="${k==="v2"?"on":""}" onclick="setProg('v2')">2.0</button><button class="${k==="v1"?"on":""}" onclick="setProg('v1')">Прежняя</button></div>
+ <p>${k==="v2p"?"9–11 упражнений, около 85 минут: по одному дополнительному упражнению на каждую мышцу. Каждая 9-я неделя — разгрузка.":k==="v2"?"7–9 упражнений, около 75 минут, без дополнительных. Каждая 9-я неделя — разгрузка.":"10–12 упражнений, 1 ч 50 мин – 2 ч 10 мин. Исходный вариант."} История и рекорды общие для всех вариантов.</p>`;
  const first=app.querySelector(".prof")||app.querySelector(".card7");if(first&&first.parentNode)first.parentNode.insertBefore(box,first.nextSibling);else app.appendChild(box);};
 applyProg();
 let _ap13=null;const _render13=render;
-render=function(){const k=DB.prog||"v2";if(_ap13!==k){_ap13=k;applyProg();}return _render13.apply(this,arguments);};
+render=function(){const k=progKey();if(_ap13!==k){_ap13=k;applyProg();}return _render13.apply(this,arguments);};
 WHY[0]=["Почему 7–9 упражнений и 75 минут","На одну мышцу за тренировку полезно 8–12 тяжёлых подходов. Дальше рост почти не прибавляется, а усталость и нагрузка на суставы растут. 7–9 упражнений по 3–4 подхода дают 25–30 рабочих подходов: это 70–80 минут вместе с разминкой. Последние упражнения ты делаешь свежим, а не на остатках сил."];
 WHY.push(["Почему разгрузка раз в 8 недель","Мышцы восстанавливаются за дни, а связки, суставы и нервная система — дольше. Усталость копится незаметно: веса встают, ноют локти и плечи. Неделя с половиной подходов снимает эту усталость, и после неё обычно идут рекорды. Приложение включает её само на 9-й, 18-й, 27-й неделе."]);
 
