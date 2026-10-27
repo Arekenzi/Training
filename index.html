@@ -1079,6 +1079,26 @@ textarea.cx-i{resize:vertical;min-height:96px}
 .rt18{display:flex;flex-wrap:wrap}.rt18 button{flex:1 1 auto}
 .cut18{margin:0 0 14px}.cut18 b{display:block;margin-bottom:3px}.cut18 div{font-size:13px}
 
+.gn19 .gn-s{font-size:13.5px;color:var(--dim);line-height:1.45;margin:4px 0 6px}
+.gn-q{margin-top:16px}.gn-q>b{display:block;font-family:var(--cond);font-weight:600;font-size:15px;margin-bottom:8px;color:var(--tx)}
+.gn-o{display:flex;flex-wrap:wrap;gap:6px}
+.gn-o button{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--tx);font:inherit;font-size:14px;cursor:pointer}
+.gn-o button.on{background:var(--lime);color:#06100D;border-color:var(--lime);font-weight:600}
+.gn-sum{margin:18px 0 0;padding:12px 14px;border-radius:16px;background:rgba(59,240,106,.08);border:1px solid rgba(59,240,106,.25);font-size:13.5px}
+.gn19 .cta{margin-top:16px}.gn19 .cta[disabled]{opacity:.4}
+.gn-why{display:grid;gap:8px;margin:10px 0 14px;padding:14px;border-radius:18px;background:rgba(59,240,106,.07);border:1px solid rgba(59,240,106,.2);font-size:13.5px;line-height:1.45}
+.gn-w{margin-top:14px}.gn-w .k13{margin-bottom:8px}
+.gn-d{margin-bottom:10px;padding:12px;border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}
+.gn-dh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.gn-dh b{font-family:var(--cond);font-weight:700;font-size:17px;color:var(--lime)}.gn-dh span{font-family:var(--cond);font-size:12px;letter-spacing:.08em;color:var(--dim);flex:1}.gn-dh em{font-style:normal;font-size:12px;color:var(--dim)}
+.gn-x{display:flex;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line)}
+.gn-x .th,.gn-x img{width:42px;height:42px;border-radius:10px;object-fit:cover;flex:0 0 42px}
+.gn-x b{display:block;font-family:var(--cond);font-weight:600;font-size:15px}.gn-x span{font-size:12px;color:var(--dim)}
+.gn-btn{display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:12px 14px;border-radius:18px;border:1px dashed rgba(59,240,106,.5);background:rgba(59,240,106,.06);color:var(--tx);text-align:left;cursor:pointer;font:inherit}
+.gn-btn b{flex:0 0 38px;height:38px;border-radius:12px;background:var(--lime);color:#06100D;display:grid;place-items:center;font-size:22px}
+.gn-btn strong{display:block;font-family:var(--cond);font-weight:600;font-size:16px}.gn-btn em{font-style:normal;font-size:12px;color:var(--dim)}
+.gn-v{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}.gn-v span{padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.06);font-size:12px}.gn-v b{margin-left:5px;color:var(--lime);font-family:var(--cond)}
+
 </style>
 </head>
 <body>
@@ -4027,7 +4047,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="18";
+const APPV="19";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4039,6 +4059,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🛠</i><p><b>Конструктор программы</b>«Ещё» → Программа → «Составить свою»: цель, опыт, дни, время, зал, суставы, приоритет — тренер соберёт грамотную программу</p></div>
  <div><i>💡</i><p><b>«Тренер заметил»</b>на главной: темп похудения, рост силы, плато, кто не восстановился, белок, пропущенный день — с кнопкой «Начать»</p></div>
  <div><i>⏳</i><p><b>«Сколько есть времени?»</b>45, 60 или 75 минут — тренер сожмёт тренировку, база останется</p></div>
  <div><i>🍽</i><p><b>Калории подстраиваются сами</b>вес стоит 2 недели — −100 ккал, уходит слишком быстро — +100</p></div>
@@ -4573,9 +4594,136 @@ vGym=function(){_vGym18.apply(this,arguments);if(session)return;const ins=insigh
  at.insertAdjacentHTML("beforebegin",`<div class="card7 tr18"><div class="tr18-h"><span class="k13">тренер заметил</span><i>🧠</i></div>${ins.map(x=>`<div class="tr18-i"><em>${x.i}</em><p>${x.t}</p>${x.a?`<button onclick="${x.a}">${x.al}</button>`:""}</div>`).join("")}</div>`);};
 const _render18=render;render=function(){try{autoKcal();}catch(e){}return _render18.apply(this,arguments);};
 
+/* ===== v19: конструктор программы ===== */
+/* пул: [id, тип b-база/i-изоляция, снаряд B-штанга D-гантели M-тренажёр/блок W-свой вес, ограничения sh плечо lb поясница kn колени el локти wr запястья] */
+const POOL={
+"Грудь":[["bp","b","B","sh wr"],["inc_db","b","D",""],["inc_bb","b","B","sh wr"],["flat_db","b","D",""],["neutral_db","b","D",""],["inc_neutral","b","D",""],["hammer_ch","b","M",""],["lev_inc","b","M",""],["press_vert","b","M",""],["smith_inc","b","M","sh"],["cable_press_flat","b","M",""],["dips","b","W","sh el"],["pushup","b","W","wr"],
+ ["cross_dn","i","M",""],["inc_cable_fly","i","M",""],["cross_up","i","M",""],["pec_deck","i","M","sh"],["flat_cable_fly","i","M",""],["fly_db","i","D","sh"]],
+"Широчайшие":[["pullup_w","b","W","el"],["pullup_n","b","W",""],["lat_r","b","M","el"],["lat_w","b","M",""],["lat_narrow","b","M",""],["grav","b","M",""],["db_row","b","D",""],["cable_row1","b","M",""],["one_pd","b","M",""],["lev_high_row","b","M",""],
+ ["pullover","i","M",""],["straight_arm","i","M",""],["rope_sa","i","M",""]],
+"Середина спины":[["tbar","b","M",""],["hammer_row","b","M",""],["seated_row","b","M",""],["row_inc","b","D",""],["seal_row","b","D",""],["bb_row","b","B","lb"],["two_db_row","b","D","lb"],["inverted","b","W",""],["mid_shrug","i","M",""]],
+"Трапеции":[["shrug_db","i","D",""],["shrug_smith","i","M",""],["shrug_m","i","M",""],["shrug_bb","i","B","wr"],["cable_shrug","i","M",""]],
+"Передняя дельта":[["ohp_db","b","D","sh"],["ohp_m","b","M","sh"],["lev_sh","b","M","sh"],["cable_sh","b","M","sh"],["ohp_stand","b","D","sh lb"]],
+"Средняя дельта":[["lat_db","i","D",""],["lat_c1","i","M",""],["lat_seat","i","D",""],["lat_cross","i","M",""],["inc_lat","i","D",""],["lying_lat","i","D",""]],
+"Задняя дельта":[["face_pull","i","M",""],["rear_m","i","M",""],["rear_c","i","M",""],["rear_db","i","D",""],["rear_head","i","D",""]],
+"Бицепс":[["ez","b","B","wr"],["inc_curl","i","D",""],["hammer_db","i","D",""],["scott","i","B","el"],["db_curl","i","D",""],["cable_curl","i","M",""],["curl_rope","i","M",""],["hammer_rope","i","M",""],["curl_m","i","M",""],["spider","i","D",""],["conc","i","D",""]],
+"Трицепс":[["dips_tri","b","W","sh el"],["cg_db","b","D",""],["cg_bench","b","B","sh wr"],["rope_ext","i","M",""],["fr_press","i","B","el"],["ext_one","i","M",""],["oh_cable","i","M","sh"],["tri_m","i","M",""],["pushdown","i","M",""],["lying_db_ext","i","D","el"],["kickback","i","D",""],["oh_db","i","D","sh el"]],
+"Предплечья":[["wrist_c","i","B","wr"],["db_wrist_up","i","D","wr"],["cable_wrist","i","M","wr"],["wrist_r","i","B","wr"],["farmer","i","D",""]],
+"Квадрицепс":[["hack","b","M","kn"],["leg_press","b","M",""],["smith_sq","b","M","kn lb"],["goblet_sq","b","D","kn"],["bulgarian","b","D","kn"],["leg_press_n","b","M","kn"],["front_squat_m","b","M","kn"],["lunges","b","D","kn"],["leg_ext","i","M","kn"],["sissy","i","W","kn"]],
+"Ягодицы":[["hip_thrust","b","B",""],["hip_m","b","M",""],["leg_press_w","b","M",""],["abduct","i","M",""],["kickback_c","i","M",""],["butt_lift","i","W",""]],
+"Бицепс бедра":[["leg_curl","i","M",""],["seated_leg_curl","i","M",""],["rdl_db","b","D","lb"],["leg_curl_stand","i","M",""],["pull_through","b","M",""],["glute_ham","b","W","lb"],["nordic","i","W","kn"],["ball_curl","i","W",""]],
+"Икры":[["calf_lp","i","M",""],["calf_seat","i","M",""],["calf_st","i","M",""],["calf_db_st","i","D",""],["calf_smith","i","M",""],["calf_rock","i","W",""]],
+"Поясница":[["hyper_w","i","W","lb"],["gm_hyper","i","M","lb"]],
+"Пресс":[["ab_legs_hang","i","W",""],["ab_cable","i","M",""],["crunch_m","i","M",""],["ab_bench","i","W","lb"],["rev_crunch","i","W",""],["pallof","i","M",""],["ab_plank","i","W",""],["dead_bug","i","W",""],["side_bridge","i","W",""]]};
+const VFAC={"Грудь":1,"Широчайшие":.8,"Середина спины":.7,"Трапеции":.4,"Передняя дельта":.35,"Средняя дельта":.8,"Задняя дельта":.6,"Бицепс":.7,"Трицепс":.7,"Предплечья":.3,"Квадрицепс":1,"Ягодицы":.6,"Бицепс бедра":.7,"Икры":.6,"Поясница":.3,"Пресс":.6};
+const PRIO={"Грудь":["Грудь"],"Спина":["Широчайшие","Середина спины"],"Плечи":["Средняя дельта","Задняя дельта"],"Руки":["Бицепс","Трицепс"],"Ноги":["Квадрицепс","Бицепс бедра"],"Ягодицы":["Ягодицы"],"Пресс":["Пресс"]};
+const SPLITS={
+ pp:{n:"Спина · Грудь · Ноги+плечи",days:[["СПИНА · БИЦЕПС · ТРАПЕЦИИ","blue",["Широчайшие","Середина спины","Трапеции","Бицепс","Пресс"]],["ГРУДЬ · ТРИЦЕПС · ПРЕДПЛЕЧЬЯ","red",["Грудь","Трицепс","Предплечья","Поясница"]],["НОГИ · ПЛЕЧИ · ИКРЫ","green",["Квадрицепс","Ягодицы","Бицепс бедра","Икры","Передняя дельта","Средняя дельта","Задняя дельта","Пресс"]]]},
+ fb:{n:"Всё тело",days:[["ВСЁ ТЕЛО · А","blue",["Квадрицепс","Грудь","Широчайшие","Средняя дельта","Бицепс бедра","Трицепс","Пресс"]],["ВСЁ ТЕЛО · Б","red",["Ягодицы","Середина спины","Грудь","Бицепс бедра","Задняя дельта","Бицепс","Икры"]],["ВСЁ ТЕЛО · В","green",["Квадрицепс","Широчайшие","Передняя дельта","Грудь","Средняя дельта","Бицепс","Трицепс","Пресс"]]]},
+ ul:{n:"Верх / низ",days:[["ВЕРХ · А","blue",["Грудь","Широчайшие","Середина спины","Средняя дельта","Трицепс","Бицепс"]],["НИЗ · А","green",["Квадрицепс","Бицепс бедра","Ягодицы","Икры","Пресс"]],["ВЕРХ · Б","red",["Середина спины","Грудь","Широчайшие","Передняя дельта","Задняя дельта","Бицепс","Трицепс"]],["НИЗ · Б","green",["Ягодицы","Квадрицепс","Бицепс бедра","Икры","Пресс","Поясница"]]]},
+ s5:{n:"5 дней",days:[["ГРУДЬ · ПЛЕЧИ · ТРИЦЕПС","red",["Грудь","Передняя дельта","Средняя дельта","Трицепс"]],["СПИНА · БИЦЕПС","blue",["Широчайшие","Середина спины","Задняя дельта","Бицепс","Трапеции"]],["НОГИ","green",["Квадрицепс","Бицепс бедра","Ягодицы","Икры","Пресс"]],["ПЛЕЧИ · РУКИ","red",["Средняя дельта","Задняя дельта","Бицепс","Трицепс","Предплечья"]],["ВЕРХ · СЛАБЫЕ МЕСТА","blue",["Грудь","Широчайшие","Пресс","Поясница"]]]}};
+const GDEF={goal:"mass",exp:"mid",days:[2,4,6],time:75,eq:"gym",inj:["lb","kn","sh"],prio:[],weeks:"alt",split:"auto"};
+let GQ=null,GMISS=[];
+function genSplit(c){if(c.split!=="auto")return c.split;const n=c.days.length;if(n<=2)return "fb";if(n===3)return c.exp==="new"?"fb":"pp";if(n===4)return "ul";return "s5";}
+function eqOK(c,e){const ok={gym:"BDMW",nobar:"DMW",db:"DW",home:"DW"}[c.eq]||"BDMW";return ok.includes(e);}
+function genWeek(c,light){const sp=SPLITS[genSplit(c)],nd=c.days.length,days=sp.days.slice(0,nd);while(days.length<nd)days.push(sp.days[days.length%sp.days.length]);
+ const occ={};days.forEach(d=>d[2].forEach(m=>occ[m]=(occ[m]||0)+1));
+ const base={new:8,mid:12,adv:15}[c.exp],pri=new Set([].concat(...c.prio.map(p=>PRIO[p]||[])));
+ const R={mass:{b:light?[12,15]:[6,8],b2:light?[12,15]:[8,10],i:light?[15,20]:[10,12],rb:light?75:120,ri:light?45:60},
+  str:{b:light?[8,10]:[4,6],b2:light?[10,12]:[6,8],i:light?[12,15]:[8,12],rb:light?90:150,ri:light?60:75},
+  cut:{b:light?[12,15]:[8,10],b2:light?[12,15]:[10,12],i:light?[15,20]:[12,15],rb:light?60:90,ri:45},
+  fit:{b:light?[12,15]:[10,12],b2:[12,15],i:[12,15],rb:75,ri:45}}[c.goal];
+ const used={};const pickOrder=light?"MDWB":"BDWM";
+ const out=days.map((d,di)=>{let items=[];
+  d[2].forEach((m,mi)=>{const V=Math.round((base*(VFAC[m]||.6)+(pri.has(m)?4:0)));let ds=Math.max(2,Math.round(V/occ[m]));
+   let pool=(POOL[m]||[]).filter(p=>EX[p[0]]&&eqOK(c,p[2])&&!c.inj.some(j=>p[3].split(" ").includes(j))&&!(light&&p[2]==="B"));
+   if(!pool.length){(GMISS=GMISS||[]).includes(m)||GMISS.push(m);return;}used[m]=used[m]||[];
+   const big5=["Грудь","Широчайшие","Середина спины","Квадрицепс","Ягодицы","Бицепс бедра"].includes(m);
+   const firstBig=mi<2&&big5;const idx=p=>(POOL[m]||[]).indexOf(p);
+   const sortP=(a,b)=>{const ka=(a[1]==="b"?0:1),kb=(b[1]==="b"?0:1);if(firstBig&&ka!==kb)return ka-kb;const ua=used[m].includes(a[0])?1:0,ub=used[m].includes(b[0])?1:0;if(ua!==ub)return ua-ub;
+    if(light){const ma=a[2]==="M"?0:1,mb=b[2]==="M"?0:1;if(ma!==mb)return ma-mb;}return idx(a)-idx(b);};
+   const maxEx=big5||pri.has(m)?3:(VFAC[m]||.6)>=.7?2:1;
+   const nEx=Math.min(maxEx,ds<=5?1:ds<=9?2:3);const chosen=[];
+   for(let k=0;k<nEx;k++){const cand=pool.filter(p=>!chosen.includes(p)&&!items.some(x=>x.id===p[0])).sort(sortP);if(!cand.length)break;
+    let p=cand[0];if(k===1&&big5){const b2=cand.find(q=>q[1]==="b");if(b2)p=b2;}else if(k>0){const iso=cand.find(q=>q[1]==="i");if(iso)p=iso;}chosen.push(p);used[m].push(p[0]);}
+   chosen.forEach((p,k)=>{const isB=p[1]==="b";const s=Math.max(2,Math.min(isB?5:4,Math.round(ds/chosen.length)));
+    const rr=isB?(k===0&&mi<3&&p[2]!=="M"?R.b:R.b2):R.i;const rest=isB?(k===0&&mi<3?R.rb:Math.max(60,R.rb-30)):R.ri;
+    const rir=c.exp==="new"?"2":isB&&p[2]!=="M"?"1–2":"0–1";
+    items.push(I(p[0],s,rr[0],rr[1],rest,rir,{m,k,eq:p[2]}));});});
+  const big=items.filter(x=>x.eq==="M"&&x.rir==="0–1"&&["Грудь","Широчайшие","Квадрицепс","Средняя дельта","Трицепс","Бицепс"].includes(x.m));
+  if(c.exp!=="new"&&(c.goal==="mass"||c.goal==="cut")&&big.length)big[big.length-1].drop=1;
+  let guard=0;while(estMin(items)>c.time&&guard++<60){
+   const imp=x=>(pri.has(x.m)?2:0)+(VFAC[x.m]||.6);const ex2=items.filter(x=>x.k>0).sort((a,b)=>imp(a)-imp(b)||b.k-a.k)[0];
+   if(ex2&&(imp(ex2)<1||!items.some(x=>x.s>3&&x.rir!=="1–2"))){items.splice(items.indexOf(ex2),1);continue;}
+   const iso=items.slice().reverse().find(x=>x.s>3&&x.rir!=="1–2");if(iso){iso.s--;continue;}
+   const any=items.slice(1).reverse().find(x=>x.s>3);if(any){any.s--;continue;}
+   const two=items.slice(2).reverse().find(x=>x.s>2);if(two){two.s--;continue;}
+   if(items.length>4){items.splice(items.length-1,1);continue;}break;}
+  items.forEach(x=>{delete x.m;delete x.k;delete x.eq;});return{t:d[0],c:d[1],items};});
+ return out;}
+function genProgram(c){GMISS=[];const A=genWeek(c,false),same=c.weeks!=="alt";const B=same?A:genWeek(c,true);
+ const gl={mass:"масса",str:"сила",cut:"рельеф",fit:"форма"}[c.goal];
+ return[{code:"A",name:same?"Рабочая неделя":"Тяжёлая неделя",short:same?"Рабочая":"Тяжёлая",desc:same?`Программа «${gl}». Каждую неделю одинаково, вес растёт по двойной прогрессии.`:"Свободные веса и база. Опускай вес 3 секунды. Запас 1–2 повтора на базе.",rule:"Запас 1–2 повтора в базовых, до отказа — только в тренажёрах и на изоляции.",days:A},
+  {code:"B",name:same?"Рабочая неделя":"Лёгкая неделя",short:same?"Рабочая":"Лёгкая",desc:same?`Программа «${gl}».`:"Тренажёры, блоки и гантели, больше повторов, короче отдых. Суставы отдыхают.",rule:"Плотная работа, короткий отдых.",days:B}];}
+/* --- хранение и применение --- */
+const ORIG13=WEEKS.map(w=>({code:w.code,name:w.name,short:w.short,desc:w.desc,rule:w.rule,days:w.days.map(d=>({t:d.t,c:d.c}))}));
+const DMAP0=Object.assign({},DMAP),DAYN0=DAYN.slice();
+const DN19=["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"];
+function setDays(dows){Object.keys(DMAP).forEach(k=>delete DMAP[k]);DAYN.length=0;dows.slice().sort((a,b)=>((a+6)%7)-((b+6)%7)).forEach((d,i)=>{DMAP[d]=i;DAYN.push(DN19[d]);});}
+const _applyProg19=applyProg;
+applyProg=function(){if(progKey()==="gen"&&DB.gen&&DB.gen.weeks){const G=DB.gen.weeks;
+  WEEKS.forEach((w,i)=>{const g=G[i]||G[0];Object.assign(w,{name:g.name,short:g.short,desc:g.desc,rule:g.rule});w.days=JSON.parse(JSON.stringify(g.days));});setDays(DB.gen.cfg.days);return;}
+ WEEKS.forEach((w,i)=>{const o=ORIG13[i];if(!o)return;Object.assign(w,{name:o.name,short:o.short,desc:o.desc,rule:o.rule});if(w.days.length!==o.days.length)w.days=o.days.map(d=>({t:d.t,c:d.c,items:[]}));else w.days.forEach((d,j)=>{d.t=o.days[j].t;d.c=o.days[j].c;});});
+ Object.keys(DMAP).forEach(k=>delete DMAP[k]);Object.assign(DMAP,DMAP0);DAYN.length=0;DAYN0.forEach(x=>DAYN.push(x));_applyProg19();};
+/* --- мастер --- */
+const QS=[["goal","Цель",[["mass","Масса"],["str","Сила"],["cut","Рельеф / похудение"],["fit","Форма и здоровье"]]],
+ ["exp","Опыт",[["new","Меньше года"],["mid","1–3 года"],["adv","Больше 3 лет"]]],
+ ["days","Дни тренировок",[[1,"Пн"],[2,"Вт"],[3,"Ср"],[4,"Чт"],[5,"Пт"],[6,"Сб"],[0,"Вс"]],1],
+ ["time","Время на тренировку",[[45,"45 мин"],[60,"60 мин"],[75,"75 мин"],[90,"90 мин"]]],
+ ["eq","Где тренируешься",[["gym","Полный зал"],["nobar","Зал без штанги"],["db","Только гантели"],["home","Дома: гантели и турник"]]],
+ ["inj","Что беречь",[["sh","Плечо"],["lb","Поясница"],["kn","Колени"],["el","Локти"],["wr","Запястья"]],1],
+ ["prio","Приоритет (до 2)",[["Грудь","Грудь"],["Спина","Спина"],["Плечи","Плечи"],["Руки","Руки"],["Ноги","Ноги"],["Ягодицы","Ягодицы"],["Пресс","Пресс"]],1],
+ ["split","Схема",[["auto","Подбери сам"],["pp","Спина / грудь / ноги+плечи"],["fb","Всё тело"],["ul","Верх / низ"],["s5","5 дней"]]],
+ ["weeks","Недели",[["alt","Тяжёлая + лёгкая"],["same","Одинаковые"]]]];
+function genOpen(){GQ=JSON.parse(JSON.stringify((DB.gen&&DB.gen.cfg)||GDEF));closeExD();const o=document.createElement("div");o.className="exd gn19";o.id="exd";document.body.appendChild(o);genPaint();}
+function genPaint(){const o=document.getElementById("exd");if(!o)return;const sp=genSplit(GQ);
+ o.innerHTML=`<div class="exd-in"><button class="x" onclick="closeExD()" aria-label="Закрыть">✕</button><span class="exd-g">конструктор</span><h2>Составить программу</h2>
+ <p class="gn-s">Ответь на 9 вопросов — тренер соберёт программу по правилам: объём на мышцу, порядок база→изоляция, повторы под цель, время, твои суставы.</p>
+ ${QS.map(([k,t,opts,multi])=>`<div class="gn-q"><b>${t}</b><div class="gn-o">${opts.map(([v,l])=>{const on=multi?GQ[k].includes(v):GQ[k]===v;return `<button class="${on?"on":""}" onclick='genSet("${k}",${JSON.stringify(v)},${multi?1:0})'>${l}</button>`;}).join("")}</div></div>`).join("")}
+ <div class="gn-sum">Схема: <b>${SPLITS[sp].n}</b> · ${GQ.days.length} ${pl(GQ.days.length,"день","дня","дней")} в неделю</div>
+ <button class="cta" onclick="genBuild()" ${GQ.days.length<2?"disabled":""}>Составить программу</button></div>`;}
+function genSet(k,v,multi){if(multi){const a=GQ[k];const i=a.indexOf(v);if(i>=0)a.splice(i,1);else{a.push(v);if(k==="prio"&&a.length>2)a.shift();if(k==="days"&&a.length>5)a.shift();}}else GQ[k]=v;
+ if(k==="days"&&GQ.split!=="auto"){const n=GQ.days.length;if((GQ.split==="pp"&&n!==3)||(GQ.split==="ul"&&n<4)||(GQ.split==="s5"&&n<5))GQ.split="auto";}
+ const sc=document.querySelector("#exd .exd-in").scrollTop;genPaint();document.querySelector("#exd .exd-in").scrollTop=sc;}
+let GP=null;
+function genBuild(){if(GQ.days.length<2)return;GP=genProgram(GQ);const o=document.getElementById("exd");if(!o)return;
+ const vol={};GP[0].days.forEach(d=>d.items.forEach(x=>{const g=grp(EX[x.id]);vol[g]=(vol[g]||0)+x.s;}));
+ const dl=GQ.days.slice().sort((a,b)=>((a+6)%7)-((b+6)%7));
+ const wk=(w,lbl)=>`<div class="gn-w"><span class="k13">${lbl}</span>${w.days.map((d,i)=>`<div class="gn-d"><div class="gn-dh"><b>${DN19[dl[i]]}</b><span>${d.t}</span><em>~${estMin(d.items)} мин</em></div>
+  ${d.items.map((x,j)=>`<div class="gn-x">${thumb(x.id)}<div><b>${EX[x.id].n}</b><span>${x.s} × ${x.r} · отдых ${x.rest} с${x.drop?" · дроп":""}</span></div></div>`).join("")}</div>`).join("")}</div>`;
+ const inj={sh:"плечо",lb:"поясницу",kn:"колени",el:"локти",wr:"запястья"};
+ o.innerHTML=`<div class="exd-in"><button class="x" onclick="closeExD()" aria-label="Закрыть">✕</button><span class="exd-g">готово</span><h2>Твоя программа</h2>
+ <div class="gn-why"><div>🧩 <b>${SPLITS[genSplit(GQ)].n}</b> — ${GQ.days.length} ${pl(GQ.days.length,"день","дня","дней")}, каждая мышца ${GQ.days.length>=4||genSplit(GQ)==="fb"?"2 раза":"раз"} в неделю.</div>
+ <div>📊 Подходов на мышцу в неделю:<div class="gn-v">${Object.keys(vol).sort((a,b)=>vol[b]-vol[a]).map(g=>`<span>${g}<b>${vol[g]}</b></span>`).join("")}</div></div>
+ <div>🎯 Повторы под цель «${{mass:"масса",str:"сила",cut:"рельеф",fit:"форма"}[GQ.goal]}», база первой, изоляция после.</div>
+ ${GQ.inj.length?`<div>🦴 Берегу ${GQ.inj.map(x=>inj[x]).join(", ")}: опасные упражнения не попали в программу.</div>`:""}
+ <div>⏱ Каждая тренировка укладывается в ${GQ.time} минут.</div>
+ ${GMISS.length?`<div>ℹ️ Из-за ограничений без отдельных упражнений: ${GMISS.map(x=>x.toLowerCase()).join(", ")}. Эти мышцы всё равно работают в других движениях.</div>`:""}</div>
+ ${wk(GP[0],GQ.weeks==="alt"?"тяжёлая неделя":"каждая неделя")}${GQ.weeks==="alt"?wk(GP[1],"лёгкая неделя"):""}
+ <button class="cta" onclick="genApply()">Применить программу</button>
+ <button class="dn-home" onclick="genPaint()">← Изменить ответы</button></div>`;o.querySelector(".exd-in").scrollTop=0;}
+function genApply(){if(session){alert0("Сначала закончи тренировку");return;}DB.gen={cfg:JSON.parse(JSON.stringify(GQ)),weeks:GP,d:today()};DB.prog="gen";save();applyProg();closeExD();setTab("gym");
+ setTimeout(()=>alert0("Новая программа включена. Вернуть прежнюю — «Ещё» → Программа"),300);}
+/* кнопки в «Ещё» */
+const _vMore19=vMore;
+vMore=function(){_vMore19.apply(this,arguments);const box=document.getElementById("prog13");if(!box)return;const seg=box.querySelector(".seg7");
+ if(DB.gen&&seg&&!seg.querySelector('[data-g]'))seg.insertAdjacentHTML("afterbegin",`<button data-g="1" class="${progKey()==="gen"?"on":""}" onclick="setProg('gen')">Моя</button>`);
+ if(progKey()==="gen"){const p=box.querySelector("p");if(p)p.textContent=`Собрана конструктором ${DB.gen.d?String(DB.gen.d).slice(8,10)+"."+String(DB.gen.d).slice(5,7):""}: ${SPLITS[genSplit(DB.gen.cfg)].n}, ${DB.gen.cfg.days.length} ${pl(DB.gen.cfg.days.length,"день","дня","дней")}, до ${DB.gen.cfg.time} мин. История и рекорды общие.`;}
+ box.insertAdjacentHTML("beforeend",`<button class="gn-btn" onclick="genOpen()"><b>＋</b><span><strong>${DB.gen?"Пересобрать программу":"Составить свою программу"}</strong><em>цель, дни, время, суставы — тренер соберёт сам</em></span></button>`);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
