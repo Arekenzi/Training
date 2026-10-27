@@ -1061,6 +1061,14 @@ textarea.cx-i{resize:vertical;min-height:96px}
 .noph15 h2{padding-right:48px}
 .rc15-h{flex-direction:column;align-items:flex-start}.rc15-h p{text-align:left;max-width:none}
 
+.coach17{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding:10px 12px;border-radius:16px;background:rgba(59,240,106,.08);border:1px solid rgba(59,240,106,.22);text-align:left}
+.coach17 i{font-style:normal;font-size:18px;flex:0 0 auto}
+.coach17 span{flex:1;font-size:13px;line-height:1.35;color:var(--tx)}
+.coach17.f{background:rgba(255,138,60,.1);border-color:rgba(255,138,60,.3)}
+.coach17.r{background:rgba(108,198,255,.08);border-color:rgba(108,198,255,.25)}
+.coach17 button{flex:0 0 auto;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:var(--dim);font:inherit;font-size:11.5px;cursor:pointer}
+.auto17{margin:0 0 14px}.auto17 b{display:block;margin-bottom:4px}.auto17 div{font-size:13px;margin-top:3px}.auto17 i{font-style:normal;color:var(--lime)}.auto17 small{color:var(--dim);margin-left:4px}
+
 </style>
 </head>
 <body>
@@ -4009,7 +4017,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="16";
+const APPV="17";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4021,6 +4029,11 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🧠</i><p><b>Умный тренер</b>вес следующего подхода подстраивается сам: легко — прибавит, тяжело — снизит</p></div>
+ <div><i>🎯</i><p><b>Подсказка на каждый подход</b>что делать сейчас: цель, запас или до отказа</p></div>
+ <div><i>🆕</i><p><b>Новое упражнение — вес уже стоит</b>по похожим упражнениям или стартовому весу</p></div>
+ <div><i>⏱</i><p><b>Умный отдых</b>тяжёлый подход — +30 с, лёгкий на изоляции — короче. Кнопки ± меняют вес шагом снаряда</p></div>
+ <div><i>🔁</i><p><b>«Занято?»</b>тренажёр занят — одно нажатие, и замена на сегодня. Плато — заменит сам</p></div>
  <div><i>💚</i><p><b>Новый цвет</b>неоново-зелёный на тёмно-изумрудном фоне — как в Befit</p></div>
  <div><i>⏱</i><p><b>Живая статистика тренировки</b>время, калории, объём в кг и подходы — обновляются на ходу</p></div>
  <div><i>✅</i><p><b>Отметить все и ± подход</b>в карточке упражнения, плюс «прошлый раз» над подходами</p></div>
@@ -4425,9 +4438,75 @@ async function shareGo(){const c=await shareCanvas();c.toBlob(async bl=>{try{con
 let _cx15=-1;const _render15=render;
 render=function(){const n=Object.keys(DB.cex||{}).length;if(n!==_cx15){_cx15=n;cexMerge();}return _render15.apply(this,arguments);};
 
+/* ===== v17: умный тренер — думать не нужно ===== */
+/* стартовый вес, если упражнение ещё не делал */
+function stW(it){const e=EX[it.id];if(!e)return 0;const inc=incOf(e);
+ const m=String(e.st||"").replace(",",".").match(/(\d+(?:\.\d+)?)/);if(m)return rnd(+m[1],inc);
+ const kind=x=>/гантел/.test(x.eq)?"g":/штанг|гриф/.test(x.eq)?"b":/блок|кроссов/.test(x.eq)?"c":"m";
+ for(const a of (e.alt||[])){const ea=EX[a],l=lastLog(a);if(!ea||!l||kind(ea)!==kind(e))continue;const ws=l.sets.filter(s=>!s.warm&&!s.drop&&+s.w>0).map(s=>+s.w);if(ws.length)return Math.max(inc,rnd(Math.max(...ws)*0.85,inc));}
+ return 0;}
+/* как прошёл предыдущий подход в этой тренировке */
+function prevSetHere(it,i){const st=session&&session.sets[it.id]||{};for(let j=i-1;j>=0;j--){const p=st["s"+j];if(p&&p.ok)return p;}return null;}
+const COACH={};
+const _prefill17=prefill;
+prefill=function(it,k,i){const r=_prefill17(it,k,i),st=(session.sets[it.id]||{}),c=st[k]||{},e=EX[it.id],inc=incOf(e);let why="";
+ if(k!=="d0"&&!c.w){const p=prevSetHere(it,i);
+  if(p&&+p.w>0&&+p.r){const pr=+p.r,pw=+p.w;
+   if(it.hi&&pr>=it.hi+2){r.w=+(pw+inc).toFixed(2);r.r=it.lo||r.r;why=`прошлый подход дался легко (${pr} повт) — прибавил ${fmtKg(inc)} кг`;}
+   else if(it.lo&&pr<it.lo-1){let nw=rnd(pw*0.9,inc);if(nw>=pw)nw=pw-inc;r.w=Math.max(inc,+nw.toFixed(2));r.r=it.lo;why=`прошлый подход тяжело (${pr} из ${it.lo}) — снизил до ${fmtKg(r.w)} кг`;}
+   else{r.w=pw;if(it.hi&&pr>=it.hi)r.r=it.hi;why="";}}
+  else if(!r.w&&!lastLog(it.id)){const w=stW(it);if(w){r.w=w;why=`первый раз — вес подобран автоматически. Легко? Следующий подход прибавлю сам`;}}}
+ COACH[it.id+"|"+k]=why;return r;};
+/* шаг «±» по снаряду: гантели 2 кг, жим ногами 5 кг, остальное 2,5 */
+const _fxStep17=fxStep;
+fxStep=function(f,d){if(f==="w"&&session){const x=itemsFor(session.di)[session.fx];if(x){const inc=incOf(EX[x.id]);d=d<0?-inc:inc;}}return _fxStep17(f,d);};
+/* умный отдых: тяжело — дольше, легко на изоляции — короче */
+let REST17="";
+const _startTimer17=startTimer;
+startTimer=function(s,name,what){REST17="";try{if(session&&s>0){const x=itemsFor(session.di)[session.fx],st=x&&session.sets[x.id]||{};
+  const ks=x?keysOf(x):[],done=ks.filter(k=>st[k]&&st[k].ok),last=done.length?st[done[done.length-1]]:null;
+  if(x&&last&&+last.r){if(x.lo&&+last.r<x.lo){s+=30;REST17="+30 с: подход был тяжёлым";}
+   else if(x.hi&&+last.r>=x.hi+2&&x.rest<=60){s=Math.max(30,s-15);REST17="−15 с: подход был лёгким";}}}}catch(e){}
+ return _startTimer17(s,name,what);};
+/* плато → автоматическая замена на сегодня */
+function autoPlateau(di){if(!session||session.di!==di)return;session.tmp=session.tmp||{};session.auto=session.auto||[];
+ const used=W().days[di].items.map(y=>swapOf(y.id));
+ W().days[di].items.forEach(x=>{if(session.tmp[x.id])return;const cur=swapOf(x.id),e=EX[cur];if(!e||!plateau(cur))return;
+  const cand=(e.alt||[]).filter(a=>EX[a]&&!used.includes(a)&&!Object.values(session.tmp).includes(a));if(!cand.length)return;
+  session.tmp[x.id]=cand[0];used.push(cand[0]);session.auto.push([e.n,EX[cand[0]].n,"плато"]);});save();}
+const _rdyApply17=rdyApply;rdyApply=function(di){_rdyApply17(di);autoPlateau(di);};
+const _rdySkip17=rdySkip;rdySkip=function(di){_rdySkip17(di);autoPlateau(di);render();};
+/* «тренажёр занят» — замена на сегодня одним нажатием */
+function busy17(){if(!session)return;const it=itemsFor(session.di),x=it[session.fx];if(!x)return;const orig=x.orig||x.id,e=EX[x.id],eo=EX[orig];
+ const used=it.map(y=>y.id),tried=(session.busy=session.busy||{})[orig]=(session.busy[orig]||[]).concat([x.id]);
+ const pool=((eo&&eo.alt)||[]).concat(e.alt||[]).concat(Object.keys(EX).filter(k=>grp(EX[k])===grp(e)&&EX[k].img));
+ const nx=pool.find(a=>EX[a]&&!used.includes(a)&&!tried.includes(a));if(!nx)return;
+ session.tmp=session.tmp||{};session.tmp[orig]=nx;delete session.sets[x.id];session.auto=session.auto||[];session.auto.push([e.n,EX[nx].n,"занят"]);
+ if(navigator.vibrate)navigator.vibrate(20);save();render();}
+/* подсказка тренера на экране подхода */
+function coachLine(){if(!session||!session.focus)return;const fx=document.getElementById("fx");if(!fx)return;const inp=fx.querySelector(".fx-inp");
+ const old=fx.querySelector(".coach17");if(old)old.remove();
+ const it=itemsFor(session.di),x=it[session.fx];if(!x)return;const e=EX[x.id],ks=keysOf(x),ci=curSet(x);
+ let msg="",tag="";
+ if(!inp){if(REST17)fx.querySelector(".fx-ctl")&&fx.querySelector(".fx-ctl").insertAdjacentHTML("beforebegin",`<div class="coach17 r"><i>⏱</i><span>${REST17}</span></div>`);return;}
+ const k=ks[ci],why=COACH[x.id+"|"+k];const last=ci===ks.length-1||(k==="d0");
+ if(why){msg=why;tag="w";}
+ else if(k==="d0"){msg="Дроп-сет: вес вдвое меньше, без отдыха — до отказа";tag="f";}
+ else if(last&&e.f){msg="Последний подход — до отказа, но с чистой техникой";tag="f";}
+ else if(last){msg="Последний подход — оставь 1–2 повтора в запасе, это свободный вес";tag="s";}
+ else if(ci===0){msg=`Цель: ${x.r} повторов, опускай вес 3 секунды`;tag="s";}
+ else{msg=`Держи тот же вес. Сделаешь ${x.hi}+ — в следующем подходе прибавлю`;tag="s";}
+ const sg=fx.querySelector(".fx-sug");
+ const html=`<div class="coach17 ${tag}"><i>${tag==="w"?"🧠":tag==="f"?"🔥":"🎯"}</i><span>${msg}</span><button onclick="busy17()">Занято?</button></div>`;
+ if(sg)sg.insertAdjacentHTML("beforebegin",html);else inp.insertAdjacentHTML("beforebegin",html);}
+/* баннер с автоматическими заменами в списке тренировки */
+function autoBanner(){if(!session||session.focus||!session.auto||!session.auto.length)return;const sum=document.querySelector("#app .wl-sum");if(!sum||document.getElementById("auto17"))return;
+ sum.insertAdjacentHTML("afterend",`<div class="ib auto17" id="auto17"><b>Тренер поменял на сегодня</b>${session.auto.map(a=>`<div>${a[0]} → <i>${a[1]}</i> <small>${a[2]==="плато"?"3 тренировки без прибавки":"тренажёр занят"}</small></div>`).join("")}</div>`);}
+const _render17=render;render=function(){const r=_render17.apply(this,arguments);try{coachLine();autoBanner();}catch(e){}return r;};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
