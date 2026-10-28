@@ -1209,6 +1209,11 @@ body.light #fab21{background:rgba(255,255,255,.95);color:#0E7A35;border-color:rg
 .gx-add{width:100%;margin-top:6px;padding:9px;border-radius:12px;border:1px dashed rgba(59,240,106,.4);background:none;color:var(--lime);font:inherit;font-size:13px;cursor:pointer}
 body.light .gx-s button{border-color:rgba(0,0,0,.12);background:#fff}
 
+.t1{color:var(--lime)!important}.t2{color:#9AD8FF!important}.t3{color:var(--dim)!important}
+.alt span.t1,.alt span.t2,.alt span.t3{font-family:var(--cond);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
+.m29{display:block;font-style:normal;font-size:11.5px;color:var(--dim);margin-top:2px}
+body.light .t1{color:#0E7A35!important}body.light .t2{color:#2E74D0!important}
+
 </style>
 </head>
 <body>
@@ -4157,7 +4162,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="28";
+const APPV="29";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4169,6 +4174,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🎯</i><p><b>Умные замены</b>везде — в тренировке, «Занято?», конструкторе, плато — сначала то же движение и та же зона: верх груди → верх груди, тяга сверху → тяга сверху, молотки → молотки. Метка «точная замена»</p></div>
  <div><i>🛠</i><p><b>Конструктор 2.0</b>перед применением можно заменить любое упражнение, убрать, добавить и поменять подходы. Видно баланс тяг и жимов и где мало объёма</p></div>
  <div><i>🔄</i><p><b>Блоки по 8 недель</b>упражнения сами меняются на похожие, объём растёт внутри блока, 9-я — разгрузка</p></div>
  <div><i>💬</i><p><b>«Составь программу на 4 дня на силу»</b>— прямо в чате; «почему такой вес?» — тренер объяснит</p></div>
@@ -5356,6 +5362,51 @@ brain=function(q){const t=nz(q);
 function genShow(){closeExD();const o=document.createElement("div");o.className="exd gn19";o.id="exd";document.body.appendChild(o);genBuild();}
 function genOpenWith(){const c=GQ;genOpen();GQ=c;genPaint();}
 const _sugg28=sugg;sugg=function(){const a=_sugg28();a.splice(4,0,"Составь программу на 4 дня на силу");return a.slice(0,9);};
+
+/* ===== v29: умные замены — та же мышца, то же движение, та же зона ===== */
+const PAT29=[["legext",/разгибания ног|сисси/],["lunge",/выпад|сплит|зашаг|на платформ/],["squat",/присед|гакк|жим ногами/],["legcurl",/сгибания ног|нордическ|ghd|скольжени|обратные сгибания корпусом/],["hinge",/румынск|протяжка между|гиперэкст|становая/],["bridge",/мост/],["abduct",/отведени|разведение бедра|приведени|сведение ног|ходьба с резин/],["calfseat",/икры сидя/],["calfst",/икры|носк/],["shrug",/шраг|протяжка с канат|к подбородку/],["rear",/разведени.*наклон|обратные развед|задняя дельта|к лицу|ротаци|кубинск|махи в наклоне|разведение резины|разведени.*лёжа на живот|разведени.*с упором/],["pullover",/пуловер|прямыми руками/],["vpull",/подтяг|верхнего блока|в хаммере сверху|гравитрон/],["row",/тяга|т-гриф|сведение лопаток|австралий/],["raise",/махи|подъём.*перед собой|подъём гантели в сторону|подъём гантелей по диагонал|подъём блина|подъём перед собой|подъём гантелей лёжа/],["fly",/сведени|разведени|бабочк/],["curl",/сгибани|подъём .*(бицепс|штанг|ez)|молот|зоттман|паук/],["ext",/разгибани|французск|из-за головы|кикбек|жим jm|жим тейта/],["press",/жим|отжиман|брусья/],["flex",/скручив|складк|велосипед|подъём таза|jackknife/],["legraise",/подъёмы ног|подтягивание колен|ножниц|скалолаз/],["core",/планк|паллоф|дровосек|мёртвый|колесо|поворот|наклоны в сторону|подъём на блоке/]];
+function pat29(e){const t=(e.n+" ").toLowerCase();for(const[p,re]of PAT29)if(re.test(t))return p;return"other";}
+function sub29(e){const t=(e.m+" "+e.n).toLowerCase(),g=grp(e);
+ if(g==="Грудь"){if(/внутренн|узк|алмаз/.test(t))return"inner";if(/низ|вниз головой|сверху вниз|брусья|отжимания в тренажёре/.test(t))return"low";if(/верх|наклон|30°|45°|снизу вверх|ландмайн/.test(t))return"up";return"mid";}
+ if(g==="Бицепс"){if(/молот|нейтрал|обратн|зоттман|брахи/.test(t))return"ham";if(/наклон/.test(t)&&!/лицом вниз/.test(t))return"long";if(/скотт|паук|концентр|парт|лицом вниз/.test(t))return"short";return"gen";}
+ if(g==="Трицепс"){if(/из-за головы|французск|длинн/.test(t))return"long";if(/брусья|узк|жим|отжим/.test(t))return"comp";return"push";}
+ if(g==="Широчайшие"){if(/обратн|узк|параллел|нейтрал|v-/.test(t))return"narrow";if(/широк/.test(t))return"wide";return"gen";}
+ if(g==="Задняя дельта"){if(/тяга|к лицу/.test(t))return"pull";if(/ротац/.test(t))return"rot";return"fly";}
+ if(g==="Квадрицепс"){if(/узк/.test(t))return"narrow";return"gen";}
+ return"";}
+function eqc29(e){const q=(e.eq||"").toLowerCase();return/штанг|гриф/.test(q)?"B":/гантел|гиря/.test(q)?"D":/блок|кроссов|тренаж|хаммер|смит|рычаж/.test(q)?"M":"W";}
+const PRE29={};function feat(id){if(PRE29[id])return PRE29[id];const e=EX[id];return PRE29[id]={g:grp(e),p:pat29(e),s:sub29(e),q:eqc29(e)};}
+function simScore(a,b){const A=feat(a),B=feat(b);if(A.g!==B.g)return 0;let s=10;if(A.p===B.p)s+=6;if(A.s&&A.s===B.s)s+=4;if(A.q===B.q)s+=1;if((EX[a].alt||[]).includes(b))s+=2;if(EX[b].img)s+=1;return s;}
+function altsFor(id,o){o=o||{};const ex=new Set([id].concat(o.exclude||[]));const inj=o.inj||[];const B=DB.ban||{};
+ const injBad=k=>{if(!inj.length)return false;for(const m in POOL){const p=POOL[m].find(x=>x[0]===k);if(p)return inj.some(j=>p[3].split(" ").includes(j));}return inj.some(j=>PAINRE[j]&&PAINRE[j].test(EX[k].n));};
+ return Object.keys(EX).filter(k=>!ex.has(k)&&!B[k]&&EX[k].img&&!injBad(k)).map(k=>[k,simScore(id,k)]).filter(x=>x[1]>=10).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);}
+function simTag(a,b){const s=simScore(a,b);return s>=20?["точная замена","t1"]:s>=16?["то же движение","t2"]:["та же мышца","t3"];}
+/* пересчёт «лучших замен» для всех упражнений: ими пользуются тренер, «Занято?», плато, боль */
+function rebuildAlts(){Object.keys(EX).forEach(k=>{if(!EX[k].alt0)EX[k].alt0=(EX[k].alt||[]).slice();EX[k].alt=altsFor(k).slice(0,6);});}
+let _ra29=-1;const _render29=render;render=function(){const n=Object.keys(EX).length+Object.keys(DB.ban||{}).length*1000;if(n!==_ra29){_ra29=n;try{rebuildAlts();}catch(e){}}return _render29.apply(this,arguments);};
+/* список замен в тренировке (режим фокуса) */
+sheetAlts=function(){const it=itemsFor(session.di),n=session.fx,x=it[n],orig=x.orig||x.id;const used=it.map(y=>y.id);const pool=altsFor(x.id,{exclude:used}).slice(0,14);
+ document.getElementById("sheetBox").innerHTML=`<div class="sheet-list">${pool.map(a=>{const[tg,c]=simTag(x.id,a);return `<button class="alt" onclick="closeSheet();doSwap('${orig}','${a}')">${thumb(a)}<div><span class="${c}">${tg} · ${EX[a].eq}</span><b>${EX[a].n}</b></div></button>`;}).join("")}
+ ${DB.swap[orig]?`<button class="alt" onclick="closeSheet();doSwap('${orig}','')"><div><span>вернуть</span><b>${EX[orig].n}</b></div></button>`:""}</div>`;
+ document.getElementById("sheetBox").scrollIntoView({behavior:"smooth"});};
+/* список замен в списке упражнений */
+alts=function(id,n){const e=EX[id],el=document.getElementById("ex"+n);if(!el||!e)return;const items=itemsFor(session.di),orig=items[n]?items[n].orig:id;const pool=altsFor(id,{exclude:items.map(y=>y.id)}).slice(0,14);const f=feat(id);
+ el.innerHTML=`<div class="note"><b>Заменить — ${f.g.toLowerCase()}${f.s?` · ${({up:"верх",mid:"середина",low:"низ",inner:"внутренняя часть",ham:"брахиалис",long:"длинная головка",short:"короткая головка",comp:"базовые",push:"разгибания",narrow:"узкий хват",wide:"широкий хват"})[f.s]||""}`:""}</b>
+ <div class="dim" style="font-size:11.5px;margin:5px 0 9px">Сверху — то же движение и та же зона мышцы. Подходы и повторы те же.</div>
+ <div style="max-height:340px;overflow:auto;-webkit-overflow-scrolling:touch">${pool.map(a=>{const[tg,c]=simTag(id,a);return `<div class="frow">${thumb(a)}<span style="flex:1;min-width:0;font-size:13px"><span class="${c}" style="font-size:10px;letter-spacing:.08em;text-transform:uppercase">${tg}</span><br>${EX[a].n}<br><span class="dim" style="font-size:10.5px">${EX[a].eq}</span></span>
+ <button class="btn sm" onclick="doSwap('${orig}','${a}')">Взять</button></div>`;}).join("")}</div>
+ ${DB.swap[orig]?`<button class="btn sm" style="margin-top:10px" onclick="doSwap('${orig}','')">Вернуть исходное</button>`:""}</div>`;};
+/* замены в конструкторе */
+genSwap=function(wi,di,j){const it=genWk(wi).days[di].items[j];const used=genWk(wi).days[di].items.map(x=>x.id);const pool=altsFor(it.id,{exclude:used,inj:GQ.inj}).slice(0,14);const f=feat(it.id);
+ GEDIT={wi,di,j,sc:document.querySelector("#exd .exd-in").scrollTop};const o=document.getElementById("exd");
+ o.innerHTML=`<div class="exd-in noph15"><button class="x" onclick="genView()" aria-label="Назад">←</button><span class="exd-g">замена · ${f.g.toLowerCase()}</span><h2>${EX[it.id].n}</h2>
+ <p class="gn-s">Сверху — то же движение и та же зона мышцы (${EX[it.id].m.toLowerCase()}).</p>
+ <div class="sheet-list">${pool.map(a=>{const[tg,c]=simTag(it.id,a);return `<button class="alt" onclick="genPick('${a}')">${thumb(a)}<div><span class="${c}">${tg} · ${EX[a].eq}</span><b>${EX[a].n}</b><em class="m29">${EX[a].m}</em></div></button>`;}).join("")}</div>
+ <button class="dn-home" style="color:#FF8A7A" onclick="genDel()">Убрать упражнение из дня</button></div>`;o.querySelector(".exd-in").scrollTop=0;};
+/* «Занято?» — ближайшая по движению замена */
+busy17=function(){if(!session)return;const it=itemsFor(session.di),x=it[session.fx];if(!x)return;const orig=x.orig||x.id;const tried=(session.busy=session.busy||{})[orig]=(session.busy[orig]||[]).concat([x.id]);
+ const nx=altsFor(orig,{exclude:it.map(y=>y.id).concat(tried)})[0];if(!nx)return;session.tmp=session.tmp||{};session.tmp[orig]=nx;delete session.sets[x.id];session.auto=session.auto||[];session.auto.push([EX[x.id].n,EX[nx].n,"занят"]);
+ if(navigator.vibrate)navigator.vibrate(20);save();render();};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
