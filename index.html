@@ -1201,6 +1201,14 @@ body.light #fab21{background:rgba(255,255,255,.95);color:#0E7A35;border-color:rg
 @media (max-height:640px){.fx-in:has(.rpe20) .fx-ph{display:none!important}.fx-in:has(.rpe20) .ring{width:min(40vw,128px,20vh)!important}.fx-in:has(.rpe20) .coach17 span{font-size:11.5px}.rpe20 button{padding:12px 4px!important}}
 @media (max-width:360px){#fx .fx-inp .stp input{font-size:21px!important;min-width:0}#fx .fx-inp .stp>button{width:30px!important;min-width:30px!important;flex:0 0 30px!important}#fx .fx-inp{gap:6px!important}}
 
+.gn-v span i{font-style:normal;font-size:10px;margin-left:5px;opacity:.75}
+.gn-v span.low{background:rgba(242,196,107,.16)}.gn-v span.low i{color:#F2C46B}.gn-v span.high{background:rgba(255,138,122,.14)}.gn-v span.high i{color:#FF8A7A}
+.e28{gap:8px}.gx-m{flex:1;display:flex;gap:10px;align-items:center;min-width:0;padding:0;border:0;background:none;color:inherit;text-align:left;font:inherit;cursor:pointer}
+.gx-m>div{min-width:0}.gx-s{display:flex;gap:4px;flex:0 0 auto}
+.gx-s button{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:var(--tx);font-size:16px;cursor:pointer}
+.gx-add{width:100%;margin-top:6px;padding:9px;border-radius:12px;border:1px dashed rgba(59,240,106,.4);background:none;color:var(--lime);font:inherit;font-size:13px;cursor:pointer}
+body.light .gx-s button{border-color:rgba(0,0,0,.12);background:#fff}
+
 </style>
 </head>
 <body>
@@ -4149,7 +4157,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="27";
+const APPV="28";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4161,6 +4169,9 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🛠</i><p><b>Конструктор 2.0</b>перед применением можно заменить любое упражнение, убрать, добавить и поменять подходы. Видно баланс тяг и жимов и где мало объёма</p></div>
+ <div><i>🔄</i><p><b>Блоки по 8 недель</b>упражнения сами меняются на похожие, объём растёт внутри блока, 9-я — разгрузка</p></div>
+ <div><i>💬</i><p><b>«Составь программу на 4 дня на силу»</b>— прямо в чате; «почему такой вес?» — тренер объяснит</p></div>
  <div><i>🍗</i><p><b>Еда словами</b>«съел 200 г курицы и гречку», «на ужин 3 яйца» — тренер сам запишет в нужный приём</p></div>
  <div><i>🔎</i><p><b>КБЖУ продуктов</b>«сколько белка в твороге», «калории в 250 г риса»</p></div>
  <div><i>🗂</i><p><b>«Последняя тренировка», «сравни жим и рычажный», «лучшее на грудь»</b></p></div>
@@ -5265,9 +5276,90 @@ function morning27(){if(DB.mornD===today())return;DB.mornD=today();save();const 
  CH.msgs.push({who:"b",t:`${h<12?"Доброе утро":h<18?"Привет":"Добрый вечер"}, Артур!\n${parts.join("\n")}`});DB.repNew=1;save();}
 const _render27=render;render=function(){const r=_render27.apply(this,arguments);try{if(!session)morning27();}catch(e){}return r;};
 
+/* ===== v28: конструктор до максимума — правка перед применением, баланс, ротация блоков, рост объёма; сборка из чата ===== */
+QS.push(["rotate","Смена упражнений каждые 8 недель",[["yes","Да — новые углы"],["no","Нет"]]],["ramp","Рост объёма внутри блока",[["yes","Да: +подход каждые 3 недели"],["no","Нет"]]]);
+GDEF.rotate="yes";GDEF.ramp="yes";
+function grpOfId(id){return grp(EX[id]);}
+const TGT={new:[8,12],mid:[10,16],adv:[12,20]};
+const PUSH=["Грудь","Передняя дельта","Трицепс"],PULL=["Широчайшие","Середина спины","Задняя дельта","Бицепс"];
+function analyze(P,c){const vol={};P[0].days.forEach(d=>d.items.forEach(x=>{const g=grpOfId(x.id);vol[g]=(vol[g]||0)+x.s;}));
+ const gf=c.goal==="str"?.75:c.goal==="fit"?.8:1;const lo=Math.round(TGT[c.exp][0]*gf),hi=Math.round(TGT[c.exp][1]*gf);const big=["Грудь","Широчайшие","Середина спины","Квадрицепс","Бицепс бедра","Ягодицы"];
+ const z=g=>{const v=vol[g]||0,f=big.includes(g)?1:.6,l=Math.round(lo*f),h=Math.round(hi*f);return v<l?"low":v>h?"high":"ok";};
+ const push=PUSH.reduce((a,g)=>a+(vol[g]||0),0),pull=PULL.reduce((a,g)=>a+(vol[g]||0),0);
+ const notes=[];if(pull<push*0.9)notes.push(`Тяг меньше, чем жимов (${pull}:${push}) — для здоровья плеч лучше наоборот. Добавь подход в тягах.`);
+ else notes.push(`Баланс тяг и жимов ${pull}:${push} — плечам хорошо.`);
+ const low=Object.keys(vol).filter(g=>z(g)==="low"&&(big.includes(g)||c.prio.some(p=>(PRIO[p]||[]).includes(g))));if(low.length)notes.push(`Мало подходов: ${low.map(x=>x.toLowerCase()).join(", ")}. Если есть время — +1 подход или 90 минут.`);
+ const mins=P[0].days.map(d=>estMin(d.items));notes.push(`Длительность: ${Math.min(...mins)}–${Math.max(...mins)} мин.`);
+ if(!P[0].days.some(d=>d.items.some(x=>x.id==="face_pull"||grpOfId(x.id)==="Задняя дельта")))notes.push("Нет работы на заднюю дельту — добавь тягу каната к лицу для плеч.");
+ return{vol,z,notes};}
+/* --- вариант Б для ротации: другие упражнения той же мышцы --- */
+function genVariant(c,v){if(!v)return genProgram(c);const saved={};Object.keys(POOL).forEach(m=>{saved[m]=POOL[m];const b=POOL[m].filter(p=>p[1]==="b"),i=POOL[m].filter(p=>p[1]==="i");
+  const rot=a=>a.length>2?a.slice(1,3).concat([a[0]],a.slice(3)):a.slice().reverse();POOL[m]=rot(b).concat(rot(i));});
+ try{return genProgram(c);}finally{Object.keys(saved).forEach(m=>POOL[m]=saved[m]);}}
+/* --- предпросмотр с правкой --- */
+let GEDIT=null;
+genBuild=function(){if(GQ.days.length<2)return;GP=genProgram(GQ);genView();};
+function genView(){const o=document.getElementById("exd");if(!o||!GP)return;const A=analyze(GP,GQ);const dl=GQ.days.slice().sort((a,b)=>((a+6)%7)-((b+6)%7));
+ const ZN={low:"мало",ok:"норма",high:"много"};
+ const wk=(w,wi,lbl)=>`<div class="gn-w"><span class="k13">${lbl}</span>${w.days.map((d,di)=>`<div class="gn-d"><div class="gn-dh"><b>${DN19[dl[di]]}</b><span>${d.t}</span><em>~${estMin(d.items)} мин</em></div>
+  ${d.items.map((x,j)=>`<div class="gn-x e28"><button class="gx-m" onclick="genSwap(${wi},${di},${j})">${thumb(x.id)}<div><b>${EX[x.id].n}</b><span>${x.s} × ${x.r} · отдых ${x.rest} с${x.drop?" · дроп":""}</span></div></button>
+   <div class="gx-s"><button onclick="genSets(${wi},${di},${j},-1)">−</button><button onclick="genSets(${wi},${di},${j},1)">+</button></div></div>`).join("")}
+  <button class="gx-add" onclick="genAddEx(${wi},${di})">＋ упражнение</button></div>`).join("")}</div>`;
+ const inj={sh:"плечо",lb:"поясницу",kn:"колени",el:"локти",wr:"запястья"};
+ o.innerHTML=`<div class="exd-in noph15"><button class="x" onclick="closeExD()" aria-label="Закрыть">✕</button><span class="exd-g">готово · можно править</span><h2>Твоя программа</h2>
+ <div class="gn-why"><div>🧩 <b>${SPLITS[genSplit(GQ)].n}</b>, ${GQ.days.length} ${pl(GQ.days.length,"день","дня","дней")} · до ${GQ.time} мин${GQ.inj.length?` · берегу ${GQ.inj.map(x=>inj[x]).join(", ")}`:""}</div>
+ <div>📊 Подходов в неделю:<div class="gn-v">${Object.keys(A.vol).sort((a,b)=>A.vol[b]-A.vol[a]).map(g=>`<span class="${A.z(g)}">${g}<b>${A.vol[g]}</b><i>${ZN[A.z(g)]}</i></span>`).join("")}</div></div>
+ ${A.notes.map(n=>`<div>• ${n}</div>`).join("")}
+ ${GQ.rotate==="yes"?"<div>🔄 Каждые 8 недель упражнения сменятся на похожие — мышцы получат новый стимул, история сохранится.</div>":""}
+ ${GQ.ramp==="yes"?"<div>📈 Внутри блока объём растёт: недели 4–6 +1 подход в первых упражнениях, 7–8 ещё +1, 9-я — разгрузка.</div>":""}</div>
+ <p class="gn-s">Нажми на упражнение — заменю. «−/+» меняют подходы.</p>
+ ${wk(GP[0],0,GQ.weeks==="alt"?"тяжёлая неделя":"каждая неделя")}${GQ.weeks==="alt"?wk(GP[1],1,"лёгкая неделя"):""}
+ <button class="cta" onclick="genApply()">Применить программу</button>
+ <button class="dn-home" onclick="genBuild()">↻ Собрать заново</button><button class="dn-home" onclick="genPaint()">← Изменить ответы</button></div>`;}
+function genWk(wi){return GQ.weeks==="alt"?GP[wi]:GP[0];}
+function genSets(wi,di,j,d){const it=genWk(wi).days[di].items[j];it.s=Math.max(1,Math.min(6,it.s+d));if(GQ.weeks!=="alt")GP[1]=GP[0];const sc=document.querySelector("#exd .exd-in").scrollTop;genView();document.querySelector("#exd .exd-in").scrollTop=sc;}
+function genSwap(wi,di,j){const it=genWk(wi).days[di].items[j];const g=grpOfId(it.id);const used=genWk(wi).days[di].items.map(x=>x.id);
+ const pool=(POOL[g]||[]).filter(p=>EX[p[0]]&&!used.includes(p[0])&&!GQ.inj.some(k=>p[3].split(" ").includes(k))).map(p=>p[0]).concat(Object.keys(EX).filter(k=>grpOfId(k)===g&&EX[k].img&&!used.includes(k)&&!(DB.ban||{})[k])).filter((a,i,arr)=>arr.indexOf(a)===i).slice(0,10);
+ GEDIT={wi,di,j,sc:document.querySelector("#exd .exd-in").scrollTop};const o=document.getElementById("exd");
+ o.innerHTML=`<div class="exd-in noph15"><button class="x" onclick="genView()" aria-label="Назад">←</button><span class="exd-g">замена · ${g.toLowerCase()}</span><h2>${EX[it.id].n}</h2>
+ <div class="sheet-list">${pool.map(a=>`<button class="alt" onclick="genPick('${a}')">${thumb(a)}<div><span class="eq">${EX[a].eq}</span><b>${EX[a].n}</b></div></button>`).join("")}</div>
+ <button class="dn-home" style="color:#FF8A7A" onclick="genDel()">Убрать упражнение из дня</button></div>`;o.querySelector(".exd-in").scrollTop=0;}
+function genPick(a){const e=GEDIT;const it=genWk(e.wi).days[e.di].items[e.j];it.id=a;if(GQ.weeks!=="alt")GP[1]=GP[0];genView();setTimeout(()=>{const x=document.querySelector("#exd .exd-in");if(x)x.scrollTop=e.sc;},20);}
+function genDel(){const e=GEDIT;genWk(e.wi).days[e.di].items.splice(e.j,1);genView();setTimeout(()=>{const x=document.querySelector("#exd .exd-in");if(x)x.scrollTop=e.sc;},20);}
+function genAddEx(wi,di){const day=genWk(wi).days[di];const gs=[...new Set(day.items.map(x=>grpOfId(x.id)))];GEDIT={wi,di,j:day.items.length,sc:document.querySelector("#exd .exd-in").scrollTop};
+ day.items.push(I((POOL[gs[0]]||[[day.items[0].id]])[0][0],3,10,12,60,"0–1"));genSwap(wi,di,day.items.length-1);}
+/* --- применение: вариант Б для ротации --- */
+const _genApply28=genApply;
+genApply=function(){if(session){alert0("Сначала закончи тренировку");return;}_genApply28();try{if(DB.gen&&GQ.rotate==="yes"){DB.gen.weeksB=genVariant(GQ,1);DB.gen.startW=weekNow();save();applyProg();render();}}catch(e){}};
+const _applyProg28=applyProg;
+applyProg=function(){if(progKey()==="gen"&&DB.gen&&DB.gen.weeks&&DB.gen.cfg&&DB.gen.cfg.rotate==="yes"&&DB.gen.weeksB&&DB.start){const blk=Math.floor((weekNow()-1)/9)%2;
+  const keep=DB.gen.weeks;if(blk===1)DB.gen.weeks=DB.gen.weeksB;try{_applyProg28();}finally{DB.gen.weeks=keep;}return;}_applyProg28();};
+let _blk28=null;const _render28=render;render=function(){if(progKey()==="gen"&&DB.start){const b=Math.floor((weekNow()-1)/9)%2;if(b!==_blk28){_blk28=b;applyProg();}}return _render28.apply(this,arguments);};
+/* --- рост объёма в блоке --- */
+const _if28=itemsFor;
+itemsFor=function(di){const a=_if28(di);if(progKey()!=="gen"||!DB.gen||!DB.gen.cfg||DB.gen.cfg.ramp!=="yes"||!DB.start||isDeload())return a;const wb=((weekNow()-1)%9)+1;const add=wb>=7?2:wb>=4?1:0;if(!add)return a;
+ return a.map((x,i)=>i<3?Object.assign({},x,{s:x.s+(i<add+1?1:0)}):x);};
+/* --- сборка программы из чата --- */
+const _brain28=brain;
+brain=function(q){const t=nz(q);
+ if(/(составь|собери|сделай|подбери).*(программ|сплит)|программу на \d/.test(t)){const c=JSON.parse(JSON.stringify((DB.gen&&DB.gen.cfg)||GDEF));
+  const n=(t.match(/(\d)\s*(дн|раз|трен)/)||[])[1];if(n){const sets={2:[2,5],3:[2,4,6],4:[1,2,4,6],5:[1,2,3,4,5]};c.days=sets[+n]||c.days;}
+  if(/сил/.test(t))c.goal="str";else if(/масс|набор/.test(t))c.goal="mass";else if(/рельеф|похуд|сушк/.test(t))c.goal="cut";else if(/здоров|форм/.test(t))c.goal="fit";
+  const m=t.match(/(\d{2})\s*мин/);if(m){const v=+m[1];c.time=v<=50?45:v<=67?60:v<=82?75:90;}
+  if(/дом/.test(t))c.eq="home";else if(/гантел/.test(t))c.eq="db";else if(/без штанги/.test(t))c.eq="nobar";
+  if(/всё тело|все тело|фулбади/.test(t))c.split="fb";else if(/верх.{0,3}низ/.test(t))c.split="ul";
+  ["Грудь","Спина","Плечи","Руки","Ноги","Ягодицы"].forEach(p=>{if(t.includes(nz(p).slice(0,4))&&/акцент|приоритет|отста|упор/.test(t)&&!c.prio.includes(p))c.prio.push(p);});
+  GQ=c;return{t:`Собираю: ${{mass:"масса",str:"сила",cut:"рельеф",fit:"форма"}[c.goal]}, ${c.days.length} ${pl(c.days.length,"день","дня","дней")}, до ${c.time} мин${c.prio.length?`, акцент ${c.prio.join(", ").toLowerCase()}`:""}. Открыть готовую программу?`,a:[A("Показать программу","chatClose();genShow()"),A("Изменить ответы","chatClose();genOpenWith()")]};}
+ if(/почему (такой|этот) вес|почему столько|откуда вес/.test(t)){const nd=nextDay();const it=itemsFor(nd.di)[0];const n=nextW(it);const md=learnMode(it.id);
+  return{t:`На «${EX[it.id].n}» стоит ${n?fk(n.w):"вес по стартовому"}:\n• ${n&&n.k==="up"?"в прошлый раз ты сделал верх диапазона во всех подходах — прибавка":n&&n.k==="down"?"дважды не добрал повторы — сброс на 10 %":"держим вес, пока не сделаешь верх диапазона"}\n• твой темп в этом упражнении: ${md==="fast"?"быстрый — прибавка двойным шагом":md==="slow"?"медленный — сначала закрепляем вес":"обычный"}\n• в зале вес подстроится по ходу: «Легко» — прибавлю, «Тяжело» — оставлю.`};}
+ return _brain28(q);};
+function genShow(){closeExD();const o=document.createElement("div");o.className="exd gn19";o.id="exd";document.body.appendChild(o);genBuild();}
+function genOpenWith(){const c=GQ;genOpen();GQ=c;genPaint();}
+const _sugg28=sugg;sugg=function(){const a=_sugg28();a.splice(4,0,"Составь программу на 4 дня на силу");return a.slice(0,9);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
