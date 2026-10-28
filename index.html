@@ -1274,6 +1274,27 @@ body.light .t1{color:#0E7A35!important}body.light .t2{color:#2E74D0!important}
 .gr-q div{display:flex;flex-wrap:wrap;gap:6px}
 .gr-q button{font:inherit;font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--tx);cursor:pointer}
 .gr-q button.on{background:var(--lime);border-color:var(--lime);color:#06100D;font-weight:700}
+@media (max-height:700px){.gear32{font-size:11.5px;padding:6px 10px;margin-top:6px}}
+
+/* v33 тренер-профи */
+.cmp33{display:grid;gap:6px}.cmp33 span{display:grid;grid-template-columns:minmax(0,1fr) 70px 26px;align-items:center;gap:8px;font-size:12.5px;color:var(--dim)}
+.cmp33 span em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cmp33 span i{display:block;height:6px;border-radius:4px;background:var(--dim);opacity:.45}
+.cmp33 span.on{color:var(--tx);font-weight:700}.cmp33 span.on i{background:var(--lime);opacity:1}.cmp33 span b{text-align:right}
+.cmp33 small{font-size:11px;color:var(--dim)}
+.q33{margin:10px 0 0;padding:14px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.q33-h{display:flex;align-items:center;gap:12px;margin-bottom:8px}.q33-h b{font-family:var(--cond);font-size:40px;line-height:1;color:var(--lime)}
+.q33-h span{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}.q33-h em{font-style:normal;text-transform:none;letter-spacing:0;font-size:14px;color:var(--tx);font-weight:600}
+.q33-r{display:grid;grid-template-columns:minmax(0,1fr) 80px 28px;gap:8px;align-items:center;font-size:12.5px;color:var(--dim);margin-top:5px}
+.q33-r i{display:block;height:6px;border-radius:4px;background:var(--line);overflow:hidden}.q33-r u{display:block;height:100%;border-radius:4px;text-decoration:none}
+.q33-r u.g{background:var(--lime)}.q33-r u.y{background:#FFC850}.q33-r u.r{background:#FF8A7A}.q33-r b{text-align:right;color:var(--tx)}
+.lim33{margin:0 0 8px;padding:12px 14px;border-radius:16px;background:rgba(255,138,122,.1);border:1px solid rgba(255,138,122,.35);font-size:12.5px;line-height:1.45}
+.lim33 b{display:block;color:#FF8A7A;font-size:14px;margin-bottom:3px}.lim33 div{display:flex;gap:8px;margin-top:9px}
+.lim33 button{flex:1;font:inherit;font-size:13px;font-weight:600;padding:10px 8px;border-radius:12px;border:1px solid rgba(255,138,122,.4);background:transparent;color:var(--tx);cursor:pointer}
+.lim33 button.m{background:#FF8A7A;border-color:#FF8A7A;color:#1A0B08}
+.rpe20 .pnb33,.pnb33{display:inline!important;width:auto!important;height:auto!important;min-height:0!important;box-shadow:none!important;flex:none!important;font:inherit;font-size:inherit;letter-spacing:inherit;text-transform:inherit;background:none;border:0;color:#FF8A7A;padding:0 0 0 6px;cursor:pointer}
+.pn33{margin:8px 0;padding:12px;border-radius:16px;background:var(--surface);border:1px solid var(--line);font-size:12.5px;line-height:1.45}
+.pn33 b{display:block;margin-bottom:7px}.pn33 div{display:flex;flex-wrap:wrap;gap:6px}.pn33 small{display:block;margin-top:8px;color:var(--dim);font-size:11.5px}
+.pn33 button{font:inherit;font-size:12.5px;padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--tx);cursor:pointer}
 
 </style>
 </head>
@@ -4223,7 +4244,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="32";
+const APPV="33";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4235,6 +4256,9 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🏆</i><p><b>Идеальная программа</b>тренер сравнивает все подходящие схемы на твоих данных и выбирает лучшую. Оценка программы 0–100: объём, частота, баланс, время. В тесте 21 вопрос: отказ, любимое оборудование, нелюбимые упражнения, приоритет первым</p></div>
+ <div><i>⚖️</i><p><b>Веса для тяжёлой и лёгкой недели отдельно</b>прогрессия сравнивается с прошлой такой же неделей; новый диапазон — вес пересчитан по силе. Выше твоего предела вес не ставится</p></div>
+ <div><i>🛑</i><p><b>Пределы и боль</b>два подхода подряд ниже диапазона — тренер предложит закончить упражнение. «Больно в суставе» — сразу замена, бережёт это место. Плато: 3 тренировки в другом диапазоне, потом замена упражнения</p></div>
  <div><i>🎚</i><p><b>Умные веса</b>сделай первый подход, отметь «Легко / Норм / Тяжело» — тренер рассчитает вес на все остальные подходы по силе дня. Гантели — вес каждой, штанга — блины на сторону, блок — по шагу плиток, гравитрон — противовес. «Ещё» → «Мой зал»: шаг гантелей, плиток и блинов</p></div>
  <div><i>🧪</i><p><b>Тест и выбор программы</b>«Ещё» → «Выбрать или составить программу». 17 вопросов: цель, стаж, возраст, сон, стресс, питание, дни, суставы. Тренер считает твоё восстановление и подбирает объём и схему. 11 готовых программ с % совпадения</p></div>
  <div><i>⚖️</i><p><b>Отстающие мышцы</b>тренер сам сравнивает рост силы всех мышц за 6 недель. Если какая-то отстаёт — +1 подход в первом упражнении на неё. Можно выбрать и самому: «подтяни грудь». Карточка «Баланс мышц» — в Прогрессе</p></div>
@@ -5761,8 +5785,8 @@ function wTxt32(e,w){const T=eqT32(e);w=+w||0;return T==="db"?`${fmtKg(w)} кг 
 function gearTxt32(e,w){const T=eqT32(e),G=gear();w=+w||0;if(!w&&T!=="bw")return"";const pl=a=>a.map(fmtKg).join(" + ");
  if(T==="db")return`🔩 Каждая гантель — <b>${fmtKg(w)} кг</b> · обе ${fmtKg(w*2)} кг`;
  if(T==="bar"||T==="ez"||T==="smith"){const b=base32(T),side=(w-b)/2;if(side<0)return`⚠️ Гриф весит ${fmtKg(b)} кг`;const p=plates32(side);
-  return`🏋 ${T==="smith"?(b?`Гриф Смита ${fmtKg(b)}`:"Смит: только блины"):`Гриф ${fmtKg(b)}`}${side>0?` + на каждую сторону: <b>${pl(p.out)}</b>${p.rest>0?` (+${fmtKg(p.rest)} — нет такого блина)`:""}`:" без блинов"}`;}
- if(T==="plate"){const p=plates32(w/2);return`⚙️ На каждую сторону: <b>${pl(p.out)||"—"}</b> (всего ${fmtKg(w)} кг блинов)`;}
+  return`🏋 ${T==="smith"?(b?`Гриф Смита ${fmtKg(b)}`:"Смит: только блины"):`Гриф ${fmtKg(b)}`}${side>0?` + на сторону: <b>${pl(p.out)}</b>${p.rest>0?` (+${fmtKg(p.rest)} — нет такого блина)`:""}`:" без блинов"}`;}
+ if(T==="plate"){const p=plates32(w/2);return`⚙️ На сторону: <b>${pl(p.out)||"—"}</b> (всего ${fmtKg(w)} кг блинов)`;}
  if(T==="land"){const p=plates32(w);return`⚙️ На гриф: <b>${pl(p.out)}</b>`;}
  if(T==="stack")return`🧱 На блоке <b>${fmtKg(w)} кг</b> — шаг блока ${fmtKg(G.stack)} кг`;
  if(T==="bw")return w?`🪢 На пояс: <b>${pl(plates32(w).out)}</b> · всего с тобой ${fmtKg(bodyW32()+w)} кг`:`🪢 Свой вес. Сделаешь верх диапазона легко — повешу груз на пояс`;
@@ -5792,9 +5816,139 @@ brain=function(q){const t=nz(q);let m;
  if(/мой зал|настрой.*зал|какие веса|блины|как считать вес|какой вес ставить/.test(t)){const G=gear();return{t:`<b>Как я считаю веса</b>\n• Гантели — вес одной гантели, шаг ${fmtKg(G.db)} кг\n• Штанга — общий вес с грифом ${fmtKg(G.bar)} кг, покажу блины на сторону\n• Блок — вес на плитках, шаг ${fmtKg(G.stack)} кг\n• Хаммер и жим ногами — сколько блинов всего, покажу на сторону\n• Подтягивания и брусья — груз на поясе; гравитрон — противовес (меньше = тяжелее)\n\nПервый подход — пристрелочный: отметь «Легко / Норм / Тяжело», и я рассчитаю вес на все остальные подходы.`,a:[A("Мой зал","chatClose();setTab('more');setTimeout(()=>{const c=document.getElementById('gear32');if(c)c.scrollIntoView({block:'center'})},120)")]};}
  return _brain32(q);};
 
+/* ===== v33: тренер-профи — оптимизатор схем и оценка программы, дотошный тест, веса для тяжёлой и лёгкой недели, пределы, боль, протокол плато ===== */
+/* ================= 1. КОНСТРУКТОР ================= */
+Object.assign(GDEF,{pref:"mix",effort:"std",no:[],prioFirst:"yes"});
+const NO33=["bp","inc_bb","dips","pullup_w","bb_row","ohp_db","hack","leg_press","smith_sq","bulgarian","lunges","rdl_db","hip_thrust","fr_press","sissy","nordic","leg_ext","shrug_bb","goblet_sq","cg_bench"].filter(id=>EX[id]);
+(function(){const at=k=>WQ.findIndex(q=>q.k===k);
+ WQ.splice(at("exp")+1,0,{k:"effort",t:"Насколько близко к отказу готов работать?",h:"Отказ — когда больше ни одного повтора с чистой техникой. Ближе к отказу — быстрее рост, но дольше восстановление и выше риск травмы.",o:[["cons","С запасом 2–3 повтора","безопаснее, для суставов и после перерыва"],["std","Запас 1–2, изоляция до отказа","оптимум для роста — рекомендую"],["hard","Часто до отказа","максимум стимула, нужен хороший сон"]]});
+ WQ.splice(at("eq")+1,0,{k:"pref",t:"Что больше нравится?",h:"Тренер поставит любимое оборудование выше в списке, но базу сохранит.",o:[["free","Свободные веса","штанга, гантели — больше стабилизаторов"],["mix","Всё вместе","лучший баланс"],["mach","Тренажёры и блоки","безопаснее для суставов, легче дойти до отказа"]]});
+ WQ.splice(at("inj")+1,0,{k:"no",t:"Какие упражнения не делаешь?",h:"Не нравятся, неудобно или нет снаряда — в программу не попадут, тренер возьмёт похожие.",multi:1,none:"Делаю всё",o:NO33.map(id=>[id,EX[id].n])});
+ WQ.splice(at("prio")+1,0,{k:"prioFirst",t:"Приоритетную мышцу ставить первой?",h:"Первое упражнение делается на свежих силах — так отстающая мышца растёт быстрее.",when:()=>(GQ.prio||[]).length>0,o:[["yes","Да, первой в день"],["no","Нет, обычный порядок"]]});})();
+const _wzGo33=wzGo;
+wzGo=function(d){let n=WZ+d,g=0;while(n>=0&&n<WQ.length&&WQ[n].when&&!WQ[n].when()&&g++<5)n+=d>0?1:-1;WZ=n-d;_wzGo33(d);};
+/* генерация: исключения, предпочтения, близость к отказу, приоритет первым */
+const _gw33=genWeek;
+genWeek=function(c,light){const sp={};try{
+ Object.keys(POOL).forEach(m=>{sp[m]=POOL[m];let a=POOL[m].filter(p=>!(c.no||[]).includes(p[0]));if(!a.length)a=POOL[m];
+  if(c.pref==="mach")a=a.filter(p=>p[2]==="M").concat(a.filter(p=>p[2]!=="M"));else if(c.pref==="free")a=a.filter(p=>p[2]==="B"||p[2]==="D").concat(a.filter(p=>p[2]!=="B"&&p[2]!=="D"));POOL[m]=a;});
+ const out=_gw33(c,light);
+ out.forEach(d=>d.items.forEach(x=>{if(c.effort==="cons"){x.rir="2–3";x.drop=0;}else if(c.effort==="hard"&&x.rir==="0–1")x.rir="0";}));
+ if(c.prioFirst!=="no"&&(c.prio||[]).length){const pm=new Set([].concat(...c.prio.map(p=>PRIO[p]||[])));
+  out.forEach(d=>{const j=d.items.findIndex(x=>{const g=grp(EX[x.id]);if(!pm.has(g))return false;const p=(sp[g]||[]).find(q=>q[0]===x.id);return p&&p[1]==="b";});
+   if(j>0){const[x]=d.items.splice(j,1);const f=d.items[0];x.rest=Math.max(x.rest,f.rest);d.items.unshift(x);}});}
+ return out;}finally{Object.keys(sp).forEach(m=>POOL[m]=sp[m]);}};
+/* оценка программы 0–100 */
+function rng33(g,c){const r=recov31(c),gf=c.goal==="str"?.75:c.goal==="fit"?.8:1,T=TGT[c.exp],pri=new Set([].concat(...(c.prio||[]).map(p=>PRIO[p]||[])));const k=(BIG31.includes(g)?1:.6)*r.f*gf;return[Math.round(T[0]*k)+(pri.has(g)?2:0),Math.round(T[1]*k)+(pri.has(g)?3:0)];}
+const SMALL33=["Средняя дельта","Задняя дельта","Бицепс","Трицепс","Икры"];
+function quality33(P,c){const days=P[0].days,vol={},fq={};days.forEach(d=>{const seen={};d.items.forEach(x=>{const g=grp(EX[x.id]);vol[g]=(vol[g]||0)+x.s;if(!seen[g]){seen[g]=1;fq[g]=(fq[g]||0)+1;}});});
+ const cv=g=>{const[lo,hi]=rng33(g,c),v=vol[g]||0;return Math.min(1,v/lo)-(v>hi?Math.min(.5,(v-hi)/hi):0);};
+ const big=BIG31.reduce((a,g)=>a+cv(g),0)/BIG31.length,small=SMALL33.reduce((a,g)=>a+cv(g),0)/SMALL33.length;
+ const push=PUSH.reduce((a,g)=>a+(vol[g]||0),0),pull=PULL.reduce((a,g)=>a+(vol[g]||0),0),bal=pull>=push*.9?1:pull/Math.max(1,push*.9);
+ const fr=BIG31.reduce((a,g)=>a+Math.min(fq[g]||0,2)/2,0)/BIG31.length,frW=c.goal==="fit"||c.goal==="cut"?.6:1;
+ const tm=days.reduce((a,d)=>a+(estMin(d.items)<=c.time+5?1:Math.max(0,1-(estMin(d.items)-c.time)/30)),0)/days.length;
+ const parts={"Объём на большие мышцы":big,"Руки, плечи, икры":small,"Баланс тяг и жимов":bal,"Частота: 2 раза в неделю":fr*frW+(1-frW),"Укладывается во время":tm};
+ const W8={"Объём на большие мышцы":.36,"Руки, плечи, икры":.16,"Баланс тяг и жимов":.16,"Частота: 2 раза в неделю":.17,"Укладывается во время":.15};
+ const s=Object.keys(parts).reduce((a,k)=>a+Math.max(0,parts[k])*W8[k],0);return{score:Math.round(s*100),parts};}
+const BS33={};
+function bestSplit33(c){const key=JSON.stringify(Object.assign({},c,{split:"",tpl:"",tested:""}));if(BS33[key])return BS33[key];
+ const n=(c.days||[]).length,cands=SPOK[n]||["fb"],cur=["v1","v2","v2p"].includes(progKey());
+ const res=cands.map(sp=>{let q={score:0,parts:{}};try{q=quality33(genProgram(Object.assign({},c,{split:sp})),c);}catch(e){}const bonus=sp==="pp"&&cur?2:0;return{sp,score:q.score,adj:q.score+bonus};}).sort((a,b)=>b.adj-a.adj);
+ return BS33[key]=res;}
+const _genSplit33=genSplit;
+genSplit=function(c){if(c.split!=="auto"&&SPLITS[c.split])return c.split;try{const b=bestSplit33(c);if(b.length&&b[0].score>0)return b[0].sp;}catch(e){}return _genSplit33(c);};
+/* результат теста: сравнение схем */
+const _wzResult33=wzResult;
+wzResult=function(){_wzResult33();try{const o=document.getElementById("exd"),why=o&&o.querySelector(".gn-why");if(!why)return;const b=bestSplit33(Object.assign({},GQ,{split:"auto"})),cur=genSplit(GQ);
+ if(b.length>1)why.insertAdjacentHTML("beforeend",`<div class="cmp33">⚖️ Сравнил схемы на твоих данных:${b.map(x=>`<span class="${x.sp===cur?"on":""}"><em>${SPLITS[x.sp].n}</em><i style="width:${x.score}%"></i><b>${x.score}</b></span>`).join("")}<small>оценка: объём, частота, баланс тяг и жимов, время${b.some(x=>x.sp==="pp")&&["v1","v2","v2p"].includes(progKey())?"; твоей привычной схеме +2 за привычку":""}</small></div>`);}catch(e){}};
+/* предпросмотр: оценка программы */
+const _genView33=genView;
+genView=function(){_genView33.apply(this,arguments);try{const o=document.getElementById("exd");if(!o||!GP||o.querySelector(".q33"))return;const Q=quality33(GP,GQ),why=o.querySelector(".gn-why");if(!why)return;
+ why.insertAdjacentHTML("beforebegin",`<div class="q33"><div class="q33-h"><b>${Q.score}</b><span>оценка программы<br><em>${Q.score>=90?"отлично":Q.score>=80?"хорошо":Q.score>=70?"нормально":"слабо — см. подсказки"}</em></span></div>
+ ${Object.keys(Q.parts).map(k=>{const v=Math.max(0,Math.round(Q.parts[k]*100));return `<div class="q33-r"><span>${k}</span><i><u style="width:${v}%" class="${v>=85?"g":v>=65?"y":"r"}"></u></i><b>${v}</b></div>`;}).join("")}</div>`);}catch(e){}};
+/* ================= 2. ВЕСА: тяжёлая и лёгкая неделя отдельно ================= */
+const _logEx33=logEx;
+logEx=function(id){const l0=(DB.log[id]||[]).length;const r=_logEx33(id);try{const l=DB.log[id]||[];if(l.length>l0){const it=itemsFor(session.di).find(x=>x.id===id),e=l[l.length-1];e.wk=W().code;if(it){e.lo=it.lo;e.hi=it.hi;}plat33Log(id,it);}}catch(e){}return r;};
+function e1Of33(id,en){const T=eqT32(EX[id]);let m=0;(en.sets||[]).forEach(s=>{if(s.warm||s.drop||!(+s.r>0))return;const L=toLoad32(T,+s.w||0);if(L>0)m=Math.max(m,L*(1+Math.min(+s.r,15)/30));});return m;}
+function same33(en,it){if(!it||!it.lo)return true;if(en.wk)return en.wk===W().code&&(!en.lo||Math.abs(en.lo-it.lo)<=2);
+ const ws=(en.sets||[]).filter(s=>!s.warm&&!s.drop&&+s.r>0);if(!ws.length)return true;const av=ws.reduce((a,s)=>a+ +s.r,0)/ws.length;return av>=it.lo-2&&av<=(it.hi||it.lo)+3;}
+const _nw33=nextW;
+nextW=function(it){if(!it||!it.id||!EX[it.id])return _nw33(it);const id=it.id,l=DB.log[id]||[];if(!l.length)return _nw33(it);const e=EX[id],T=eqT32(e);let n;
+ try{if(same33(l[l.length-1],it))n=_nw33(it);
+  else{let j=-1;for(let i=l.length-1;i>=0;i--)if(same33(l[i],it)){j=i;break;}const e1now=Math.max(0,...l.slice(-2).map(x=>e1Of33(id,x)));
+   if(j>=0){const keep=DB.log[id];DB.log[id]=l.slice(0,j+1);try{n=_nw33(it);}finally{DB.log[id]=keep;}
+    const e1then=e1Of33(id,l[j]);if(n&&e1then&&e1now>e1then*1.04&&n.k==="same"&&T!=="assist"){const b=n.w,w2=snap32(e,b+incOf(e),"round");n=Object.assign({},n,{w:w2,d:+(w2-b).toFixed(2),k:"up"});}
+    if(n)n=Object.assign({},n,{why:n.why||"wk",wkd:l[j].d});}
+   else if(e1now){const L=e1now/(1+(tgt32(it)+rir32(it))/30);let w=fromLoad32(T,L);w=T==="assist"?snap32(e,w,"up"):snap32(e,w,"down");n={w,k:"same",d:0,why:"conv"};}
+   else n=_nw33(it);}
+  if(n&&n.w>0&&T!=="assist"){const best=Math.max(0,...l.map(x=>e1Of33(id,x)));if(best){const cap=best/(1+((+it.lo||tgt32(it))+0.5)/30)*1.05;if(toLoad32(T,n.w)>cap){const w=snap32(e,fromLoad32(T,cap),"down");if(w<n.w)n=Object.assign({},n,{w,why:"cap"});}}}}catch(err){n=_nw33(it);}
+ return n;};
+const _sug33=suggestion;
+suggestion=function(it){const n=nextW(it);if(n&&it){const wn=(W().short||"").toLowerCase();
+ if(n.why==="conv")return{k:"same",t:`${W().short||"Эта"} неделя — другой диапазон (${it.r}). Пересчитал по твоей силе: рабочий вес ${wTxt32(EX[it.id],n.w)}.`};
+ if(n.why==="wk")return{k:n.k,t:`Сравниваю с прошлой ${wn==="тяжёлая"?"тяжёлой":wn==="лёгкая"?"лёгкой":"такой же"} неделей (${String(n.wkd||"").slice(8,10)}.${String(n.wkd||"").slice(5,7)}): ${n.k==="up"?`прибавка — ${wTxt32(EX[it.id],n.w)}`:n.k==="down"?`снижение до ${wTxt32(EX[it.id],n.w)}`:`вес тот же, добирай повторы до ${it.hi}`}.`};
+ if(n.why==="cap")return{k:"same",t:`Выше ${wTxt32(EX[it.id],n.w)} пока не ставлю — это предел по твоим лучшим подходам. Сначала добери повторы.`};}
+ return _sug33(it);};
+/* ================= 3. ПРЕДЕЛЫ В ТРЕНИРОВКЕ ================= */
+function lim33(x){if(!session||!x||!x.lo)return null;const st=session.sets[x.id]||{};const done=keysOf(x).filter(k=>k!=="d0").map(k=>st[k]).filter(s=>s&&s.ok&&+s.r>0);if(done.length<2)return null;
+ const last=done[done.length-1],r=+last.r;const two=done.slice(-2).every(s=>+s.r<x.lo),big=r<=x.lo-3,hard=last.rpe==="hard"&&r<x.lo;
+ return two||big||hard?{r,lo:x.lo,two}:null;}
+function limStop33(){if(!session)return;const x=itemsFor(session.di)[session.fx];if(x){session.lim=session.lim||{};session.lim[x.id]=1;DB.limits=DB.limits||{};(DB.limits[x.id]=DB.limits[x.id]||[]).push(today());}fxNextEx();}
+function limMore33(){if(!session)return;const x=itemsFor(session.di)[session.fx];if(!x)return;session.limOk=session.limOk||{};session.limOk[x.id]=1;save();render();}
+/* боль */
+const JN33={sh:"плечо",el:"локоть",wr:"запястье",lb:"поясницу",kn:"колено"};
+function pain33(){const fx=document.getElementById("fx");if(!fx||fx.querySelector(".pn33"))return;const box=fx.querySelector(".rpe20")||fx.querySelector(".fx-inp");if(!box)return;
+ box.insertAdjacentHTML("afterend",`<div class="pn33"><b>Где больно?</b><div>${Object.keys(JN33).map(j=>`<button onclick="painAt33('${j}')">${JN33[j][0].toUpperCase()+JN33[j].slice(1)}</button>`).join("")}<button onclick="painAt33('mus')">Жжёт мышцу</button></div><small>Острая или резкая боль — прекрати тренировку. Если боль не проходит — покажись врачу.</small></div>`);}
+function painAt33(j){if(!session)return;const it=itemsFor(session.di),x=it[session.fx];if(!x)return;
+ if(j==="mus"){const p=document.querySelector("#fx .pn33");if(p)p.innerHTML=`<b>Жжение в мышце — это нормально</b><small>Так ощущается работа мышцы и закисление. Продолжай. Ненормально — боль в суставе, резкая, колющая или в одной точке.</small>`;return;}
+ const orig=x.orig||x.id;DB.painLog=(DB.painLog||[]).filter(p=>p.d>=dkAgo(30));DB.painLog.push({d:today(),id:x.id,j});const times=DB.painLog.filter(p=>p.id===x.id).length;
+ if(curSet(x)>0){session.sets[x.id].fin=true;logEx(x.id);}
+ const nx=altsFor(orig,{exclude:it.map(y=>y.id),inj:[j]}).find(a=>!PAINRE[j]||!PAINRE[j].test(EX[a].n));let msg="";
+ if(nx){session.tmp=session.tmp||{};session.tmp[orig]=nx;delete session.sets[nx];session.auto=session.auto||[];session.auto.push([EX[x.id].n,EX[nx].n,"боль"]);msg=`Заменил на «${EX[nx].n}» — меньше грузит ${JN33[j]}. Начни с лёгкого веса.`;}
+ else{session.sets[x.id]=session.sets[x.id]||{};session.sets[x.id].fin=true;msg="Подходящей замены нет — упражнение на сегодня пропускаем.";}
+ if(times>=2){DB.ban=DB.ban||{};DB.ban[x.id]=1;try{banApply();}catch(e){}if(nx)doSwap(orig,nx);msg+=` Боль второй раз за месяц — убрал «${EX[x.id].n}» из программы насовсем.`;}
+ save();render();setTimeout(()=>alert0(msg+" Если боль острая или не проходит — прекрати тренировку и покажись врачу."),200);}
+/* подсказки в фокусе */
+const _coachLine33=coachLine;
+coachLine=function(){_coachLine33();try{if(!session||!session.focus)return;const fx=document.getElementById("fx");if(!fx)return;const x=itemsFor(session.di)[session.fx];if(!x)return;const inp=fx.querySelector(".fx-inp");if(!inp)return;
+ const L=lim33(x);if(L&&!(session.limOk||{})[x.id]&&!fx.querySelector(".lim33"))inp.insertAdjacentHTML("beforebegin",`<div class="lim33"><b>🛑 Предел на сегодня</b><span>${L.two?"Два подхода подряд":"Подход"} ниже ${L.lo} повторов${L.two?"":` (${L.r} из ${L.lo})`}. Мышца исчерпана: дальше не рост, а усталость и риск для суставов. Это нормально — в следующий раз вес будет точнее.</span><div><button class="m" onclick="limStop33()">Закончить упражнение</button><button onclick="limMore33()">Ещё подход, легче</button></div></div>`);
+ const nl=Object.keys(session.lim||{}).length;if(nl>=2&&!(session.lim||{})[x.id]&&!fx.querySelector(".lim33")&&!fx.querySelector(".tired33"))inp.insertAdjacentHTML("beforebegin",`<div class="coach17 tired33 r"><i>🔋</i><span>Сегодня сил меньше обычного (${nl} упражнения на пределе). Оставшиеся делай с запасом 2 повтора — это сохранит прогресс.</span></div>`);
+ const P=(DB.plat||{})[x.id];if(P&&P.st===1&&!fx.querySelector(".plat33"))inp.insertAdjacentHTML("beforebegin",`<div class="coach17 plat33 s"><i>🔄</i><span>Плато: ${P.n+1}-я из 3 тренировок в новом диапазоне ${x.r}. Новый стимул сдвинет вес — потом вернёмся к ${P.lo}–${P.hi}.</span></div>`);
+ const rp=fx.querySelector(".rpe20>span");if(rp&&!fx.querySelector(".pnb33")){rp.textContent="как прошёл подход?";rp.insertAdjacentHTML("beforeend",` · <button class="pnb33" onclick="pain33()">⚠️ больно</button>`);}}catch(e){}};
+/* баннер замен: причина */
+autoBanner=function(){if(!session||session.focus||!session.auto||!session.auto.length)return;const sum=document.querySelector("#app .wl-sum");if(!sum||document.getElementById("auto17"))return;
+ const RS={"плато":"3 тренировки без прибавки","занят":"тренажёр занят","боль":"было больно"};
+ sum.insertAdjacentHTML("afterend",`<div class="ib auto17" id="auto17"><b>Тренер поменял на сегодня</b>${session.auto.map(a=>`<div>${a[0]} → <i>${a[1]}</i> <small>${RS[a[2]]||a[2]}</small></div>`).join("")}</div>`);};
+/* ================= 4. ПРОТОКОЛ ПЛАТО: диапазон → замена → честный предел ================= */
+function platRange33(lo,hi){return hi<=8?[10,12]:hi<=12?[6,8]:[10,12];}
+function platCheck33(){DB.plat=DB.plat||{};const ids=new Set();WEEKS.forEach(w=>w.days.forEach(d=>(d.items||[]).forEach(x=>ids.add(swapOf(x.id)))));
+ ids.forEach(id=>{if(DB.plat[id]||!EX[id]||!DB.log[id]||DB.log[id].length<4)return;if(!plateau(id))return;const it=findItem(id)||{lo:8,hi:12};
+  DB.plat[id]={st:1,n:0,lo:it.lo,hi:it.hi,best:Math.max(...DB.log[id].map(x=>e1Of33(id,x))),d:today()};});}
+function plat33Log(id,it){const P=(DB.plat||{})[id];if(!P||P.st!==1)return;const en=DB.log[id][DB.log[id].length-1];P.n++;
+ const e1=e1Of33(id,en);if(e1>P.best*1.01){delete DB.plat[id];(DB.platLog=DB.platLog||[]).push({d:today(),id,r:"win"});DB.platMsg={t:`«${EX[id].n}»: плато пробито — новый рекорд по силе. Возвращаю обычный диапазон.`,d:today()};return;}
+ if(P.n>=3){delete DB.plat[id];(DB.platLog=DB.platLog||[]).push({d:today(),id,r:"swap"});const orig=it&&it.orig||id;const used=[];WEEKS.forEach(w=>w.days.forEach(d=>(d.items||[]).forEach(x=>used.push(swapOf(x.id)))));
+  const nx=altsFor(id,{exclude:used})[0];if(nx){doSwap(orig,nx);DB.platMsg={t:`«${EX[id].n}»: смена диапазона не сдвинула вес. Заменил на «${EX[nx].n}» — то же движение под другим углом. Через 8–12 недель можно вернуться: сила обычно выше.`,d:today()};}}}
+const _if33=itemsFor;
+itemsFor=function(di){const a=_if33(di);try{const P=DB.plat||{};return a.map(x=>{const p=P[x.id];if(!p||p.st!==1||isDeload())return x;const[lo,hi]=platRange33(x.lo,x.hi);return Object.assign({},x,{lo,hi,r:lo+"–"+hi,rir:"1–2",plat:1});});}catch(e){return a;}};
+autoPlateau=function(di){try{platCheck33();save();}catch(e){}};
+/* честный предел */
+function ceil33(){const out=[];const L=DB.platLog||[];const since=dkAgo(120);const by={};L.filter(x=>x.d>=since).forEach(x=>{const g=grp(EX[x.id]||{});by[g]=(by[g]||0)+1;});
+ Object.keys(by).forEach(g=>{if(by[g]<2)return;const ids=Object.keys(DB.log||{}).filter(id=>EX[id]&&grp(EX[id])===g);let a=0,b=0;ids.forEach(id=>{a=Math.max(a,e1At(id,dkAgo(84),dkAgo(43)));b=Math.max(b,e1At(id,dkAgo(42),today()));});
+  if(a&&b<=a*1.03)out.push(g);});return out;}
+const _ins33=insights;
+insights=function(){const out=_ins33().filter(x=>!/^Плато:/.test(x.t||""));try{if(DB.platMsg&&DB.platMsg.d>=dkAgo(7))out.unshift({i:"🔄",t:DB.platMsg.t});const P=DB.plat||{},ps=Object.keys(P).filter(id=>EX[id]&&P[id].st===1);
+ if(ps.length)out.push({i:"🧱",t:`Плато: ${ps.slice(0,2).map(id=>EX[id].n).join(", ")}. 3 тренировки в другом диапазоне повторов — новый стимул. Не сдвинется — заменю упражнение.`});
+ const c=ceil33();if(c.length)out.push({i:"🏔",t:`${c.map(g=>g.toLowerCase()).join(", ")}: два плато за 4 месяца, сила почти не растёт. Ты близко к своему текущему пределу — это нормально. Теперь цель: +1 повтор, медленный негатив 3–4 с, пауза внизу. Вес прибавится сам.`});}catch(e){}return out.slice(0,4);};
+/* чат */
+const _brain33=brain;
+brain=function(q){const t=nz(q);
+ if(/плато|предел|не раст|стоит вес|застрял/.test(t)){platCheck33();save();const P=DB.plat||{},ps=Object.keys(P).filter(id=>EX[id]);const c=ceil33();
+  return{t:`<b>Как я работаю с плато</b>\n1. 3 тренировки без роста силы — меняю диапазон повторов (6–8 ↔ 10–12) на 3 тренировки.\n2. Не помогло — заменяю на точную замену (то же движение, другой угол).\n3. Два плато за 4 месяца в одной мышце — это близко к твоему пределу: работаем повторами и темпом, вес не форсируем.\n4. В тренировке: два подхода подряд ниже диапазона — предлагаю закончить упражнение.\n\n${ps.length?`Сейчас в протоколе: ${ps.map(id=>`${EX[id].n} (${P[id].n} из 3)`).join(", ")}.`:"Сейчас плато нет."}${c.length?`\nБлизко к пределу: ${c.join(", ").toLowerCase()}.`:""}`};}
+ return _brain33(q);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
