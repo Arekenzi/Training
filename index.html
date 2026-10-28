@@ -1406,6 +1406,8 @@ body.light .hello>div:first-child:before{color:#9A7A45}
 .wl-dots i{width:18px!important;height:5px!important;border-radius:3px!important;background:rgba(201,169,110,.18)!important;border:1px solid rgba(201,169,110,.28)}
 .wl-dots i.on{background:var(--gold)!important;border-color:var(--gold);box-shadow:0 0 6px rgba(201,169,110,.5)}
 .wl-dots:after{content:attr(data-l);margin-left:4px;font-size:11px;color:var(--dim)}
+img[src^="data:image/jpeg"]{object-position:50% 12%!important}
+.fx-ph img[src^="data:image/jpeg"],.exd-shot img[src^="data:image/jpeg"],.zoom img[src^="data:image/jpeg"],.fxa40 img{object-position:50% 50%!important}
 
 </style>
 </head>
@@ -6408,6 +6410,9 @@ brain=function(q){const t=nz(fix36(q).t);
 /* v42: подпись к полоскам подходов и «без отдыха» вместо «отдых 0 с» */
 const _render42=render;render=function(){const r=_render42.apply(this,arguments);try{document.querySelectorAll(".wl-dots").forEach(d=>{const n=d.children.length,on=d.querySelectorAll("i.on").length;d.dataset.l=on?`${on} из ${n}`:"подходы";});
  document.querySelectorAll(".wl-tx em,.gn-x span").forEach(e=>{if(/отдых 0 с/.test(e.textContent))e.innerHTML=e.innerHTML.replace("отдых 0 с","без отдыха → сразу следующее");});}catch(e){}return r;};
+/* v42b: кадры Анубиса — только у своего упражнения, без «похожих» */
+anbMap39=function(){ANB=window.ANB||{};Object.keys(EX).forEach(id=>{delete EX[id].anbId;delete EX[id].anbRel;});Object.keys(ANB).forEach(id=>{if(EX[id])EX[id].anbId=id;});};
+try{anbMap39();}catch(e){}
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
