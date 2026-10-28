@@ -4366,7 +4366,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="44";
+const APPV="45";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4378,6 +4378,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>⚙️</i><p><b>«Оптимизировать программу»</b>в чате: «разбор моей программы» → кнопка. Больше 10 подходов на мышцу за тренировку — излишек уходит на другой день (мышца работает 2 раза в неделю), недостающее добирается. Всё отменяется одной кнопкой</p></div>
  <div><i>🎓</i><p><b>Программа как у профи</b>конструктор проверяет, что закрыты все зоны: верх груди, тяги сверху и к поясу, махи, задняя дельта, бицепс и трицепс в растяжении. Не больше 10 подходов на мышцу за тренировку. Недостающее исправляет сам</p></div>
  <div><i>❓</i><p><b>«Зачем жим на наклонной?»</b>тренер объяснит роль любого упражнения в твоей программе</p></div>
  <div><i>✅</i><p><b>Точнее и понятнее</b>«Разбор моей программы» в чате теперь может сам добрать подходы мышцам, которым не хватает объёма. Сила в отчётах сравнивается с такой же неделей (тяжёлая с тяжёлой). Запас «0» пишется как «до отказа», исправлены падежи и числа</p></div>
@@ -6457,7 +6458,7 @@ review36=function(){const c=cfg36(),P=curProg36();let Q=null;try{Q=quality33(P,c
  const push=PUSH.reduce((a,g)=>a+(vol[g]||0),0),pull=PULL.reduce((a,g)=>a+(vol[g]||0),0);if(pull<push*.9)rec.push(`Тяг (${pull}) меньше жимов (${push}) — для здоровья плеч добавь тягу каната к лицу.`);
  try{const L=lagFind();if(L.list.length)rec.push(`Отстаёт по силе: ${L.list.map(g=>LAGN[g]).join(", ")} — уже даю +1 подход.`);}catch(e){}
  const fixed=!!DB.volFix;const a=[];if(low.length&&!fixed)a.push(A("Добрать подходы автоматически","volFixDo43()"));if(fixed)a.push(A("Вернуть подходы как было","volFixUndo43()"));a.push(A("Пересобрать по тесту","chatClose();genOpen()"));
- return{t:`<b>Разбор твоей программы</b>${Q?`\nОценка: <b>${Q.score}/100</b>\n${Object.keys(Q.parts).map(k=>`• ${k}: ${Math.max(0,Math.round(Q.parts[k]*100))}`).join("\n")}`:""}${fixed?"\n\n✅ Подходы уже добраны автоматически.":""}\n\n<b>Что улучшить:</b>\n${rec.length?rec.slice(0,6).map((r,i)=>`${i+1}. ${r}`).join("\n"):"Программа сбалансирована — менять нечего. Главное: регулярность и прогрессия весов."}${low.length&&!fixed?"\n\nМогу сам добавить подходы этим мышцам — кнопка ниже.":""}`,a};};
+ return{t:`<b>Разбор твоей программы</b>${Q?`\nОценка: <b>${Q.score}/100</b>\n${Object.keys(Q.parts).map(k=>`• ${k}: ${Math.max(0,Math.round(Q.parts[k]*100))}`).join("\n")}`:""}${fixed?"\n\n✅ Программа оптимизирована тренером: лишнее перенесено, недостающее добрано.":""}\n\n<b>Что улучшить:</b>\n${rec.length?rec.slice(0,6).map((r,i)=>`${i+1}. ${r}`).join("\n"):"Программа сбалансирована — менять нечего. Главное: регулярность и прогрессия весов."}${low.length&&!fixed?"\n\nМогу сам добавить подходы этим мышцам — кнопка ниже.":""}`,a};};
 /* «подтяни …» — правильный падеж в советах */
 const _wr43=weekReport24;weekReport24=function(){let r=_wr43();if(r)r=r.replace(/Мало подходов на ([^—]+) —/,(m,l)=>`Мало подходов на ${l.split(", ").map(g=>{const k=Object.keys(LACC).find(x=>x.toLowerCase()===g.trim());return k?LACC[k]:g;}).join(", ")} —`).replace(/«подтяни ([^»]+)»/g,(m,g)=>{const k=Object.keys(LACC).find(x=>x.toLowerCase()===g.trim());return `«подтяни ${k?LACC[k]:g}»`;});return r;};
 /* ---- 3. Недельный отчёт: сила сравнивается только с тем же типом недели ---- */
@@ -6553,9 +6554,46 @@ function trimWN44(){try{const l=document.querySelector(".wn .wn-l");if(!l||l.que
  const d=document.createElement("details");d.className="wn-old";d.innerHTML=`<summary>Прошлые обновления (${rest.length}) ›</summary>`;rest.forEach(x=>d.appendChild(x));l.appendChild(d);}catch(e){}}
 setTimeout(trimWN44,720);setTimeout(trimWN44,1200);
 
+/* ===== v45: «Оптимизировать программу» — лишние подходы за тренировку переносятся на другой день (частота 2), недостающие добираются, всё с отменой ===== */
+function opt45(){const c=cfg36();sync35(c);c.inj=userInj36();DB.volFix={};const log=[];
+ WEEKS.forEach(w=>{const al={extra:[]},days=w.days.map(d=>(d.items||[]).map(x=>({oid:x.id,id:swapOf(x.id),s:x.s,g:grp(EX[swapOf(x.id)])})));
+  const used=new Set(days.flat().map(x=>x.id));const wn=(w.short||w.name||"").toLowerCase();
+  const sOf=(di,x)=>x.s+(al[di+"|"+x.oid]||0);
+  const volDay=(di,g)=>days[di].filter(x=>x.g===g).reduce((a,x)=>a+sOf(di,x),0)+al.extra.filter(e=>e.di===di&&grp(EX[e.it.id])===g).reduce((a,e)=>a+e.it.s,0);
+  const minOf=di=>estMin(days[di].map(x=>({s:sOf(di,x),rest:90})))+al.extra.filter(e=>e.di===di).reduce((a,e)=>a+e.it.s*2.2,0);
+  const pick=(g,di)=>{const inDay=new Set(days[di].map(x=>x.id));const pool=[...(POOL[g]||[]).map(p=>p[0]),...Object.keys(EX).filter(k=>grp(EX[k])===g)].filter((v,i,a)=>a.indexOf(v)===i);
+   const ok=pool.filter(id=>!used.has(id)&&!inDay.has(id)&&allow44(c,g,id));const iso=ok.find(id=>{const q=(POOL[g]||[]).find(z=>z[0]===id);return q&&q[1]==="i";});return iso||ok[0];};
+  const addEx=(di,g,s,why)=>{if(!days[di])return false;const id=pick(g,di);if(!id)return false;used.add(id);const ref=days[di][days[di].length-1];
+   const it=Object.assign({},(w.days[di].items||[]).find(x=>x.id===ref.oid)||{},{id,s,lo:10,hi:12,r:"10–12",rest:75,rir:"1–2",drop:0,ss:0,vfix:"new"});
+   const lastNotAbs=[...days[di]].reverse().find(x=>x.g!=="Пресс")||ref;al.extra.push({di,after:lastNotAbs.oid,it});log.push(`${wn}: + «${EX[id].n}» ${s}×10–12 в день «${w.days[di].t.split(" · ")[0][0]+w.days[di].t.split(" · ")[0].slice(1).toLowerCase()}» — ${why}`);return true;};
+  /* 1. больше 10 подходов на мышцу за тренировку → излишек на другой день */
+  days.forEach((d,di)=>{const gs=[...new Set(d.map(x=>x.g))];gs.forEach(g=>{let tot=volDay(di,g);if(tot<=10||g==="Пресс")return;const E=tot-10;let cut=0,guard=0;
+   while(tot>10&&guard++<30){const x=d.filter(y=>y.g===g&&sOf(di,y)>2).sort((a,b)=>sOf(di,b)-sOf(di,a))[0];if(!x)break;const k=di+"|"+x.oid;al[k]=(al[k]||0)-1;tot--;cut++;}
+   if(!cut)return;const other=days.map((_,i)=>i).filter(i=>i!==di&&volDay(i,g)<=6).sort((a,b)=>minOf(a)-minOf(b))[0];
+   if(other!==undefined&&cut>=2)addEx(other,g,Math.min(4,cut),`перенёс ${cut} ${pl(cut,"подход","подхода","подходов")} ${g==="Широчайшие"?"на широчайшие":"на "+g.toLowerCase()} из дня, где было ${tot+cut}: так мышца работает 2 раза в неделю`);
+   else log.push(`${wn}: ${g.toLowerCase()} ${tot+cut}→${tot} подходов за тренировку`);});});
+  /* 2. мало подходов в неделю → добрать */
+  BIG31.forEach(g=>{const[lo]=rng33(g,c);let v=days.reduce((a,_,di)=>a+volDay(di,g),0);if(!v||v>=lo)return;let need=Math.min(6,lo-v);
+   const where=[];days.forEach((d,di)=>d.forEach(x=>{if(x.g===g)where.push([di,x]);}));
+   if(need>=3){const di=days.map((_,i)=>i).filter(i=>volDay(i,g)<=7).sort((a,b)=>volDay(b,g)-volDay(a,g))[0];if(di!==undefined&&addEx(di,g,Math.min(4,need),`${g.toLowerCase()} было ${v} ${pl(v,"подход","подхода","подходов")} в неделю при норме от ${lo}`))need-=Math.min(4,need);}
+   for(const[di,x]of where){if(need<=0)break;if(volDay(di,g)>=10)continue;const k=di+"|"+x.oid;if((al[k]||0)>=2)continue;al[k]=(al[k]||0)+1;need--;}});
+  DB.volFix[w.code]=al;});
+ DB.volFixD=today();save();render();return log;}
+function opt45Do(){const log=opt45();const t=volTime43();chatSay(log.length?`<b>Программа оптимизирована</b>\n${log.map(x=>"• "+x).join("\n")}${t}`:"Программа уже в норме — менять нечего.",[A("Вернуть как было","volFixUndo43()"),A("Проверить ещё раз","chatAsk('разбор моей программы')")]);}
+/* в разборе — одна кнопка вместо двух */
+const _rv45=review36;
+review36=function(){const r=_rv45();try{r.a=(r.a||[]).filter(b=>!/Добрать подходы/.test(b.l));if(!DB.volFix&&/что не так|норме/.test(r.t))r.a.unshift(A("Оптимизировать программу","opt45Do()"));r.t=r.t.replace("Могу сам добавить подходы этим мышцам — кнопка ниже.","Могу сам всё исправить: лишнее перенесу на другой день, недостающее доберу — кнопка ниже.");}catch(e){}return r;};
+volFixDo43=opt45Do;
+/* в тренировке — метка «добавлено тренером» */
+const _wl45=typeof wlCard==="function"?wlCard:null;
+if(_wl45)wlCard=function(x,n,it){let h=_wl45(x,n,it);if(x.vfix==="new")h=h.replace('<div class="wl-tx"><span>','<div class="wl-tx"><span>✨ добавлено тренером · ');else if(x.vfix>0)h=h.replace('<div class="wl-tx"><span>',`<div class="wl-tx"><span>+${x.vfix} подх. от тренера · `);else if(x.vfix<0)h=h.replace('<div class="wl-tx"><span>',`<div class="wl-tx"><span>${x.vfix} подх. (перенесено) · `);return h;};
+
+/* разбор и оценка — по программе с учётом всех поправок тренера */
+curProg36=function(){const wk0=DB.wk,ses=session;session=null;try{return WEEKS.map((w,wi)=>{DB.wk=wi;return{days:w.days.map((d,di)=>({t:d.t,items:itemsFor(di).map(x=>Object.assign({},x))}))};});}finally{if(wk0===undefined)delete DB.wk;else DB.wk=wk0;session=ses;}};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","opt45Do","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
