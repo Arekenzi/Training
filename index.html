@@ -1237,6 +1237,34 @@ body.light .t1{color:#0E7A35!important}body.light .t2{color:#2E74D0!important}
 .lg-c button.on{background:var(--lime);border-color:var(--lime);color:#091411;font-weight:700}
 .lg-a{margin-top:12px;font:inherit;font-size:12px;background:none;border:0;color:var(--dim);text-decoration:underline;padding:0;cursor:pointer}
 
+/* v31 конструктор PRO */
+.wz-bar{height:5px;border-radius:4px;background:var(--line);margin:8px 0 14px;overflow:hidden}.wz-bar i{display:block;height:100%;background:var(--lime);border-radius:4px;transition:width .25s}
+.wz-o{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.wz-o button{text-align:left;padding:14px 16px;border-radius:18px;border:1px solid var(--line);background:var(--surface);color:var(--tx);font:inherit;cursor:pointer}
+.wz-o button b{display:block;font-size:15.5px;font-weight:600}.wz-o button span{display:block;margin-top:3px;font-size:12.5px;color:var(--dim)}
+.wz-o button.on{border-color:var(--lime);background:rgba(59,240,106,.12)}.wz-o button.on b{color:var(--lime)}
+.wz-o.wz-d{display:grid;grid-template-columns:repeat(4,1fr)}.wz-o.wz-d button{text-align:center;padding:14px 4px}
+.wz-o.wz-d button.on{background:var(--lime)}.wz-o.wz-d button.on b{color:#06100D}
+.wz31 .cta{margin-top:16px}.wz31 .cta[disabled]{opacity:.4}
+.wz31 .dn-home{display:block;margin-top:8px}
+.wz-k{display:block;margin:20px 0 8px}
+.wz-start{display:block;width:100%;text-align:left;margin-top:10px;padding:16px;border-radius:20px;border:1px solid rgba(59,240,106,.35);background:rgba(59,240,106,.1);color:var(--tx);font:inherit;cursor:pointer}
+.wz-start b{display:block;font-size:17px;color:var(--lime)}.wz-start span{display:block;margin-top:5px;font-size:12.5px;line-height:1.45;color:var(--dim)}
+.hub-c{display:grid;gap:8px}
+.hub-c button{text-align:left;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--surface);color:var(--tx);font:inherit;cursor:pointer}
+.hub-c button b{display:block;font-size:14.5px}.hub-c button span{display:block;margin-top:2px;font-size:12px;color:var(--dim)}
+.hub-c button.on{border-color:var(--lime)}.hub-c button.on span{color:var(--lime)}
+.tp31{display:block;width:100%;text-align:left;margin-bottom:8px;padding:14px;border-radius:18px;border:1px solid var(--line);background:var(--surface);color:var(--tx);font:inherit;cursor:pointer}
+.tp-h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.tp-h b{font-size:15px;line-height:1.3}
+.tp-h em{flex:0 0 auto;font-style:normal;font-weight:700;font-size:14px;padding:3px 9px;border-radius:999px}
+.tp-h em.hi{background:var(--lime);color:#06100D}.tp-h em.md{background:rgba(255,200,80,.18);color:#FFC850}.tp-h em.lo{background:rgba(255,138,122,.15);color:#FF8A7A}
+.tp31>span{display:block;margin-top:5px;font-size:12.5px;line-height:1.45;color:var(--dim)}
+.tp-r{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.tp-r i{font-style:normal;font-size:11.5px;padding:3px 8px;border-radius:999px}
+.tp-r i.p{background:rgba(59,240,106,.1);color:var(--lime)}.tp-r i.c{background:rgba(255,138,122,.1);color:#FF8A7A}
+.tip31{margin:0 0 12px;padding:12px 14px;border-radius:16px;background:rgba(255,200,80,.1);border:1px solid rgba(255,200,80,.3);font-size:13px;line-height:1.45}
+.tip31 b{display:block;color:#FFC850;margin-bottom:3px}.tip31 div{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tip31 button{font:inherit;font-size:12.5px;padding:7px 11px;border-radius:999px;border:1px solid rgba(255,200,80,.4);background:transparent;color:var(--tx);cursor:pointer}
+
 </style>
 </head>
 <body>
@@ -4185,7 +4213,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="30";
+const APPV="31";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4197,6 +4225,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🧪</i><p><b>Тест и выбор программы</b>«Ещё» → «Выбрать или составить программу». 17 вопросов: цель, стаж, возраст, сон, стресс, питание, дни, суставы. Тренер считает твоё восстановление и подбирает объём и схему. 11 готовых программ с % совпадения</p></div>
  <div><i>⚖️</i><p><b>Отстающие мышцы</b>тренер сам сравнивает рост силы всех мышц за 6 недель. Если какая-то отстаёт — +1 подход в первом упражнении на неё. Можно выбрать и самому: «подтяни грудь». Карточка «Баланс мышц» — в Прогрессе</p></div>
  <div><i>🎯</i><p><b>Умные замены</b>везде — в тренировке, «Занято?», конструкторе, плато — сначала то же движение и та же зона: верх груди → верх груди, тяга сверху → тяга сверху, молотки → молотки. Метка «точная замена»</p></div>
  <div><i>🛠</i><p><b>Конструктор 2.0</b>перед применением можно заменить любое упражнение, убрать, добавить и поменять подходы. Видно баланс тяг и жимов и где мало объёма</p></div>
@@ -5499,9 +5528,169 @@ brain=function(q){const t=nz(q);
  return _brain30(q);};
 const _sugg30=sugg;sugg=function(){const a=_sugg30();a.splice(4,0,"Что отстаёт?");return a.slice(0,9);};
 
+/* ===== v31: конструктор PRO — пошаговый тест (17 вопросов), профиль восстановления, каталог программ с % совпадения ===== */
+/* --- новые схемы --- */
+SPLITS.ppl={n:"Жим · Тяга · Ноги",days:[["ЖИМ · ГРУДЬ · ПЛЕЧИ · ТРИЦЕПС","red",["Грудь","Передняя дельта","Средняя дельта","Трицепс","Пресс"]],["ТЯГА · СПИНА · БИЦЕПС","blue",["Широчайшие","Середина спины","Задняя дельта","Бицепс","Трапеции"]],["НОГИ · ИКРЫ · ПРЕСС","green",["Квадрицепс","Бицепс бедра","Ягодицы","Икры","Пресс"]]]};
+SPLITS.arn={n:"Грудь+спина · Плечи+руки · Ноги",days:[["ГРУДЬ · СПИНА","red",["Грудь","Широчайшие","Середина спины","Пресс"]],["ПЛЕЧИ · РУКИ","blue",["Средняя дельта","Задняя дельта","Передняя дельта","Бицепс","Трицепс","Предплечья"]],["НОГИ · ИКРЫ","green",["Квадрицепс","Бицепс бедра","Ягодицы","Икры","Пресс"]]]};
+SPLITS.ppl6={n:"Жим · Тяга · Ноги ×2",days:SPLITS.ppl.days.concat([["ЖИМ · Б","red",["Средняя дельта","Грудь","Трицепс","Передняя дельта"]],["ТЯГА · Б","blue",["Середина спины","Широчайшие","Бицепс","Задняя дельта","Предплечья"]],["НОГИ · Б","green",["Бицепс бедра","Ягодицы","Квадрицепс","Икры","Поясница"]]])};
+const SPDESC={fb:"каждая мышца 2–3 раза в неделю небольшими порциями",pp:"спина+бицепс, грудь+трицепс, ноги+плечи — твоя схема",ppl:"жимы, тяги и ноги отдельно",arn:"отдельный день на плечи и руки",ul:"каждая мышца 2 раза в неделю",s5:"день на каждую группу + день слабых мест",ppl6:"каждая мышца 2 раза, максимум объёма"};
+const SPOK={2:["fb"],3:["pp","ppl","arn","fb"],4:["ul","fb"],5:["s5","ul"],6:["ppl6","ul"]};
+Object.assign(GDEF,{age:"30",sleep:"7",stress:"mid",job:"sit",food:"def",cardio:"no"});
+const GL31={mass:"масса",str:"сила",cut:"сушка",fit:"форма"},EXPN31={new:"до года",mid:"1–3 года",adv:"больше 3 лет"};
+const REPS31={mass:"база 6–8 повторов, изоляция 10–12; отдых 2 мин и 1 мин",str:"база 4–6 повторов с отдыхом 2,5 мин, подсобка 8–12",cut:"база 8–10, изоляция 12–15; отдых 60–90 с — веса держим",fit:"10–15 повторов, отдых 45–75 с, без отказа"};
+/* --- восстановление: сон, возраст, стресс, работа, питание, кардио --- */
+function recov31(c){let s=0;const why=[];
+ const a={u30:0,"30":0,"40":-1,"50":-2}[c.age]||0;if(a)why.push(c.age==="40"?"возраст 40+":"возраст 50+");s+=a;
+ const sl={lt6:-2,"6":-1,"7":0}[c.sleep]||0;if(sl)why.push(c.sleep==="lt6"?"сон меньше 6 ч":"сон 6–7 ч");s+=sl;
+ if(c.stress==="high"){s-=1;why.push("высокий стресс");}
+ if(c.job==="phys"){s-=1;why.push("физическая работа");}
+ if(c.food==="def"){s-=1;why.push("дефицит калорий");}else if(c.food==="sur"){s+=1;}
+ if(c.cardio==="other"&&(c.days||[]).length>=4){s-=1;why.push("кардио в дни отдыха");}
+ const f=s>=0?1:s>=-2?0.9:s>=-4?0.8:0.7;return{s,f,lvl:f>=1?"хорошее":f>=0.9?"среднее":f>=0.8?"пониженное":"низкое",why};}
+/* --- выбор схемы с учётом восстановления --- */
+const _genSplit31=genSplit;
+genSplit=function(c){if(c.split!=="auto"&&SPLITS[c.split])return c.split;const n=(c.days||[]).length;
+ if(n<=2)return"fb";if(n===3)return(c.exp==="new"||recov31(c).f<=0.8||c.eq==="home"||c.eq==="db")?"fb":"pp";if(n===4)return"ul";if(n===5)return"s5";return"ppl6";};
+function whySplit31(c,sp){const r=recov31(c);if(sp==="fb")return c.exp==="new"?"на первом году частая практика движений даёт больше всего":r.f<=0.8?"при таком восстановлении лучше чаще и понемногу":(c.days||[]).length<=2?"при 2 днях только так каждая мышца получает нагрузку":"частая нагрузка небольшими порциями";
+ return{pp:"твоя схема: мышца раз в неделю, но с большим объёмом и полным восстановлением",ppl:"жимы и тяги в разные дни — плечи и локти отдыхают",arn:"руки и плечи получают отдельный день",ul:"каждая мышца 2 раза в неделю — оптимум для роста",s5:"много объёма, но каждая группа отдыхает неделю",ppl6:"каждая мышца 2 раза при максимальном объёме"}[sp]||"";}
+/* --- генерация: объём × восстановление, без запрещённых упражнений, кардио отнимает время --- */
+const _genWeek31=genWeek;
+genWeek=function(c,light){const r=recov31(c),saved=Object.assign({},VFAC),sp={},ban=DB.ban||{};
+ try{if(r.f!==1)Object.keys(VFAC).forEach(k=>VFAC[k]=saved[k]*r.f);
+  Object.keys(POOL).forEach(m=>{sp[m]=POOL[m];const f=POOL[m].filter(p=>!ban[p[0]]);if(f.length)POOL[m]=f;});
+  const c2=Object.assign({},c,{time:Math.max(40,c.time-(c.cardio==="after"?15:0))});const out=_genWeek31(c2,light);
+  if(r.f<0.9)out.forEach(d=>d.items.forEach(x=>{x.rest=Math.min(180,(x.rest||60)+15);}));try{bal31(out,c,c2.time,r.f);}catch(e){}return out;}
+ finally{Object.assign(VFAC,saved);Object.keys(sp).forEach(m=>POOL[m]=sp[m]);}};
+/* --- балансировка объёма: срезать лишнее у перегруженных мышц, добрать недогруженным, пока есть время --- */
+const BIG31=["Грудь","Широчайшие","Середина спины","Квадрицепс","Бицепс бедра","Ягодицы"];
+function bal31(days,c,time,f){const gf=c.goal==="str"?.75:c.goal==="fit"?.8:1,T=TGT[c.exp],pri=new Set([].concat(...(c.prio||[]).map(p=>PRIO[p]||[])));
+ const rng=g=>{const k=(BIG31.includes(g)?1:.6)*f*gf;return[Math.round(T[0]*k)+(pri.has(g)?2:0),Math.round(T[1]*k)+(pri.has(g)?3:0)];};
+ const vol=()=>{const v={};days.forEach(d=>d.items.forEach(x=>{const g=grp(EX[x.id]);v[g]=(v[g]||0)+x.s;}));return v;};
+ let v=vol();for(const g in v){let guard=0;while(v[g]>rng(g)[1]&&guard++<30){const ex=days.flatMap(d=>d.items).filter(x=>grp(EX[x.id])===g&&x.s>2).sort((a,b)=>b.s-a.s)[0];if(!ex)break;ex.s--;v[g]--;}}
+ days.forEach(d=>{let guard=0;while(guard++<40){v=vol();const gs=[...new Set(d.items.map(x=>grp(EX[x.id])))].filter(g=>g!=="Пресс"&&g!=="Предплечья"&&v[g]<rng(g)[0]).sort((a,b)=>v[a]/rng(a)[0]-v[b]/rng(b)[0]);
+  let done=false;for(const g of gs){const ex=d.items.filter(x=>grp(EX[x.id])===g&&x.s<5).sort((a,b)=>a.s-b.s)[0];if(!ex)continue;ex.s++;if(estMin(d.items)>time){ex.s--;continue;}done=true;break;}if(!done)break;}});}
+/* --- сила по записям --- */
+function strLevel31(){const b=(DB.bw||[]).slice().sort((x,y)=>x.d<y.d?-1:1).slice(-1)[0];const bw=b?b.w:0;if(!bw)return"";
+ const r=["bp","smith_flat"].map(id=>EX[id]&&DB.log[id]?best1rm(id):0).reduce((a,x)=>Math.max(a,x),0);if(!r)return"";const k=r/bw;
+ return`жим лёжа ≈ ${String(Math.round(k*100)/100).replace(".",",")}× веса тела — ${k<0.8?"начальная":k<1.2?"средняя":k<1.5?"хорошая":"высокая"} сила`;}
+/* --- тест --- */
+const LAG2PRIO={"Грудь":"Грудь","Широчайшие":"Спина","Середина спины":"Спина","Средняя дельта":"Плечи","Задняя дельта":"Плечи","Бицепс":"Руки","Трицепс":"Руки","Квадрицепс":"Ноги","Бицепс бедра":"Ноги","Ягодицы":"Ягодицы"};
+const WQ=[
+ {k:"goal",t:"Главная цель",h:"От цели зависят повторы, отдых и объём.",o:[["mass","Набрать мышцы","больше объёма, 6–12 повторов"],["str","Стать сильнее","тяжёлая база, длинный отдых"],["cut","Похудеть и сохранить мышцы","веса держим, отдых короче"],["fit","Форма и здоровье","умеренно, без отказа"]]},
+ {k:"exp",t:"Сколько тренируешься без долгих перерывов?",h:"Новичку хватает 8–12 подходов на мышцу в неделю, опытному нужно 12–20.",o:[["new","Меньше года"],["mid","1–3 года"],["adv","Больше 3 лет"]]},
+ {k:"age",t:"Возраст",h:"После 40 связки и суставы восстанавливаются дольше — объём будет чуть меньше.",o:[["u30","До 30"],["30","30–39"],["40","40–49"],["50","50 и старше"]]},
+ {k:"sleep",t:"Сколько обычно спишь?",h:"Сон — главный фактор восстановления. Меньше 6 часов — минус к объёму.",o:[["lt6","Меньше 6 часов"],["6","6–7 часов"],["7","7 часов и больше"]]},
+ {k:"stress",t:"Уровень стресса",h:"Стресс съедает восстановление так же, как тренировка.",o:[["low","Низкий"],["mid","Средний"],["high","Высокий"]]},
+ {k:"job",t:"Работа",o:[["sit","Сидячая"],["mix","Смешанная"],["phys","Физическая, весь день на ногах"]]},
+ {k:"food",t:"Питание сейчас",h:"На дефиците восстановление хуже — объём чуть меньше, задача сохранить силу.",o:[["def","Дефицит — худею"],["main","Поддержание"],["sur","Профицит — набираю"]]},
+ {k:"days",t:"В какие дни можешь тренироваться?",h:"От 2 до 6 дней. Лучше с днём отдыха между тренировками.",multi:1,o:[[1,"Пн"],[2,"Вт"],[3,"Ср"],[4,"Чт"],[5,"Пт"],[6,"Сб"],[0,"Вс"]]},
+ {k:"time",t:"Сколько минут на одну тренировку?",h:"Только силовая, с разминкой.",o:[[45,"45 минут"],[60,"60 минут"],[75,"75 минут"],[90,"90 минут"],[120,"2 часа"]]},
+ {k:"eq",t:"Где тренируешься?",o:[["gym","Полный зал"],["nobar","Зал без штанги"],["db","Только гантели"],["home","Дома: гантели и турник"]]},
+ {k:"inj",t:"Что беречь?",h:"Упражнения, опасные для этих мест, не попадут в программу.",multi:1,none:"Ничего не болит",o:[["sh","Плечо"],["lb","Поясница"],["kn","Колени"],["el","Локти"],["wr","Запястья"]]},
+ {k:"prio",t:"Что подтянуть?",h:"До двух групп: им достанется больше подходов.",multi:1,none:"Всё ровно",o:[["Грудь","Грудь"],["Спина","Спина"],["Плечи","Плечи"],["Руки","Руки"],["Ноги","Ноги"],["Ягодицы","Ягодицы"],["Пресс","Пресс"]]},
+ {k:"cardio",t:"Кардио",h:"Кардио после силовой отнимает 15 минут — тренер сожмёт силовую.",o:[["no","Не делаю"],["after","После силовой"],["other","В отдельные дни"]]},
+ {k:"split",t:"Схема тренировок",h:"«Подбери сам» — тренер выберет по дням, опыту и восстановлению.",o:()=>{const ok=SPOK[GQ.days.length]||["fb"];return[["auto","Подбери сам","сейчас: "+SPLITS[genSplit(Object.assign({},GQ,{split:"auto"}))].n]].concat(ok.map(k=>[k,SPLITS[k].n,SPDESC[k]]));}},
+ {k:"weeks",t:"Как чередовать недели?",o:[["alt","Тяжёлая + лёгкая","база через неделю, суставы отдыхают"],["same","Каждую неделю одинаково","проще следить за ростом"]]},
+ {k:"rotate",t:"Менять упражнения каждые 8 недель?",h:"Похожие упражнения под новым углом дают свежий стимул. История сохранится.",o:[["yes","Да"],["no","Нет, оставить те же"]]},
+ {k:"ramp",t:"Наращивать объём внутри блока?",h:"Недели 4–6: +1 подход, 7–8: ещё +1, 9-я — разгрузка.",o:[["yes","Да"],["no","Нет"]]}];
+let WZ=0;
+function cfg31(){return Object.assign(JSON.parse(JSON.stringify(GDEF)),JSON.parse(JSON.stringify((DB.gen&&DB.gen.cfg)||{})));}
+function exd31(){let o=document.getElementById("exd");if(!o){o=document.createElement("div");o.id="exd";document.body.appendChild(o);}o.className="exd gn19 wz31";return o;}
+function wzStart(){GQ=cfg31();delete GQ.tpl;WZ=0;exd31();wzPaint();}
+function wzPaint(){const o=exd31(),q=WQ[WZ],opts=typeof q.o==="function"?q.o():q.o,val=GQ[q.k];const on=v=>q.multi?val.includes(v):val===v;
+ let hint=q.h||"";if(q.k==="prio"){try{const L=lagFind();if(L.list.length)hint+=` По твоим записям отстаёт: <b>${L.list.map(g=>LAGN[g]).join(", ")}</b>.`;}catch(e){}}
+ if(q.k==="exp"){const s=strLevel31();if(s)hint+=` По записям: ${s}.`;}
+ o.innerHTML=`<div class="exd-in"><button class="x" onclick="${WZ?"wzGo(-1)":"progHub()"}" aria-label="Назад">←</button><span class="exd-g">тест · ${WZ+1} из ${WQ.length}</span>
+ <div class="wz-bar"><i style="width:${Math.round((WZ+1)/WQ.length*100)}%"></i></div><h2>${q.t}</h2>${hint?`<p class="gn-s">${hint}</p>`:""}
+ <div class="wz-o${q.k==="days"?" wz-d":""}">${opts.map(([v,l,d])=>`<button class="${on(v)?"on":""}" onclick='wzSet(${JSON.stringify(v)})'><b>${l}</b>${d?`<span>${d}</span>`:""}</button>`).join("")}
+ ${q.none?`<button class="${val.length?"":"on"}" onclick="wzNone()"><b>${q.none}</b></button>`:""}</div>
+ ${q.multi?`<button class="cta" onclick="wzGo(1)" ${q.k==="days"&&val.length<2?"disabled":""}>Дальше</button>`:val!==undefined&&WZ<WQ.length?`<button class="dn-home" onclick="wzGo(1)">Оставить «${(opts.find(x=>x[0]===val)||[0,"как есть"])[1]}» →</button>`:""}
+ <button class="dn-home" onclick="wzResult()">Пропустить остальные вопросы</button></div>`;}
+function wzSet(v){const q=WQ[WZ],k=q.k;if(q.multi){const a=GQ[k],i=a.indexOf(v);if(i>=0)a.splice(i,1);else{a.push(v);if(k==="prio"&&a.length>2)a.shift();if(k==="days"&&a.length>6)a.shift();}
+  if(k==="days"&&GQ.split!=="auto"&&!(SPOK[a.length]||[]).includes(GQ.split))GQ.split="auto";wzPaint();return;}
+ GQ[k]=v;if(navigator.vibrate)navigator.vibrate(10);wzPaint();setTimeout(()=>wzGo(1),170);}
+function wzNone(){GQ[WQ[WZ].k]=[];wzPaint();}
+function wzGo(d){WZ+=d;if(WZ<0)WZ=0;if(WZ>=WQ.length){wzResult();return;}wzPaint();const x=document.querySelector("#exd .exd-in");if(x)x.scrollTop=0;}
+/* --- результат теста --- */
+function wzResult(){GQ.tested=1;WZ=WQ.length-1;const o=exd31(),r=recov31(GQ),sp=genSplit(GQ),T=TGT[GQ.exp],lv=strLevel31(),top=tplRank(GQ).slice(0,3);
+ o.innerHTML=`<div class="exd-in"><button class="x" onclick="wzPaint()" aria-label="Назад">←</button><span class="exd-g">результат теста</span><h2>Твой профиль</h2>
+ <div class="gn-why">
+ <div>🎯 Цель: <b>${GL31[GQ.goal]}</b> · стаж: <b>${EXPN31[GQ.exp]}</b>${lv?`<br><span class="dim">${lv}</span>`:""}</div>
+ <div>🔋 Восстановление: <b>${r.lvl}</b>${r.why.length?` — ${r.why.join(", ")}`:""}. ${r.f<1?`Объём ×${String(r.f).replace(".",",")}${r.f<0.9?", отдых +15 с":""}.`:"Полный объём."}</div>
+ <div>📊 На большую мышцу: <b>${Math.round(T[0]*r.f)}–${Math.round(T[1]*r.f)} подходов в неделю</b></div>
+ <div>🧩 Схема: <b>${SPLITS[sp].n}</b> — ${whySplit31(GQ,sp)}.</div>
+ <div>🔁 ${REPS31[GQ.goal]}.</div>
+ <div>📅 ${GQ.days.slice().sort((a,b)=>((a+6)%7)-((b+6)%7)).map(d=>["Вс","Пн","Вт","Ср","Чт","Пт","Сб"][d]).join(", ")} · до ${GQ.time} мин${GQ.cardio==="after"?" (из них 15 — кардио)":""}${GQ.inj.length?` · берегу ${GQ.inj.map(x=>({sh:"плечо",lb:"поясницу",kn:"колени",el:"локти",wr:"запястья"})[x]).join(", ")}`:""}</div>
+ </div>${tip31()}
+ <button class="cta" onclick="delete GQ.tpl;genBuild()">Собрать программу по тесту</button>
+ <span class="k13 wz-k">или готовая программа под тебя</span>${top.map(t=>tplCard(t,1)).join("")}
+ <button class="dn-home" onclick="progHub()">Все программы</button><button class="dn-home" onclick="WZ=0;wzPaint()">← Изменить ответы</button></div>`;o.querySelector(".exd-in").scrollTop=0;}
+function tip31(){try{const P=genProgram(GQ),A=analyze(P,GQ);const low=Object.keys(A.vol).filter(g=>BIG31.includes(g)&&A.z(g)==="low");BIG31.forEach(g=>{if(!A.vol[g]&&!low.includes(g))low.push(g);});if(low.length<2)return"";
+ const b=[];if(GQ.time<90)b.push(`<button onclick="GQ.time=${GQ.time<75?75:90};wzResult()">Поставить ${GQ.time<75?75:90} мин</button>`);if(GQ.cardio==="after")b.push(`<button onclick="GQ.cardio='other';wzResult()">Кардио в отдельные дни</button>`);if(genSplit(GQ)!=="fb")b.push(`<button onclick="GQ.split='fb';wzResult()">Схема «Всё тело»</button>`);
+ return `<div class="tip31"><b>⚠️ Не хватает объёма</b><span>За ${GQ.time} мин${GQ.cardio==="after"?" с кардио":""} в этой схеме мало подходов на ${low.map(g=>g.toLowerCase()).join(", ")}. Что поможет:</span><div>${b.join("")}</div></div>`;}catch(e){return"";}}
+/* --- готовые программы --- */
+const TPL=[
+ {id:"classic",n:"Классика: спина · грудь · ноги+плечи",who:"3 дня, тяжёлая и лёгкая неделя по очереди. Мышца раз в неделю, но с большим объёмом.",cfg:{split:"pp",weeks:"alt"},nd:3,goals:["mass","cut","str"],exp:["mid","adv"],t:75},
+ {id:"ppl",n:"Жим · Тяга · Ноги",who:"3 дня. Плечи с грудью, задняя дельта с тягами — в один день меньше нагрузки на плечо и локти.",cfg:{split:"ppl",weeks:"alt"},nd:3,goals:["mass","str"],exp:["mid","adv"],t:75},
+ {id:"arn",n:"Грудь+спина · Плечи+руки · Ноги",who:"3 дня. Отдельный день на плечи и руки — когда руки отстают.",cfg:{split:"arn",weeks:"alt"},nd:3,goals:["mass"],exp:["mid","adv"],t:80,focus:["Руки","Плечи"]},
+ {id:"fb3",n:"Всё тело ×3",who:"Каждая мышца 3 раза в неделю небольшими порциями. Хорошо на сушке, на первом году и при плохом сне.",cfg:{split:"fb",weeks:"same"},nd:3,goals:["cut","fit","mass"],exp:["new","mid"],t:60,easy:1},
+ {id:"ul4",n:"Верх / низ ×4",who:"4 дня, каждая мышца 2 раза в неделю — по исследованиям лучший вариант для роста.",cfg:{split:"ul",weeks:"alt"},nd:4,goals:["mass","str"],exp:["mid","adv"],t:70},
+ {id:"str",n:"Сила без приседа и становой",who:"Верх/низ, 4–6 повторов в базе, длинный отдых. Ноги — на тренажёрах, спина без осевой нагрузки.",cfg:{split:"ul",goal:"str",weeks:"same"},nd:4,goals:["str"],exp:["mid","adv"],t:75},
+ {id:"cut",n:"Сушка: сохранить мышцы",who:"3 дня всё тело, веса держим, отдых короче, 15 минут кардио после силовой.",cfg:{split:"fb",goal:"cut",weeks:"same",cardio:"after"},nd:3,goals:["cut"],exp:["new","mid","adv"],t:60,easy:1},
+ {id:"min2",n:"Минимум: 2 дня по 45 минут",who:"Когда мало времени. Всё тело, только главное — держит силу и форму.",cfg:{split:"fb",time:45,weeks:"same"},nd:2,goals:["fit","cut"],exp:["new","mid","adv"],t:45,easy:1},
+ {id:"s5",n:"5 дней: сплит по мышцам",who:"Для опытных с хорошим сном и питанием. Отдельные дни на плечи и руки и на слабые места.",cfg:{split:"s5",weeks:"alt"},nd:5,goals:["mass"],exp:["adv"],t:75,hard:1},
+ {id:"ppl6",n:"Жим · Тяга · Ноги ×2 (6 дней)",who:"Максимальный объём: каждая мышца 2 раза. Только при хорошем восстановлении.",cfg:{split:"ppl6",weeks:"same"},nd:6,goals:["mass"],exp:["adv"],t:70,hard:1},
+ {id:"home",n:"Дома: гантели и турник",who:"3 дня всё тело без тренажёров и штанги.",cfg:{split:"fb",eq:"home",weeks:"same"},nd:3,goals:["mass","cut","fit"],exp:["new","mid","adv"],t:60,home:1}];
+function tplFit(t,c){let s=92;const pro=[],con=[];const n=(c.days||[]).length,r=recov31(c);const dd=x=>x+" "+pl(x,"день","дня","дней");
+ if(n===t.nd)pro.push(dd(n)+" — как у тебя");else{s-=Math.min(45,Math.abs(n-t.nd)*22);con.push(`нужно ${dd(t.nd)}, у тебя ${n}`);}
+ if(!t.goals.includes(c.goal)){s-=20;con.push(`не под цель «${GL31[c.goal]}»`);}else if(t.goals[0]===c.goal){s+=4;pro.push(`под цель «${GL31[c.goal]}»`);}
+ if(!t.exp.includes(c.exp)){s-=18;con.push(c.exp==="new"?"сложна для первого года":"проста для твоего стажа");}
+ if((t.cfg.time||t.t)>c.time+10){s-=12;con.push(`нужно ~${t.cfg.time||t.t} мин, у тебя ${c.time}`);}
+ if(t.hard&&r.f<1){s-=20;con.push(`восстановление ${r.lvl} — такой объём тяжело вытянуть`);}
+ if(t.easy&&r.f<=0.9){s+=6;pro.push("щадит восстановление");}
+ const home=c.eq==="home"||c.eq==="db";if(t.home&&!home){s-=25;con.push("для дома, а у тебя зал");}else if(home&&t.home)pro.push("для дома");else if(home&&t.cfg.split!=="fb"){s-=12;con.push("дома часть упражнений не подойдёт");}
+ if(t.focus&&(c.prio||[]).some(p=>t.focus.includes(p))){s+=6;pro.push("акцент на "+t.focus.join(" и ").toLowerCase());}
+ if(t.focus&&!(c.prio||[]).some(p=>t.focus.includes(p)))s-=8;
+ if(t.id==="classic"){s+=3;pro.push("твоё сочетание мышц");}
+ if(t.id==="ppl"&&(c.inj||[]).includes("sh")){s+=2;pro.push("бережёт плечо");}
+ return{s:Math.max(5,Math.min(99,s)),pro,con};}
+function tplRank(c){return TPL.map(t=>Object.assign({},t,tplFit(t,c))).sort((a,b)=>b.s-a.s);}
+function tplCard(t,pct){return `<button class="tp31" onclick="tplOpen('${t.id}')"><div class="tp-h"><b>${t.n}</b>${pct?`<em class="${t.s>=80?"hi":t.s>=60?"md":"lo"}">${t.s}%</em>`:""}</div><span>${t.who}</span>
+ ${pct&&(t.pro.length||t.con.length)?`<div class="tp-r">${t.pro.slice(0,2).map(x=>`<i class="p">✓ ${x}</i>`).join("")}${t.con.slice(0,2).map(x=>`<i class="c">✗ ${x}</i>`).join("")}</div>`:""}</button>`;}
+function tplOpen(id){const t=TPL.find(x=>x.id===id);if(!t)return;const base=GQ||cfg31();const c=Object.assign(JSON.parse(JSON.stringify(base)),JSON.parse(JSON.stringify(t.cfg)),{tpl:id});
+ if(c.days.length!==t.nd)c.days=({2:[2,5],3:[2,4,6],4:[1,2,4,5],5:[1,2,3,4,5],6:[1,2,3,4,5,6]})[t.nd].slice();
+ if(!t.cfg.time&&c.time<t.t-10)c.time=t.t;GQ=c;exd31();genBuild();}
+/* предпросмотр: имя готовой программы */
+const _genView31=genView;
+genView=function(){_genView31.apply(this,arguments);const o=document.getElementById("exd");if(!o||!GQ)return;const t=GQ.tpl&&TPL.find(x=>x.id===GQ.tpl);const h=o.querySelector("h2");
+ if(t&&h){h.textContent=t.n;const s=o.querySelector(".exd-g");if(s)s.textContent="готовая программа · можно править";}
+ const why=o.querySelector(".gn-why");if(why&&!why.querySelector(".rc31")){const r=recov31(GQ);why.insertAdjacentHTML("afterbegin",`<div class="rc31">🔋 Восстановление ${r.lvl}${r.f<1?` — объём ×${String(r.f).replace(".",",")}`:""} · ${REPS31[GQ.goal]}</div>`);}
+ const back=[...o.querySelectorAll(".dn-home")].find(b=>/Изменить ответы/.test(b.textContent));if(back){back.textContent=GQ.tested?"← К результату теста":"← Пройти тест";back.setAttribute("onclick",GQ.tested?"wzResult()":"wzStart()");}
+ if(!o.querySelector(".hb31"))o.querySelector(".exd-in").insertAdjacentHTML("beforeend",`<button class="dn-home hb31" onclick="progHub()">Все программы</button>`);};
+genPaint=function(){WZ=0;wzPaint();};
+/* --- экран «Программы» --- */
+function progHub(){const o=exd31();if(!GQ)GQ=cfg31();const k=progKey(),tested=!!GQ.tested;
+ const cur=[["v2p","2.0 +","9–11 упражнений, ~85 мин, тяжёлая и лёгкая неделя"],["v2","2.0","7–9 упражнений, ~75 мин"],["v1","Прежняя","10–12 упражнений, около 2 часов"]];
+ if(DB.gen&&DB.gen.weeks){const t=DB.gen.cfg.tpl&&TPL.find(x=>x.id===DB.gen.cfg.tpl);cur.unshift(["gen",t?t.n:"Моя (по тесту)",`${SPLITS[genSplit(DB.gen.cfg)].n}, ${DB.gen.cfg.days.length} ${pl(DB.gen.cfg.days.length,"день","дня","дней")}, до ${DB.gen.cfg.time} мин`]);}
+ o.innerHTML=`<div class="exd-in"><button class="x" onclick="closeExD()" aria-label="Закрыть">✕</button><span class="exd-g">программы</span><h2>Выбрать программу</h2>
+ <button class="wz-start" onclick="wzStart()"><b>🧪 ${tested?"Пройти тест заново":"Пройти тест"}</b><span>${WQ.length} вопросов, около 2 минут: цель, стаж, возраст, сон, стресс, питание, дни, время, суставы. Тренер соберёт программу и покажет, какая из готовых подходит больше.</span></button>
+ ${tested?`<button class="dn-home" onclick="wzResult()">Мой результат теста →</button>`:""}
+ <span class="k13 wz-k">твои программы</span><div class="hub-c">${cur.map(([key,n,d])=>`<button class="${k===key?"on":""}" onclick="hubPick('${key}')"><b>${n}</b><span>${k===key?"✓ сейчас · ":""}${d}</span></button>`).join("")}</div>
+ <span class="k13 wz-k">готовые программы${tested?" · совпадение с тестом":""}</span>${(tested?tplRank(GQ):TPL).map(t=>tplCard(t,tested)).join("")}
+ <p class="gn-s">Любую готовую программу тренер подгонит под твои суставы, зал и время, а перед включением её можно поправить.</p></div>`;o.querySelector(".exd-in").scrollTop=0;}
+function hubPick(k){if(session){alert0("Сначала закончи тренировку");return;}if(k===progKey()){closeExD();return;}setProg(k);closeExD();setTab("gym");setTimeout(()=>alert0("Программа включена. История и рекорды общие."),250);}
+genOpen=function(){GQ=cfg31();if(!(DB.gen&&DB.gen.cfg&&DB.gen.cfg.tested))delete GQ.tested;closeExD();exd31();progHub();};
+const _vMore31=vMore;
+vMore=function(){_vMore31.apply(this,arguments);const b=document.querySelector("#app .gn-btn");if(b){const s=b.querySelector("strong"),e=b.querySelector("em");if(s)s.textContent="Выбрать или составить программу";if(e)e.textContent=`тест из ${WQ.length} вопросов и ${TPL.length} готовых программ`;}};
+/* --- чат --- */
+const _brain31=brain;
+brain=function(q){const t=nz(q);
+ if(/какие (есть )?программ|выбери программ|выбрать программ|другую программ|пройти тест|тест на программ|готовые программ/.test(t)){return{t:`Есть ${TPL.length} готовых программ и тест из ${WQ.length} вопросов: по нему я соберу программу под твой сон, возраст, питание, суставы и время и покажу, какая из готовых подходит больше.`,a:[A("Пройти тест","chatClose();GQ=cfg31();exd31();wzStart()"),A("Все программы","chatClose();genOpen()")]};}
+ return _brain31(q);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
