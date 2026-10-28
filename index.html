@@ -1265,6 +1265,16 @@ body.light .t1{color:#0E7A35!important}body.light .t2{color:#2E74D0!important}
 .tip31 b{display:block;color:#FFC850;margin-bottom:3px}.tip31 div{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .tip31 button{font:inherit;font-size:12.5px;padding:7px 11px;border-radius:999px;border:1px solid rgba(255,200,80,.4);background:transparent;color:var(--tx);cursor:pointer}
 
+/* v32 умные веса */
+.gear32{margin:8px 0 0;padding:8px 12px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:12.5px;line-height:1.4;color:var(--dim);text-align:center}
+.gear32 b{color:var(--tx)}
+#fx .stp label span{white-space:nowrap}
+.gr32 .gr-p{margin:0 0 6px;font-size:12.5px;color:var(--dim);line-height:1.45}
+.gr-q{margin-top:10px}.gr-q>b{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--tx)}
+.gr-q div{display:flex;flex-wrap:wrap;gap:6px}
+.gr-q button{font:inherit;font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--tx);cursor:pointer}
+.gr-q button.on{background:var(--lime);border-color:var(--lime);color:#06100D;font-weight:700}
+
 </style>
 </head>
 <body>
@@ -4213,7 +4223,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="31";
+const APPV="32";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4225,6 +4235,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🎚</i><p><b>Умные веса</b>сделай первый подход, отметь «Легко / Норм / Тяжело» — тренер рассчитает вес на все остальные подходы по силе дня. Гантели — вес каждой, штанга — блины на сторону, блок — по шагу плиток, гравитрон — противовес. «Ещё» → «Мой зал»: шаг гантелей, плиток и блинов</p></div>
  <div><i>🧪</i><p><b>Тест и выбор программы</b>«Ещё» → «Выбрать или составить программу». 17 вопросов: цель, стаж, возраст, сон, стресс, питание, дни, суставы. Тренер считает твоё восстановление и подбирает объём и схему. 11 готовых программ с % совпадения</p></div>
  <div><i>⚖️</i><p><b>Отстающие мышцы</b>тренер сам сравнивает рост силы всех мышц за 6 недель. Если какая-то отстаёт — +1 подход в первом упражнении на неё. Можно выбрать и самому: «подтяни грудь». Карточка «Баланс мышц» — в Прогрессе</p></div>
  <div><i>🎯</i><p><b>Умные замены</b>везде — в тренировке, «Занято?», конструкторе, плато — сначала то же движение и та же зона: верх груди → верх груди, тяга сверху → тяга сверху, молотки → молотки. Метка «точная замена»</p></div>
@@ -5688,9 +5699,102 @@ brain=function(q){const t=nz(q);
  if(/какие (есть )?программ|выбери программ|выбрать программ|другую программ|пройти тест|тест на программ|готовые программ/.test(t)){return{t:`Есть ${TPL.length} готовых программ и тест из ${WQ.length} вопросов: по нему я соберу программу под твой сон, возраст, питание, суставы и время и покажу, какая из готовых подходит больше.`,a:[A("Пройти тест","chatClose();GQ=cfg31();exd31();wzStart()"),A("Все программы","chatClose();genOpen()")]};}
  return _brain31(q);};
 
+/* ===== v32: умные веса — пристрелочный подход, расчёт веса на все подходы по силе дня, снаряды (блок, гантели, штанга, рычажные, пояс, гравитрон), «Мой зал» ===== */
+const GEAR0={db:2,dbMax:50,stack:5,plate:1.25,bar:20,ez:10,smith:0};
+function gear(){return Object.assign({},GEAR0,DB.gear||{});}
+function eqT32(e){if(!e)return"other";const q=((e.eq||"")+" "+e.n).toLowerCase();
+ if(/гравитрон/.test(q)&&!/брусья или/.test(q))return"assist";
+ if(/т-гриф|гриф в углу|одного края|ландмайн/.test(q))return"land";
+ if(/смит/.test(q))return"smith";
+ if(/хаммер|рычажн|жим ногами|гакк/.test(q))return"plate";
+ if(/\bez\b|ez-/.test(q))return"ez";
+ if(/штанг|прямой гриф/.test(q))return"bar";
+ if(/гантел|гантель|гиря/.test(q))return"db";
+ if(/блок|кроссовер|тренаж|бабочк/.test(q))return"stack";
+ if(/турник|брусья|пояс/.test(q)&&/подтяг|брусья/.test((e.n||"").toLowerCase()))return"bw";
+ return"other";}
+function bodyW32(){const b=(DB.bw||[]).slice().sort((x,y)=>x.d<y.d?-1:1).slice(-1)[0];return b?+b.w:100;}
+/* шаг и допустимые веса */
+const _incOf32=incOf;
+incOf=function(e){const T=eqT32(e),G=gear();
+ if(T==="db")return G.db;if(T==="stack")return G.stack;if(T==="bar"||T==="ez"||T==="smith")return G.plate*2;
+ if(T==="plate")return/жим ногами|гакк|икры/.test((e.n||"").toLowerCase())?Math.max(5,G.plate*4):G.plate*2;
+ if(T==="land")return Math.max(2.5,G.plate*2);if(T==="bw"||T==="assist")return 2.5;return _incOf32(e);};
+function base32(T){const G=gear();return T==="bar"?G.bar:T==="ez"?G.ez:T==="smith"?G.smith:0;}
+function snap32(e,w,mode){w=+w;if(!(w>0))return w;const T=eqT32(e),inc=incOf(e),b=base32(T),G=gear();
+ if(T==="db"&&w>G.dbMax)w=G.dbMax;
+ const f=mode==="down"?Math.floor:mode==="up"?Math.ceil:Math.round;let v=b+f((w-b)/inc+1e-9)*inc;if(v<b)v=b;if(v<=0)v=inc;return+v.toFixed(2);}
+/* нагрузка с учётом своего веса (подтягивания, брусья, гравитрон) */
+function toLoad32(T,w){const B=bodyW32();return T==="bw"?B+(+w||0):T==="assist"?Math.max(5,B-(+w||0)):+w;}
+function fromLoad32(T,L){const B=bodyW32();return T==="bw"?Math.max(0,L-B):T==="assist"?Math.max(0,B-L):L;}
+function tgt32(it){const lo=+it.lo||0,hi=+it.hi||0;return lo&&hi?Math.round((lo+hi)/2):lo||hi||10;}
+function rir32(it){const m=String(it.rir||"").replace(",",".").match(/(\d+(?:\.\d+)?)(?:\s*[–-]\s*(\d+(?:\.\d+)?))?/);if(!m)return 1.5;return m[2]?(+m[1]+ +m[2])/2:+m[1];}
+const RPEQ={easy:4,ok:2,hard:0.5},RPEN32={easy:"легко",ok:"норм",hard:"тяжело"};
+/* ---- главное: вес на оставшиеся подходы по тому, как прошёл последний ---- */
+const _prefill32=prefill;
+prefill=function(it,k,i){const r=_prefill32(it,k,i);try{if(!session||k==="d0")return r;const st=session.sets[it.id]||{},c=st[k]||{};if(c.w)return r;
+ const e=EX[it.id],T=eqT32(e);if(T==="other")return r;const key=it.id+"|"+k,tg=tgt32(it);
+ let p=null;for(let j=i-1;j>=0;j--){const q=st["s"+j];if(q&&q.ok&&+q.r>0&&(+q.w>0||T==="bw"||T==="assist")){p=q;break;}}
+ if(!p){if(r.w)r.w=snap32(e,r.w);
+  if(i===0&&!lastLog(it.id))COACH[key]=r.w?`пробный вес: сделай ~${tg} повторов и отметь, как прошло — остальные подходы рассчитаю сам`:`пристрелочный подход: возьми вес, с которым сделаешь ${tg} повторов с запасом 1–2. Отметь, как прошло — веса на остальные подходы рассчитаю сам`;
+  return r;}
+ const pw=+p.w||0,pr=+p.r,rq=p.rpe?RPEQ[p.rpe]:2,pL=toLoad32(T,pw);const e1=pL*(1+(pr+rq)/30);
+ let L=e1/(1+(tg+rir32(it))/30);L=Math.max(pL*0.82,Math.min(pL*1.15,L));let w=fromLoad32(T,L);
+ w=T==="assist"?snap32(e,w,"up"):snap32(e,w,"down");if(T==="bw"&&w<2.5)w=0;
+ const inRange=(!it.lo||pr>=it.lo)&&(!it.hi||pr<=it.hi);
+ if((inRange&&p.rpe!=="easy"&&p.rpe!=="hard")||w===pw||Math.abs(toLoad32(T,w)-pL)<incOf(e)*0.6){r.w=pw;if(!COACH[key]||/прибавил|снизил/.test(COACH[key]))COACH[key]="";return r;}
+ r.w=w;r.r=tg;const up=toLoad32(T,w)>pL;
+ COACH[key]=`${T==="bw"&&!pw?"свой вес":fmtKg(pw)}×${pr}${p.rpe?` ${RPEN32[p.rpe]}`:""} → сегодня твой рабочий: <b>${wTxt32(e,w)}</b> на все оставшиеся подходы, цель ${tg} повт.`;}catch(err){}return r;};
+/* следующая тренировка: веса только реальные; гравитрон — прогресс вниз */
+const _nextW32=nextW;
+nextW=function(it){const n=_nextW32(it);if(!n||!it||!EX[it.id])return n;const e=EX[it.id],T=eqT32(e);
+ if(T==="assist"&&n.k!=="same"){const b=+(n.w-n.d).toFixed(2);const w=n.k==="up"?Math.max(0,b-incOf(e)):snap32(e,b*1.1,"up");return Object.assign({},n,{w,d:+(w-b).toFixed(2)});}
+ const w=snap32(e,n.w,n.k==="down"?"down":"round");return Object.assign({},n,{w,d:+(w-(n.w-n.d)).toFixed(2)});};
+/* ± шагает по реальным весам */
+const _fxStep32=fxStep;
+fxStep=function(f,d){if(f!=="w"||!session)return _fxStep32(f,d);const x=itemsFor(session.di)[session.fx],el=document.getElementById("fx_w");if(!x||!el)return _fxStep32(f,d);
+ const e=EX[x.id],v=parseFloat(String(el.value).replace(",","."))||0,b=base32(eqT32(e));let nv=d>0?snap32(e,v+incOf(e)*0.999,"down"):snap32(e,v-incOf(e)*0.999,"up");
+ if(d>0&&nv<=v)nv=snap32(e,v+incOf(e),"round");if(nv<b&&d<0)nv=b;if(nv<0)nv=0;el.value=+(+nv).toFixed(2);gearUpd32();};
+/* ---- подписи: что значит число ---- */
+function plates32(side){const G=gear();const P=[25,20,15,10,5,2.5,1.25,0.5].filter(p=>p>=G.plate-1e-9);const out=[];let s=+side.toFixed(2);for(const p of P)while(s>=p-1e-9){out.push(p);s=+(s-p).toFixed(2);}return{out,rest:s};}
+function wTxt32(e,w){const T=eqT32(e);w=+w||0;return T==="db"?`${fmtKg(w)} кг каждая гантель`:T==="bw"?(w?`свой вес + ${fmtKg(w)} кг`:"свой вес"):T==="assist"?`противовес ${fmtKg(w)} кг`:`${fmtKg(w)} кг`;}
+function gearTxt32(e,w){const T=eqT32(e),G=gear();w=+w||0;if(!w&&T!=="bw")return"";const pl=a=>a.map(fmtKg).join(" + ");
+ if(T==="db")return`🔩 Каждая гантель — <b>${fmtKg(w)} кг</b> · обе ${fmtKg(w*2)} кг`;
+ if(T==="bar"||T==="ez"||T==="smith"){const b=base32(T),side=(w-b)/2;if(side<0)return`⚠️ Гриф весит ${fmtKg(b)} кг`;const p=plates32(side);
+  return`🏋 ${T==="smith"?(b?`Гриф Смита ${fmtKg(b)}`:"Смит: только блины"):`Гриф ${fmtKg(b)}`}${side>0?` + на каждую сторону: <b>${pl(p.out)}</b>${p.rest>0?` (+${fmtKg(p.rest)} — нет такого блина)`:""}`:" без блинов"}`;}
+ if(T==="plate"){const p=plates32(w/2);return`⚙️ На каждую сторону: <b>${pl(p.out)||"—"}</b> (всего ${fmtKg(w)} кг блинов)`;}
+ if(T==="land"){const p=plates32(w);return`⚙️ На гриф: <b>${pl(p.out)}</b>`;}
+ if(T==="stack")return`🧱 На блоке <b>${fmtKg(w)} кг</b> — шаг блока ${fmtKg(G.stack)} кг`;
+ if(T==="bw")return w?`🪢 На пояс: <b>${pl(plates32(w).out)}</b> · всего с тобой ${fmtKg(bodyW32()+w)} кг`:`🪢 Свой вес. Сделаешь верх диапазона легко — повешу груз на пояс`;
+ if(T==="assist")return`🤝 Противовес ${fmtKg(w)} кг — <b>чем меньше, тем тяжелее</b>. Тянешь ${fmtKg(Math.max(0,bodyW32()-w))} кг`;return"";}
+const CAP32={db:"кг каждая",bar:"кг всего",ez:"кг всего",smith:"кг всего",plate:"кг блинов",stack:"кг блок",land:"кг блинов",bw:"кг на пояс",assist:"противовес"};
+function gearUpd32(){const fx=document.getElementById("fx");if(!fx||!session)return;const x=itemsFor(session.di)[session.fx];const el=document.getElementById("fx_w");if(!x||!el)return;
+ const e=EX[x.id],T=eqT32(e);const lab=el.parentNode&&el.parentNode.querySelector("span");if(lab&&CAP32[T])lab.textContent=CAP32[T];
+ let g=fx.querySelector(".gear32");const t=gearTxt32(e,parseFloat(String(el.value).replace(",","."))||0);
+ if(!t){if(g)g.remove();return;}if(!g){const inp=fx.querySelector(".fx-inp");if(!inp)return;inp.insertAdjacentHTML("afterend",`<div class="gear32"></div>`);g=fx.querySelector(".gear32");}g.innerHTML=t;
+ if(!el.dataset.g32){el.dataset.g32=1;el.addEventListener("input",gearUpd32);}}
+const _coachLine32=coachLine;
+coachLine=function(){_coachLine32();try{gearUpd32();}catch(e){}};
+/* ---- «Мой зал» в «Ещё» ---- */
+const GOPT32=[["db","Шаг гантелей",[[1,"1 кг"],[2,"2 кг"],[2.5,"2,5 кг"]]],["dbMax","Самая тяжёлая гантель",[[30,"30"],[40,"40"],[50,"50"],[60,"60+"]]],
+ ["stack","Шаг плиток в блоке",[[2.5,"2,5 кг"],[5,"5 кг"],[7,"7 кг"],[10,"10 кг"]]],["plate","Самый маленький блин",[[0.5,"0,5"],[1.25,"1,25"],[2.5,"2,5"],[5,"5"]]],
+ ["bar","Гриф штанги",[[15,"15 кг"],[20,"20 кг"]]],["ez","EZ-гриф",[[7,"7 кг"],[10,"10 кг"],[12,"12 кг"]]],["smith","Гриф Смита",[[0,"не считаю"],[10,"10"],[15,"15"],[20,"20"]]]];
+function gearSet(k,v){DB.gear=DB.gear||{};DB.gear[k]=v;save();render();setTimeout(()=>{const c=document.getElementById("gear32");if(c)c.scrollIntoView({block:"center"});},30);}
+function gearCard(){const G=gear();return `<div class="card7 gr32" id="gear32"><span class="k13">мой зал</span><p class="gr-p">Тренер ставит только те веса, которые реально есть: гантели, плитки в блоке, блины на штангу.</p>
+ ${GOPT32.map(([k,t,o])=>`<div class="gr-q"><b>${t}</b><div>${o.map(([v,l])=>`<button class="${G[k]===v?"on":""}" onclick="gearSet('${k}',${v})">${l}</button>`).join("")}</div></div>`).join("")}</div>`;}
+const _vMore32=vMore;
+vMore=function(){_vMore32.apply(this,arguments);const app=document.getElementById("app");if(!app||document.getElementById("gear32"))return;const p=document.getElementById("prog13");if(p)p.insertAdjacentHTML("afterend",gearCard());else app.insertAdjacentHTML("beforeend",gearCard());};
+/* ---- тренер в чате ---- */
+const _brain32=brain;
+brain=function(q){const t=nz(q);let m;
+ if(/гантел.*шаг|шаг.*гантел/.test(t)&&(m=t.match(/(\d+(?:[.,]\d+)?)/))){const v=+m[1].replace(",",".");if([1,2,2.5].includes(v)){DB.gear=DB.gear||{};DB.gear.db=v;save();render();return{t:`Запомнил: гантели шагом ${fmtKg(v)} кг. Веса буду ставить только такие.`};}}
+ if(/(шаг|плитк).*(блок)|блок.*(шаг|плитк)/.test(t)&&(m=t.match(/(\d+(?:[.,]\d+)?)/))){const v=+m[1].replace(",",".");if(v>=1&&v<=15){DB.gear=DB.gear||{};DB.gear.stack=v;save();render();return{t:`Запомнил: в блоке шаг ${fmtKg(v)} кг.`};}}
+ if(/мой зал|настрой.*зал|какие веса|блины|как считать вес|какой вес ставить/.test(t)){const G=gear();return{t:`<b>Как я считаю веса</b>\n• Гантели — вес одной гантели, шаг ${fmtKg(G.db)} кг\n• Штанга — общий вес с грифом ${fmtKg(G.bar)} кг, покажу блины на сторону\n• Блок — вес на плитках, шаг ${fmtKg(G.stack)} кг\n• Хаммер и жим ногами — сколько блинов всего, покажу на сторону\n• Подтягивания и брусья — груз на поясе; гравитрон — противовес (меньше = тяжелее)\n\nПервый подход — пристрелочный: отметь «Легко / Норм / Тяжело», и я рассчитаю вес на все остальные подходы.`,a:[A("Мой зал","chatClose();setTab('more');setTimeout(()=>{const c=document.getElementById('gear32');if(c)c.scrollIntoView({block:'center'})},120)")]};}
+ return _brain32(q);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
