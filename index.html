@@ -4255,7 +4255,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="35";
+const APPV="36";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4267,6 +4267,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>💬</i><p><b>Тренер понимает лучше</b>исправляет опечатки и английскую раскладку, отвечает по твоим цифрам: «прогресс в жиме», «почему такой вес», «чем заменить гакк», «сколько подходов на спину», «разбор моей программы» — оценка и что улучшить</p></div>
  <div><i>📋</i><p><b>Тест 2.0 — 46 вопросов</b>10 разделов: твоя сила в 8 упражнениях, каждый сустав по степени, что есть в зале, повторы, отдых, суперсеты, что не увеличивать. Ответы сохраняются — можно продолжить позже</p></div>
  <div><i>🎯</i><p><b>Неделя замера</b>первый подход каждого нового упражнения — пробный, тренер выставляет точные стартовые веса</p></div>
  <div><i>🧮</i><p><b>Веса 2.0</b>один точный расчёт: сила по каждому упражнению по всем тренировкам и твоим «Легко/Норм/Тяжело». Вес под любой диапазон повторов, прибавка по стажу, без скачков. Под весом — понятная причина</p></div>
@@ -6104,6 +6105,90 @@ vGym=function(){_vGym35.apply(this,arguments);try{if(session)return;const app=do
  let h="";if(C)h=`<div class="cal35"><b>🎯 Неделя замера</b><span>Осталось замерить ${C.left} из ${C.all} упражнений. В каждом новом упражнении 1-й подход пробный: подбери вес на ~10 повторов с запасом 2 и отметь «Легко / Норм / Тяжело» — остальные подходы и будущие веса тренер выставит сам.</span><i style="width:${Math.round((1-C.left/C.all)*100)}%"></i></div>`;
  else if(DB.calibDone&&DB.calibDone>=dkAgo(3))h=`<div class="cal35 ok"><b>✅ Замер завершён</b><span>Все стартовые веса выставлены по твоим подходам. Дальше — прогрессия.</span></div>`;
  if(!h)return;const at=app.querySelector(".bento")||app.querySelector(".sec");if(at)at.insertAdjacentHTML("beforebegin",h);}catch(e){}};
+
+/* ===== v36: Чат 2.0 — опечатки и английская раскладка, личные ответы по твоим цифрам, разбор программы, «возможно, ты имел в виду» ===== */
+/* --- словарь для исправления опечаток --- */
+const KW36="хочу хотел нужно можно надо большие больше большой меньше маленький сделать сделал делаю делал каждый каждую первый последний сильнее сильный быстрее медленно нормально хорошо плохо тяжело легко сегодняшняя завтрашняя накачать увеличить уменьшить убрать добавить включить выключить открыть покажи расскажи объясни подскажи посоветуй помоги сколько какой какая какое какие когда где зачем почему потому который которая было будет болят болело тянет ноет хрустит щелкает жжет устал устала утром вечером днем неделе месяц месяца недели дней сегодня завтра вчера тренировка тренировки программа программу неделя тяжелая легкая рекорд рекорды прогресс максимум растет растут болит больно плечо плечи колено колени поясница спина локоть локти запястье заменить замени поменять техника правильно выполнять делать сколько подходов повторов отдыхать отдых весит вес похудеть калории белок углеводы жиры съел выпил вода воды восстановление восстановились плато предел разгрузка тест программы отстает отстают подтяни приоритет почему такой какой какие лучше лучшее сравни грудь грудные спину широчайшие бицепс трицепс дельты ноги квадрицепс ягодицы икры пресс трапеции предплечья жим тяга присед подтягивания брусья махи разводка сведение гантели штанга блок тренажер гакк хаммер смит устал выспался минут мотивация оцени анализ улучшить совет советы шагов кардио меню рецепт завтрак обед ужин перекус цель вешу".split(" ");
+let VOC36=null;
+function voc36(){if(VOC36)return VOC36;const s=new Set(KW36);const add=t=>nz(t).split(/[\s,.()«»-]+/).forEach(w=>{if(w.length>=4&&!/\d/.test(w))s.add(w);});
+ Object.keys(EX).forEach(k=>add(EX[k].n));try{Object.keys(F).forEach(k=>add(F[k].n));}catch(e){}GNAMES.forEach(add);try{Object.keys(SYN).forEach(add);Object.keys(FSYN).forEach(add);}catch(e){}return VOC36=[...s];}
+function lev36(a,b,max){if(Math.abs(a.length-b.length)>max)return max+1;const m=a.length,n=b.length;let p=Array(n+1).fill(0).map((_,j)=>j);
+ for(let i=1;i<=m;i++){const c=[i];let mn=i;for(let j=1;j<=n;j++){c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));if(c[j]<mn)mn=c[j];}if(mn>max)return max+1;p=c;}return p[n];}
+/* английская раскладка → русская («ghbdtn» → «привет») */
+const LAY36={q:"й",w:"ц",e:"у",r:"к",t:"е",y:"н",u:"г",i:"ш",o:"щ",p:"з","[":"х","]":"ъ",a:"ф",s:"ы",d:"в",f:"а",g:"п",h:"р",j:"о",k:"л",l:"д",";":"ж","'":"э",z:"я",x:"ч",c:"с",v:"м",b:"и",n:"т",m:"ь",",":"б",".":"ю","`":"ё"};
+function layout36(q){const lat=(q.match(/[a-z\[\];',.`]/gi)||[]).length,cyr=(q.match(/[а-яё]/gi)||[]).length;if(lat<4||cyr>lat)return q;return q.split("").map(ch=>{const l=LAY36[ch.toLowerCase()];return l?(ch!==ch.toLowerCase()?l.toUpperCase():l):ch;}).join("");}
+function fix36(q){let s=layout36(String(q||""));const V=voc36(),set=new Set(V);const ws=nz(s).split(" ");let ch=0;
+ const out=ws.map(w=>{if(w.length<5||/\d/.test(w)||set.has(w))return w;if(V.some(v=>v.startsWith(w)||w.startsWith(v)&&v.length>=5))return w;const max=w.length>=9?2:1;let best=null,bd=max+1;
+  for(const v of V){if(v.slice(0,2)!==w.slice(0,2))continue;const d=lev36(w,v,max);if(d<bd){bd=d;best=v;if(d===1&&max===1)break;}}if(best&&bd<=max){ch++;return best;}return w;});
+ return{t:ch?out.join(" "):nz(s),fixed:ch>0||s!==q};}
+/* --- помощники --- */
+function d36(d){return `${String(d).slice(8,10)}.${String(d).slice(5,7)}`;}
+function progItem36(id){for(let di=0;di<W().days.length;di++){const x=itemsFor(di).find(y=>y.id===id);if(x)return Object.assign({},x,{di});}const f=findItem(id);return f?Object.assign({},f,{id}):null;}
+function grpOf36(t){const g=lagGroupOf(t);if(g)return g;if(/трапец/.test(t))return"Трапеции";if(/икр/.test(t))return"Икры";if(/пресс|живот/.test(t))return"Пресс";if(/предплеч/.test(t))return"Предплечья";if(/передн.*дельт/.test(t))return"Передняя дельта";return null;}
+function curProg36(){const P=WEEKS.map(w=>({days:w.days.map((d,di)=>({t:d.t,items:(d.items||[]).map(x=>Object.assign({},x,{id:swapOf(x.id)}))}))}));return P;}
+function cfg36(){return Object.assign(cfg31(),{days:Object.keys(DMAP).map(Number)});}
+/* прогресс по упражнению */
+function progress36(id){const e=EX[id],l=DB.log[id]||[];if(!l.length){const it=progItem36(id);const n=it?nextW(it):null;return{t:`<b>${e.n}</b>\nЕщё не делал.${n&&n.w?` Стартовый вес: ${wTxt32(e,n.w)} (${n.seed?"по тесту":"по похожим упражнениям"}).`:" Первый подход будет пробным — дальше веса выставлю сам."}`};}
+ const T=eqT32(e),S=str34(id),now=S?S.e1:0;const at=d=>{const x=l.filter(y=>y.d<=d).slice(-1)[0];return x?sessE1(id,x,T):0;};const w4=at(dkAgo(28)),w8=at(dkAgo(56));
+ const pc=(a,b)=>b?`${a>=b?"+":""}${Math.round((a-b)/b*1000)/10}%`.replace(".",","):"";const last=l[l.length-1],ws=last.sets.filter(s=>!s.warm&&!s.drop);
+ const it=progItem36(id),n=it?nextW(it):null,sg=it?suggestion(it):null;const P=(DB.plat||{})[id];
+ const shown=v=>T==="bw"?`${Math.round(v)} кг с тобой`:T==="assist"?`тянешь ${Math.round(v)} кг`:`${Math.round(v)} кг${T==="db"?" на гантель":""}`;
+ return{t:`<b>${e.n}</b>\nРасчётный максимум: <b>${shown(now)}</b>${w4?` · за 4 недели ${pc(now,w4)}`:""}${w8?` · за 8 недель ${pc(now,w8)}`:""}\nПоследний раз ${d36(last.d)}: ${ws.map(s=>`${s.w}×${s.r}${s.rpe==="easy"?"😎":s.rpe==="hard"?"🥵":""}`).join(", ")}\nТренировок: ${l.length} · лучший рабочий вес ${fk(bestOf(id))}${P?`\n🔄 Плато: ${P.n} из 3 тренировок в новом диапазоне`:plateau(id)?"\n🧱 3 тренировки без роста — в ближайшую включу протокол плато":""}${n&&n.w?`\n\n<b>Следующий раз:</b> ${wTxt32(e,n.w)} × ${it.r}${sg?`\n${String(sg.t).replace(/<[^>]+>/g,"")}`:""}`:""}`,a:[A("Открыть упражнение",`chatClose();exDetail('${id}')`)]};}
+/* разбор программы */
+function review36(){const c=cfg36(),P=curProg36();let Q=null;try{Q=quality33(P,c);}catch(e){}const rec=[];const vol={};P[0].days.forEach(d=>d.items.forEach(x=>{const g=grp(EX[x.id]);vol[g]=(vol[g]||0)+x.s;}));
+ BIG31.forEach(g=>{const[lo,hi]=rng33(g,c),v=vol[g]||0;if(v<lo)rec.push(`${g}: ${v} подходов в неделю при норме ${lo}–${hi} — добавь подход в первом упражнении на неё или упражнение.`);else if(v>hi+3)rec.push(`${g}: ${v} подходов — больше, чем успеешь восстановить (${lo}–${hi}). Можно убрать подход.`);});
+ const push=PUSH.reduce((a,g)=>a+(vol[g]||0),0),pull=PULL.reduce((a,g)=>a+(vol[g]||0),0);if(pull<push*.9)rec.push(`Тяг (${pull}) меньше жимов (${push}) — для здоровья плеч добавь тягу каната к лицу или тягу к поясу.`);
+ try{const L=lagFind();if(L.list.length)rec.push(`Отстаёт по силе: ${L.list.map(g=>LAGN[g]).join(", ")} — уже даю +1 подход.`);}catch(e){}
+ const pl=Object.keys(DB.plat||{}).filter(id=>EX[id]);if(pl.length)rec.push(`В протоколе плато: ${pl.map(id=>EX[id].n).join(", ")}.`);
+ const long=P[0].days.map(d=>estMin(d.items)).filter(m=>m>100);if(long.length)rec.push(`Есть тренировки дольше 100 минут — к концу падает качество. Пересобери программу на 75–90 минут.`);
+ return{t:`<b>Разбор твоей программы</b>${Q?`\nОценка: <b>${Q.score}/100</b>\n${Object.keys(Q.parts).map(k=>`• ${k}: ${Math.max(0,Math.round(Q.parts[k]*100))}`).join("\n")}`:""}\n\n<b>Что улучшить:</b>\n${rec.length?rec.slice(0,6).map((r,i)=>`${i+1}. ${r}`).join("\n"):"Программа сбалансирована — менять нечего. Главное сейчас: регулярность и прогрессия весов."}`,a:[A("Пересобрать по тесту","chatClose();genOpen()")]};}
+/* объём по мышце */
+function volume36(g){const c=cfg36(),[lo,hi]=rng33(g,c);const rows=WEEKS.map(w=>{let v=0;const ex=[];w.days.forEach(d=>(d.items||[]).forEach(x=>{const id=swapOf(x.id);if(grp(EX[id])===g){v+=x.s;ex.push(`${EX[id].n} ${x.s}×${x.r}`);}}));return{w,v,ex};});
+ return{t:`<b>${g}: подходов в неделю</b>\n${rows.map(r=>`${r.w.short||r.w.name}: <b>${r.v}</b>${r.ex.length?` — ${r.ex.join("; ")}`:""}`).join("\n")}\nНорма для тебя: ${lo}–${hi}. ${rows[0].v<lo?"Мало — скажи «подтяни "+g.toLowerCase()+"», дам +1 подход.":rows[0].v>hi+3?"Многовато для восстановления.":"В норме."}`};}
+/* чем заменить */
+function swap36(id){const it=progItem36(id);const e=EX[id];const used=[];W().days.forEach((d,di)=>itemsFor(di).forEach(x=>used.push(x.id)));const al=altsFor(id,{exclude:used}).slice(0,5);
+ if(!al.length)return{t:`Для «${e.n}» нет подходящих замен.`};
+ return{t:`<b>Замена для «${e.n}»</b> — сверху самые похожие:\n${al.map((a,i)=>`${i+1}. ${EX[a].n} — ${simTag(id,a)[0]}`).join("\n")}${it?"":"\n(Этого упражнения нет в программе — просто для справки.)"}`,a:it?al.slice(0,3).map(a=>A(EX[a].n,`doSwap('${it.orig||id}','${a}');chatSay('Готово: «${EX[a].n.replace(/'/g,"")}» вместо «${e.n.replace(/'/g,"")}». История сохранилась.')`)):[]};}
+/* --- намерения для подсказок «возможно, ты имел в виду» --- */
+const INT36=[["Что сегодня?","что сегодня тренировка план какая"],["Разбор моей программы","оцени программу анализ улучшить разбор совет"],["Прогресс в жиме лёжа","прогресс динамика растет сила жим"],["Почему такой вес?","почему такой вес откуда"],["Чем заменить жим лёжа?","заменить замена поменять вместо"],["Сколько подходов на грудь?","сколько подходов объем неделю мышцу"],["Что отстаёт?","отстает слабое отстающие"],["Мои рекорды","рекорды лучшие максимум"],["Что съесть?","съесть еда белок калории"],["Болит плечо","болит боль травма плечо колено"],["У меня 45 минут","минут время мало успею"],["Устал, не выспался","устал выспался сил"],["Когда дойду до 95?","похудеть вес прогноз когда"],["У меня плато","плато застрял стоит предел"],["Пройти тест","тест программа выбрать составить"],["Как считать вес гантелей","гантели блины блок шаг"]];
+function guess36(t){const ws=stems(t);if(!ws.length)return[];return INT36.map(([l,k])=>{const ks=k.split(" ");let s=0;ws.forEach(w=>{if(ks.some(x=>x.startsWith(w.slice(0,4))||w.startsWith(x.slice(0,4))))s++;});return[l,s];}).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]);}
+/* --- главный обработчик --- */
+const _brain36=brain;
+brain=function(q){const F=fix36(q),t=F.t,qq=F.fixed?t:q;let r=null;
+ try{
+  if(/^(спасибо|благодарю|спс|пасиб)/.test(t))return{t:"Всегда пожалуйста 💪 Пиши, если что-то нужно."};
+  if(/кто ты|что ты такое|ты кто/.test(t))return{t:"Я твой тренер в приложении: знаю всю твою историю, программу, веса и питание. Работаю без интернета и без ИИ — на правилах тренировок и твоих цифрах."};
+  if(/(оцени|разбери|разбор|анализ|проанализируй|что улучшить|как улучшить|совет).*(программ|тренировк|план)|^(оцени|разбор|анализ)$|что не так с программ/.test(t))return review36();
+  {const m=t.match(/(\d+)\s*мин/);if(m&&/у меня|есть|только|успею|времени|мало|осталось/.test(t)){const v=+m[1],b=v<=50?45:v<=67?60:v<=82?75:0;DB.budgetNext=b;save();const nd=nextDay(),full=dayMeta(nd.di).mins;
+   return{t:b?`Сделаю ближайшую тренировку на ${b} минут вместо ${full}: база и приоритетные мышцы останутся, лишние подходы и изоляцию уберу. Уже отмечено в вопросе перед стартом.`:`${v} минут хватит на полную тренировку (~${full} мин).`};}}
+  if(/хочу|накачать|увеличить|сделать больше|подкачать/.test(t)&&/больш|накач|увелич|подкач|массив|объ[её]м/.test(t)){if(/рук/.test(t)&&!/предплеч/.test(t)){_brain36("подтяни бицепс");const r3=_brain36("подтяни трицепс");return{t:r3.t.replace(/^Готово: <b>трицепс<\/b>/,"Готово: <b>бицепс и трицепс</b>")+"\nПлюс: в первом упражнении на руки добирай верх диапазона — это главный сигнал роста.",a:r3.a};}
+  const g=grpOf36(t);if(g){const r2=_brain36("подтяни "+(LAGN[g]||g.toLowerCase()));return{t:r2.t+`
+Плюс: старайся добирать верх диапазона в первом упражнении на ${(LAGN[g]||g).toLowerCase()} — это главный сигнал роста.`,a:r2.a};}}
+  const id=findEx(qq);
+  if(id&&/прогрес|динамик|раст[её]т|как.*(идет|успехи)|сила в|максимум|на раз|1пм|разовый/.test(t))return progress36(id);
+  if(/почему/.test(t)&&/вес|столько|кг|так мало|так много/.test(t)){const x=id?progItem36(id):(()=>{const nd=nextDay();return itemsFor(nd.di)[0];})();if(x){const s=suggestion(x),n=nextW(x);return{t:`<b>${EX[x.id].n}</b>: ${n&&n.w?wTxt32(EX[x.id],n.w):"вес подберём на пробном подходе"} × ${x.r}\n${s?String(s.t).replace(/<[^>]+>/g,""):"Это первый раз: 1-й подход пробный, по нему рассчитаю остальные."}\n\nКак я считаю: беру твой расчётный максимум по последним тренировкам (последние весят больше, учитываю «Легко/Тяжело»), целюсь в середину диапазона с запасом ${x.rir||"1–2"}, округляю до реальных весов зала и не прыгаю больше чем на 5 % за раз.`,a:[A("Прогресс",`chatAsk('прогресс ${EX[x.id].n.replace(/'/g,"")}')`)]};}}
+  if(id&&/замен|поменя|вместо|альтернатив|аналог/.test(t))return swap36(id);
+  if(/сколько.*(подход|объ[её]м)|объ[её]м.*(на|по)/.test(t)){const g=grpOf36(t);if(g)return volume36(g);}
+  if(id&&/сколько.*(отдых|повтор|подход)|отдых.*между/.test(t)){const x=progItem36(id);if(x)return{t:`<b>${EX[id].n}</b> в программе: ${x.s} × ${x.r}, отдых ${x.rest||60} с, запас ${x.rir||"1–2"} повтора${x.drop?", последний — дроп-сет":""}.`};}
+  if(/когда.*(груд|спин|ног|плеч|рук|бицепс|трицепс)/.test(t)){const g=grpOf36(t);if(g){const nd=nextDay();for(let k=0;k<7;k++){const dw=(new Date().getDay()+k)%7;if(!(dw in DMAP))continue;const di=DMAP[dw];if(itemsFor(di).some(x=>grp(EX[x.id])===g)){return{t:`${g} — ${k===0?"сегодня":k===1?"завтра":"в "+DN19[dw].toLowerCase().replace(/среда$/,"среду").replace(/пятница$/,"пятницу").replace(/суббота$/,"субботу")}: «${W().days[di].t.toLowerCase()}».`};}}}}
+  r=_brain36(qq);
+ }catch(e){r=null;}
+ if(!r)r=_brain36(q);
+ if(r&&/^Не совсем понял/.test(r.t)){const g=guess36(t);if(g.length)r={t:`Не уверен, что понял${F.fixed?` («${t}»)`:""}. Возможно, ты имел в виду:`,a:g.map(s=>A(s,`chatAsk('${s}')`))};}
+ else if(r&&F.fixed&&layout36(q)!==q)r=Object.assign({},r,{t:`<span class="dim">(понял как: «${t}»)</span>\n`+r.t});
+ return r;};
+/* подсказки — по твоей ситуации */
+const _sugg36=sugg;
+sugg=function(){const a=["Что сегодня?","Разбор моей программы"];try{const nd=nextDay();const x=itemsFor(nd.di)[0];if(x)a.push(`Почему такой вес: ${EX[x.id].n.toLowerCase()}?`);
+ const L=lagFind();if(L.list.length)a.push("Что отстаёт?");if(Object.keys(DB.plat||{}).length)a.push("У меня плато");
+ const ids=Object.keys(DB.log||{}).filter(id=>EX[id]).sort((p,q)=>(DB.log[q]||[]).length-(DB.log[p]||[]).length);if(ids[0])a.push(`Прогресс ${EX[ids[0]].n.toLowerCase()}`);}catch(e){}
+ return[...new Set(a.concat(_sugg36()))].slice(0,9);};
+/* замены всегда учитывают твои суставы из теста */
+let _inj36k=null,_inj36=[];
+function userInj36(){const c=DB.gen&&DB.gen.cfg;const k=c?JSON.stringify([c.j_sh,c.j_el,c.j_wr,c.j_lb,c.j_kn,c.inj]):"def";if(k!==_inj36k){_inj36k=k;const x=cfg31();sync35(x);_inj36=x.inj||[];}return _inj36;}
+const _alts36=altsFor;
+altsFor=function(id,o){o=Object.assign({},o||{});if(!o.inj)o.inj=userInj36();let r=_alts36(id,o);if(!r.length&&o.inj.length){const extra=_alts36(id,Object.assign({},o,{inj:[]})).filter(a=>!r.includes(a));r=r.concat(extra);}return r;};
+try{PAINRE.lb=new RegExp(PAINRE.lb.source+"|т-грифа стоя|становая|доброе утро","i");PAINRE.kn=new RegExp(PAINRE.kn.source+"|пистолет|прыжк","i");}catch(e){}
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
