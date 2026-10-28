@@ -1119,6 +1119,33 @@ textarea.cx-i{resize:vertical;min-height:96px}
 .fx-in:has(.rpe20) .fx-inp{margin-bottom:8px}
 .rpe20{width:100%;align-self:stretch}
 
+#fab21{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 96px);z-index:40;display:flex;align-items:center;gap:6px;padding:10px 16px 10px 12px;border-radius:999px;border:1px solid rgba(59,240,106,.5);background:rgba(13,26,22,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--lime);font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.03em;box-shadow:0 10px 30px -10px rgba(59,240,106,.6);cursor:pointer;animation:fab21 3s ease-in-out infinite}
+#fab21 span{font-size:20px}
+@keyframes fab21{50%{box-shadow:0 10px 36px -6px rgba(59,240,106,.9)}}
+#chat21{position:fixed;inset:0;z-index:110;display:none;background:rgba(4,10,8,.6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#chat21.on{display:flex;align-items:flex-end;justify-content:center;animation:fd .25s}
+.ch-in{width:100%;max-width:560px;height:94vh;height:94dvh;display:flex;flex-direction:column;border-radius:28px 28px 0 0;background:radial-gradient(90% 40% at 50% 0%,rgba(59,240,106,.14),transparent 70%),#0B1612;border:1px solid rgba(59,240,106,.25);border-bottom:0;animation:up .45s cubic-bezier(.2,.9,.3,1);overflow:hidden}
+.ch-top{display:flex;align-items:center;gap:12px;padding:16px 16px 12px;border-bottom:1px solid var(--line)}
+.ch-av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:rgba(59,240,106,.15);box-shadow:0 0 0 2px rgba(59,240,106,.4),0 0 24px rgba(59,240,106,.35)}
+.ch-top div:nth-child(2){flex:1}.ch-top b{display:block;font-family:var(--cond);font-weight:700;font-size:20px}.ch-top span{font-size:12px;color:var(--lime)}
+.ch-top button{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;font-size:16px}
+.ch-list{flex:1;overflow-y:auto;padding:14px 14px 6px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
+.ch-m{max-width:86%;animation:stg .35s cubic-bezier(.2,.85,.25,1) both}
+.ch-m>div:first-child{padding:11px 14px;border-radius:20px;font-size:14.5px;line-height:1.45}
+.ch-m.b{align-self:flex-start}.ch-m.b>div:first-child{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);border-bottom-left-radius:6px}
+.ch-m.u{align-self:flex-end}.ch-m.u>div:first-child{background:var(--lime);color:#06100D;font-weight:500;border-bottom-right-radius:6px}
+.ch-m b{color:var(--lime)}
+.ch-a{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ch-a button{padding:9px 13px;border-radius:999px;border:1px solid rgba(59,240,106,.45);background:rgba(59,240,106,.08);color:var(--lime);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.typing>div{display:flex;gap:4px;padding:14px 16px!important}.typing i{width:7px;height:7px;border-radius:50%;background:var(--dim);animation:ty 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes ty{50%{transform:translateY(-4px);background:var(--lime)}}
+.ch-sug{display:flex;gap:6px;overflow-x:auto;padding:8px 14px;scrollbar-width:none}.ch-sug::-webkit-scrollbar{display:none}
+.ch-sug button{flex:0 0 auto;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--tx);font:inherit;font-size:12.5px;white-space:nowrap}
+.ch-bar{display:flex;gap:8px;padding:8px 12px calc(env(safe-area-inset-bottom) + 12px)}
+.ch-bar input{flex:1;min-width:0;padding:14px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--tx);font:inherit;font-size:16px}
+.ch-go,.ch-mic{flex:0 0 48px;height:48px;border-radius:50%;border:0;background:var(--lime);color:#06100D;font-size:20px;font-weight:700}
+.ch-mic{background:rgba(255,255,255,.08);color:#fff}.ch-mic.rec{background:#FF6A5A;animation:dpulse 1s infinite}
+
 </style>
 </head>
 <body>
@@ -4067,7 +4094,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="20";
+const APPV="21";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4079,6 +4106,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>💬</i><p><b>«Спроси тренера»</b>кнопка справа внизу: пиши или говори как другу — «что сегодня», «сколько жал», «что съесть», «болит плечо», «замени гакк». Отвечает по твоим данным и сам меняет программу</p></div>
  <div><i>😎</i><p><b>«Как прошёл подход?»</b>Легко / Норм / Тяжело вместо цифр — тренер сам решит, прибавлять ли вес и сколько отдыхать</p></div>
  <div><i>🪜</i><p><b>Разминочная лесенка</b>перед базой: 50 % × 8 → 70 % × 4 → 85 % × 1, всё посчитано</p></div>
  <div><i>📋</i><p><b>План на тренировку</b>на главной: веса, прибавки и вероятные рекорды</p></div>
@@ -4806,9 +4834,98 @@ vGym=function(){_vGym20.apply(this,arguments);if(session)return;const f=forecast
  ${f.rows.map(r=>`<div class="pl20-r"><b>${r.n}</b><span>${r.w?fmtKg(r.w)+" кг × ":""}${r.r}</span>${r.tag?`<em class="${r.tag}">${T[r.tag]}</em>`:""}</div>`).join("")}
  <p>Веса посчитаны по прошлым тренировкам. В зале их поправит сам тренер.</p></div>`);};
 
+/* ===== v21: «Спроси тренера» — чат, который знает все твои данные и сам делает действия ===== */
+const CH={msgs:[],open:false};
+const nz=t=>String(t||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9%,.\s-]/g," ").replace(/\s+/g," ").trim();
+const stems=t=>nz(t).split(/[\s-]+/).filter(w=>w.length>2&&!/^(как|что|мой|мне|для|сколько|был|было|раз|прошлый|последний|делал|жал|поднимал|техника|делать|покажи|замени|поменяй|рекорд|вес|кг|это|такое|упражнение|упражнения)$/.test(w)).map(w=>{const x=w.replace(/(ами|ями|ого|его|ому|ему|ыми|ими|ая|яя|ую|юю|ой|ей|ий|ый|ом|ем|ах|ях|ов|ев|а|я|у|ю|ы|и|е|о|ь)$/,"");return (x.length>=3?x:w).slice(0,5);});
+const SYN={"жим лежа":"bp","жим штанги":"bp","скамь":"bp","подтяг":"pullup_w","гакк":"hack","жим ногами":"leg_press","т-гриф":"tbar","тгриф":"tbar","мост":"hip_thrust","махи":"lat_db","бицепс":"ez","брусья":"dips_tri","французск":"fr_press","шраг":"shrug_db"};
+function findEx(q){const t=nz(q);for(const k in SYN)if(t.includes(k)&&EX[SYN[k]]){const inProg=W().days.some(d=>itemsFor(W().days.indexOf(d)).some(x=>x.id===SYN[k]));if(inProg||DB.log[SYN[k]])return SYN[k];}
+ const qs=stems(q);if(!qs.length)return null;const prog=new Set();W().days.forEach((d,i)=>itemsFor(i).forEach(x=>prog.add(x.id)));let best=null,bs=0;
+ Object.keys(EX).forEach(id=>{const ns=stems(EX[id].n);let s=0;qs.forEach(a=>{if(ns.some(b=>b.startsWith(a)||a.startsWith(b)))s+=1;});if(!s)return;s=s/qs.length*10+(prog.has(id)?3:0)+(DB.log[id]?2:0)-ns.length*0.1;if(s>bs){bs=s;best=id;}});
+ return bs>=6?best:null;}
+const fk=v=>fmtKg(v)+" кг";
+function A(label,js){return {l:label,js};}
+/* --- мозг: намерение → ответ --- */
+function brain(q){const t=nz(q);const T=target();let r;
+ if(!t)return{t:"Напиши или надиктуй вопрос."};
+ if(/^(привет|здаров|хай|ку)|помощ|что умеешь|что ты умеешь/.test(t))return help();
+ if(/болит|боль|травм|потянул|ноет/.test(t)){const z=/плеч/.test(t)?"sh":/поясн|спин/.test(t)?"lb":/колен/.test(t)?"kn":null;
+  const pn={sh:"Плечо",lb:"Поясница",kn:"Колено"}[z];const P=PAIN.find(p=>pn&&p[0].startsWith(pn.slice(0,5)));
+  if(z){DB.painNext=[z];save();}
+  return{t:(z?`Понял, болит ${pn.toLowerCase()}. На ближайшей тренировке я сам заменю всё, что его нагружает, — отметка уже стоит в вопросе перед стартом.`:"Где болит: плечо, поясница или колено?")+(P?`\n\n<b>Что делать:</b> ${P[1]}\n<b>Нельзя:</b> ${P[2]}\n<b>${P[3]}</b>`:""),a:z?[A("Отменить отметку","DB.painNext=null;save();chatSay('Отметку убрал.')")]:[A("Плечо","chatAsk('болит плечо')"),A("Поясница","chatAsk('болит поясница')"),A("Колено","chatAsk('болит колено')")]};}
+ if(/(\d+)\s*мин/.test(t)&&/(есть|только|успею|у меня|времени|мало)/.test(t)){const m=+t.match(/(\d+)\s*мин/)[1];const b=m<=50?45:m<=67?60:m<=82?75:0;DB.budgetNext=b;save();
+  const nd=nextDay();const full=dayMeta(nd.di).mins;return{t:b?`Сделаю тренировку на ${b} минут вместо ${full}: база останется, лишнее уберу. Уже выбрано в вопросе перед стартом.`:`${m} минут хватит на полную тренировку (~${full} мин).`};}
+ if(/не выспал|устал|нет сил|разбит|плохо спал|болею|заболел/.test(t)){DB.tiredNext=1;save();return{t:"Ок, сегодня лёгкий режим: веса на 10 % ниже, без отказа. Отметка уже стоит перед стартом. Если болеешь с температурой — пропусти, серия не пострадает, если сделаешь хоть одну тренировку на неделе."};}
+ if(/что такое|что значит|означает/.test(t)){const g=GLOSS.find(x=>t.includes(nz(x[0]).slice(0,6)));if(g)return{t:`<b>${g[0]}</b> — ${g[1]}`};}
+ if(/как делать|техник|как правильно|как выполнять/.test(t)){const id=findEx(q);if(id){const e=EX[id];const st=(e.steps&&e.steps.length?e.steps:[e.t]).map((s,i)=>`${i+1}. ${s}`).join("\n");return{t:`<b>${e.n}</b>\n${st}${e.tip?`\n\n<b>Для тебя:</b> ${e.tip}`:""}`,a:[A("Открыть карточку",`chatClose();exDetail('${id}')`)]};}}
+ if(/замени|поменя|не нравится|нет тренажер|нету тренажер/.test(t)){const id=findEx(q);if(id){let orig=null;W().days.forEach((d,di)=>itemsFor(di).forEach(x=>{if(x.id===id)orig=x.orig||x.id;}));
+  if(!orig)return{t:`«${EX[id].n}» сейчас нет в программе.`};const e=EX[id];const used=[];W().days.forEach((d,di)=>itemsFor(di).forEach(x=>used.push(x.id)));
+  const al=(e.alt||[]).concat(Object.keys(EX).filter(k=>grp(EX[k])===grp(e)&&EX[k].img)).filter((a,i,arr)=>EX[a]&&!used.includes(a)&&arr.indexOf(a)===i).slice(0,3);
+  return{t:`Чем заменить «${e.n}»? Лучшие варианты на ту же мышцу:`,a:al.map(a=>A(EX[a].n,`doSwap('${orig}','${a}');chatSay('Готово: «${EX[a].n.replace(/'/g,"")}» теперь в программе вместо «${e.n.replace(/'/g,"")}». История сохранилась.')`))};}}
+ if(/сегодня|завтра|какая тренировк|что за тренировк|план|расписан|когда тренировк/.test(t)&&!/съесть|ед[аы]|калор/.test(t)){const nd=nextDay();const d=W().days[nd.di];const it=itemsFor(nd.di);const m=dayMeta(nd.di);
+  const when=nd.off===0?"Сегодня":nd.off===1?"Завтра":`Через ${nd.off} ${pl(nd.off,"день","дня","дней")}`;
+  const rows=it.map(x=>{const n=nextW(x);const w=n?n.w:(lastLog(x.id)?0:stW(x));return `• ${EX[x.id].n} — ${x.s}×${x.r}${w?`, ${fk(w)}`:""}${n&&n.k==="up"?" ⬆":""}`;}).join("\n");
+  return{t:`<b>${when}: ${d.t[0]+d.t.slice(1).toLowerCase()}</b> · ${W().short.toLowerCase()} неделя · ~${m.mins} мин\n${rows}`,a:nd.off<=0?[A("Начать тренировку",`chatClose();openDay(${nd.di},1)`)]:[]};}
+ if(/рекорд/.test(t)&&!findEx(q)){const ids=Object.keys(DB.log||{}).filter(id=>EX[id]&&bestOf(id)>0).sort((a,b)=>best1rm(b)-best1rm(a)).slice(0,6);
+  if(!ids.length)return{t:"Рекордов пока нет — после первой тренировки начну считать."};return{t:"<b>Твои рекорды</b> (рабочий вес · расчётный максимум):\n"+ids.map(id=>`• ${EX[id].n} — ${fk(bestOf(id))} · ${best1rm(id)} кг`).join("\n")};}
+ if(/(сколько|последн|прошл|какой вес|каким весом|рекорд|прогресс по|результат)/.test(t)){const id=findEx(q);if(id){const l=DB.log[id]||[];const e=EX[id];
+  if(!l.length){const w=stW({id});return{t:`«${e.n}» ты ещё не делал.${w?` Начни с ${fk(w)} — дальше я подстрою сам.`:""}`};}
+  const last=l[l.length-1],n=nextW({id,hi:0,lo:0});const ws=last.sets.filter(s=>!s.warm&&!s.drop);
+  const s1=e1series(id);const tr=s1.length>=2?s1[s1.length-1].v-s1[0].v:0;
+  return{t:`<b>${e.n}</b>\nПоследний раз (${String(last.d).slice(8,10)}.${String(last.d).slice(5,7)}): ${ws.map(s=>`${s.w}×${s.r}`).join(", ")}\nЛучший вес: ${fk(bestOf(id))} · расчётный максимум ${best1rm(id)} кг${tr?`\nЗа всё время: ${tr>0?"+":""}${tr} кг к максимуму`:""}${plateau(id)?"\n⚠ Плато — на тренировке заменю на похожее.":""}`,a:[A("Открыть историю",`chatClose();exDetail('${id}')`)]};}}
+ if(/вес|похуд|95|сброс|худе|прогноз|когда дойду/.test(t)){const b=(DB.bw||[]).slice().sort((x,y)=>x.d<y.d?-1:1);if(!b.length)return{t:"Запиши вес во вкладке «Прогресс» — и я посчитаю темп и прогноз."};
+  const last=b[b.length-1],r=wRate(16),fc=forecast();return{t:`Сейчас ${String(last.w).replace(".",",")} кг (с ${String(b[0].d).slice(8,10)}.${String(b[0].d).slice(5,7)}: ${(last.w-b[0].w>0?"+":"")+(Math.round((last.w-b[0].w)*10)/10).toString().replace(".",",")} кг).${r!==null?`\nТемп: ${rateTxt(r)}.`:""}${fc?`\nПрогноз: ${fc}.`:""}\nЦель — 95 кг, идеальный темп 0,5–0,8 кг в неделю.`};}
+ if(/съесть|поесть|перекус|ужин|завтрак|обед|что есть|белк|калор|кбжу|осталось/.test(t)){const c=calc(allItems()),lk=Math.max(0,T.k-c.k),lp=Math.max(0,T.p-c.p);
+  let txt=`Сегодня: ${c.k} из ${T.k} ккал, белок ${c.p} из ${T.p} г.\nОсталось ${lk} ккал и ${lp} г белка.`;const acts=[];
+  if(/съесть|поесть|перекус|ужин|завтрак|обед|что есть/.test(t)||lp>20){const opts=[["cottage0",250],["chick",200],["tuna_can",185],["egg_wh",6],["kefir1",500],["turkey",200],["cod",250],["cottage5",200]].filter(([id])=>F[id]);
+   const pick=opts.map(([id,g])=>{const x=calc([[id,g]]);return{id,g,x,sc:x.p*4-Math.max(0,x.k-lk)*0.5};}).filter(o=>o.x.k<=lk+80).sort((a,b)=>b.sc-a.sc).slice(0,3);
+   if(pick.length){txt+=`\n\n<b>Чтобы добрать белок:</b>\n`+pick.map(o=>`• ${F[o.id].n} — ${F[o.id].unit?o.g+" шт":o.g+" г"}: ${o.x.p} г белка, ${o.x.k} ккал`).join("\n");pick.forEach(o=>acts.push(A(`+ ${F[o.id].n.split(",")[0]}`,`chatAddFood('${o.id}',${o.g})`)));}}
+  return{t:txt,a:acts};}
+ if(/восстанов|отдохнул|готов|можно ли/.test(t)){const rc=recov();const ls=GNAMES.filter(g=>rc[g]).sort((a,b)=>rc[a].p-rc[b].p);if(!ls.length)return{t:"Все мышцы отдохнули — можно работать в полную силу."};
+  return{t:"<b>Восстановление:</b>\n"+ls.slice(0,7).map(g=>`• ${g} — ${rc[g].p}%${rc[g].p<100?` (ещё ~${rc[g].h} ч)`:""}`).join("\n")};}
+ if(/плато|не раст|застрял|стоит на месте/.test(t)){const pls=Object.keys(DB.log||{}).filter(id=>EX[id]&&plateau(id));return{t:pls.length?`Плато сейчас: ${pls.map(id=>EX[id].n).join(", ")}. На тренировке я сам поставлю замену на похожее упражнение — новая нагрузка сдвинет вес.`:"Плато нет — все упражнения растут или ещё мало данных."};}
+ if(/разгрузк/.test(t))return{t:isDeload()?"Эта неделя — разгрузка: подходов вдвое меньше, вес −10 %.":DB.dlNext&&weekNow()<DB.dlNext?`Разгрузка на следующей неделе: ${DB.dlWhy}.`:`Плановая разгрузка — на ${Math.ceil(weekNow()/9)*9}-й неделе. Если устанешь раньше, я включу её сам.`};
+ if(/сери/.test(t))return{t:`Серия: ${streakWeeks()} ${pl(streakWeeks(),"неделя","недели","недель")} подряд, лучшая — ${bestStreak15()}. Всего тренировок: ${DB.hist.length}.`};
+ const id=findEx(q);if(id)return brain("сколько "+q);
+ return{t:"Не совсем понял. Вот что можно спросить:",a:sugg().map(s=>A(s,`chatAsk('${s}')`))};}
+function sugg(){return["Что сегодня?","Сколько я жал в жиме лёжа?","Что съесть?","У меня 45 минут","Болит плечо","Мои рекорды","Когда дойду до 95?","Что восстановилось?"];}
+function help(){return{t:"Я знаю всю твою историю и программу. Спрашивай как другу — можно голосом с клавиатуры (микрофон 🎤 на iPhone):\n• что сегодня и с какими весами\n• сколько жал в любом упражнении, рекорды, плато\n• что съесть, чтобы добрать белок\n• «болит плечо», «у меня 40 минут», «не выспался» — подстрою тренировку\n• «замени гакк» — поменяю упражнение\n• «как делать румынскую тягу», «что такое RIR»",a:sugg().slice(0,4).map(s=>A(s,`chatAsk('${s}')`))};}
+/* --- действия --- */
+function chatAddFood(id,g){const f=dayFood();const h=new Date().getHours();const m=h<11?0:h<15?1:h<19?2:3;f[m].push([id,g]);save();chatSay(`Готово: ${F[id].n.toLowerCase()}, ${F[id].unit?g+" шт":g+" г"} → ${["завтрак","обед","перекус","ужин"][m]}. ${(()=>{const c=calc(allItems()),T=target();return `Теперь белок ${c.p} из ${T.p} г.`})()}`);}
+/* предустановки для вопроса перед тренировкой */
+const _readyOpen21=readyOpen;
+readyOpen=function(di){if(DB.painNext)RDY.pain=DB.painNext.slice();if(DB.tiredNext){RDY.sleep=0;RDY.energy=0;}if(DB.budgetNext)RDY.time=DB.budgetNext;
+ _readyOpen21(di);try{rdyEval();document.querySelectorAll(".rp button").forEach(b=>b.classList.toggle("on",RDY.pain.includes(b.dataset.v)));
+  document.querySelectorAll(".rt18 button").forEach(b=>b.classList.toggle("on",+b.dataset.v===(RDY.time||0)));}catch(e){}};
+const _rdyStart21=rdyStart;rdyStart=function(di){DB.painNext=null;DB.tiredNext=0;DB.budgetNext=0;return _rdyStart21(di);};
+/* --- интерфейс --- */
+function chatOpen(){CH.open=true;let o=document.getElementById("chat21");if(!o){o=document.createElement("div");o.id="chat21";document.body.appendChild(o);}
+ if(!CH.msgs.length){const n=new Date().getHours(),hi=n<12?"Доброе утро":n<18?"Привет":"Добрый вечер";CH.msgs.push({who:"b",...help(),t:`${hi}, Артур! `+help().t});}
+ o.innerHTML=`<div class="ch-in"><div class="ch-top"><div class="ch-av">🧠</div><div><b>Тренер</b><span>знает всю твою историю</span></div><button onclick="chatClose()" aria-label="Закрыть">✕</button></div>
+ <div class="ch-list" id="chList"></div>
+ <div class="ch-sug">${sugg().map(s=>`<button onclick="chatAsk('${s}')">${s}</button>`).join("")}</div>
+ <form class="ch-bar" onsubmit="event.preventDefault();chatSend()"><input id="chIn" placeholder="Спроси или надиктуй 🎤" autocomplete="off" enterkeyhint="send">${SR21?`<button type="button" class="ch-mic" onclick="chatMic()" aria-label="Голос">🎤</button>`:""}<button class="ch-go" aria-label="Отправить">➤</button></form></div>`;
+ o.classList.add("on");chatPaint();}
+function chatClose(){CH.open=false;const o=document.getElementById("chat21");if(o)o.classList.remove("on");}
+function chatPaint(){const l=document.getElementById("chList");if(!l)return;
+ l.innerHTML=CH.msgs.map((m,i)=>`<div class="ch-m ${m.who}"><div>${String(m.t).replace(/\n/g,"<br>")}</div>${m.a&&m.a.length&&i===CH.msgs.length-1?`<div class="ch-a">${m.a.map(a=>`<button onclick="${a.js.replace(/"/g,"&quot;")}">${a.l}</button>`).join("")}</div>`:""}</div>`).join("");
+ l.scrollTop=l.scrollHeight;}
+function chatSay(t,a){CH.msgs.push({who:"b",t,a});chatPaint();}
+function chatAsk(q){CH.msgs.push({who:"u",t:q.replace(/</g,"&lt;")});chatPaint();const l=document.getElementById("chList");
+ l.insertAdjacentHTML("beforeend",`<div class="ch-m b typing"><div><i></i><i></i><i></i></div></div>`);l.scrollTop=l.scrollHeight;
+ setTimeout(()=>{let r;try{r=brain(q);}catch(e){r={t:"Что-то пошло не так, спроси по-другому."};}CH.msgs.push({who:"b",t:r.t,a:r.a});chatPaint();},380+Math.random()*300);}
+function chatSend(){const i=document.getElementById("chIn");const v=(i.value||"").trim();if(!v)return;i.value="";chatAsk(v);}
+const SR21=window.SpeechRecognition||window.webkitSpeechRecognition;
+function chatMic(){if(!SR21)return;try{const r=new SR21();r.lang="ru-RU";r.interimResults=false;const b=document.querySelector(".ch-mic");if(b)b.classList.add("rec");
+ r.onresult=e=>{const t=e.results[0][0].transcript;chatAsk(t);};r.onend=()=>{if(b)b.classList.remove("rec");};r.start();}catch(e){}}
+/* плавающая кнопка */
+const _render21=render;render=function(){const r=_render21.apply(this,arguments);try{let f=document.getElementById("fab21");
+ if(!f){f=document.createElement("button");f.id="fab21";f.setAttribute("aria-label","Спросить тренера");f.innerHTML='<span>🧠</span><b>Спроси</b>';f.onclick=chatOpen;document.body.appendChild(f);}
+ f.style.display=(session&&session.focus)||document.body.classList.contains("fxon")?"none":"";}catch(e){}return r;};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
