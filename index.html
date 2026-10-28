@@ -1166,6 +1166,10 @@ textarea.cx-i{resize:vertical;min-height:96px}
 .rv22>b{display:block;font-family:var(--cond);font-weight:700;font-size:18px;margin-bottom:6px}.rv22 div{font-size:13.5px;margin-top:4px}.rv22 p{margin:8px 0 0;font-size:12.5px;color:var(--dim)}
 body.fxon #fab21,body:has(#done.on) #fab21,body:has(.exd) #fab21,body:has(#rdy) #fab21,body:has(.wn) #fab21{display:none!important}
 
+#fab21.new24:after{content:"1";position:absolute;top:-6px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#FF6A5A;color:#fff;font-size:12px;display:grid;place-items:center;font-family:var(--cond)}
+#fab21{position:fixed}
+#ics24{margin:0 0 14px}
+
 </style>
 </head>
 <body>
@@ -4114,7 +4118,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="23";
+const APPV="24";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4126,6 +4130,8 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🔔</i><p><b>Напоминания о тренировках</b>«Ещё» → «Напоминания»: тренировки на 8 недель в Календарь iPhone, сигнал за час</p></div>
+ <div><i>📨</i><p><b>Отчёт за неделю</b>в понедельник тренер сам пишет итоги и план — красная точка на кнопке «Спроси»</p></div>
  <div><i>🧬</i><p><b>Тренер учится на тебе</b>в упражнениях, где ты растёшь быстро, прибавляет по двойному шагу; где прибавка срывает повторы — сначала закрепляет вес. Спроси: «что ты знаешь обо мне?»</p></div>
  <div><i>🚶</i><p><b>Шаги и кардио</b>на главной: шаги, «🏃 20 мин», сожжённые калории. Или скажи тренеру «прошёл 8500 шагов»</p></div>
  <div><i>🎯</i><p><b>Цели по силе</b>«цель жим 100» — тренер покажет, когда дойдёшь</p></div>
@@ -5086,9 +5092,49 @@ insights=function(){const out=_insights23();try{const p=profile23();if(p.fast.le
  else if(p.slow.length)out.push({i:"🐢",t:`В «${EX[p.slow[0]].n}» прибавка часто срывает повторы. Тренер сначала закрепляет вес — так рост будет стабильнее.`});}catch(e){}return out.slice(0,5);};
 const _sugg23=sugg;sugg=function(){const a=_sugg23();a.splice(2,0,"Что ты знаешь обо мне?");return a;};
 
+/* ===== v24: напоминания в Календарь iPhone и еженедельный отчёт тренера ===== */
+function icsTime(d,h,m){const p=n=>String(n).padStart(2,"0");return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+"T"+p(h)+p(m)+"00";}
+function icsMake(hh,weeks){const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Programma//RU","CALSCALE:GREGORIAN","METHOD:PUBLISH"];const now=new Date();let n=0;
+ for(let i=0;i<weeks*7;i++){const d=new Date(now);d.setDate(now.getDate()+i);const dow=d.getDay();if(!(dow in DMAP))continue;const di=DMAP[dow];
+  const wk=Math.max(1,weekNow()+Math.floor((i+((now.getDay()+6)%7))/7));const W2=WEEKS[(wk-1)%WEEKS.length]||W();const day=W2.days[di];if(!day)continue;
+  const t0=day.t.split(" · ").join(", ").toLowerCase(),t=t0[0].toUpperCase()+t0.slice(1);const mins=dayMeta(di).mins;const eh=hh+Math.floor(mins/60),em=mins%60;
+  L.push("BEGIN:VEVENT","UID:prog-"+icsTime(d,hh,0)+"@arekenzi","DTSTAMP:"+icsTime(now,now.getHours(),now.getMinutes()),"DTSTART:"+icsTime(d,hh,0),"DTEND:"+icsTime(d,eh,em),
+   "SUMMARY:🏋 "+t+" ("+W2.short.toLowerCase()+")","DESCRIPTION:~"+mins+" мин. Открой «Программу» — тренер уже посчитал веса.","URL:https://arekenzi.github.io/Training/",
+   "BEGIN:VALARM","TRIGGER:-PT60M","ACTION:DISPLAY","DESCRIPTION:Через час тренировка","END:VALARM","END:VEVENT");n++;}
+ L.push("END:VCALENDAR");return{txt:L.join("\r\n"),n};}
+function icsGo(hh){DB.calH=hh;save();const r=icsMake(hh,8);const bl=new Blob([r.txt],{type:"text/calendar"});const f=new File([bl],"trenirovki.ics",{type:"text/calendar"});
+ if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:"Тренировки"}).catch(()=>{});return;}
+ const a=document.createElement("a");a.href=URL.createObjectURL(bl);a.download="trenirovki.ics";document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),500);}
+function icsOpen(){closeExD();const o=document.createElement("div");o.className="exd";o.id="exd";const h=DB.calH||19;
+ o.innerHTML=`<div class="exd-in noph15"><button class="x" onclick="closeExD()" aria-label="Закрыть">✕</button><span class="exd-g">напоминания</span><h2>Тренировки в Календарь</h2>
+ <p class="gn-s">Добавлю тренировки на 8 недель вперёд в обычный Календарь iPhone. За час до начала придёт напоминание, даже если приложение закрыто.</p>
+ <div class="gn-q"><b>Во сколько обычно тренируешься?</b><div class="gn-o">${[7,9,12,17,18,19,20,21].map(x=>`<button class="${x===h?"on":""}" onclick="DB.calH=${x};save();icsOpen()">${x}:00</button>`).join("")}</div></div>
+ <button class="cta" onclick="icsGo(${h})">Добавить в Календарь</button>
+ <p class="gn-s" style="margin-top:12px">Откроется окно — выбери «Календарь» и «Добавить всё». Если сменишь программу или дни — просто добавь заново.</p></div>`;document.body.appendChild(o);}
+const _vMore24=vMore;
+vMore=function(){_vMore24.apply(this,arguments);const box=document.getElementById("prog13");if(!box||document.getElementById("ics24"))return;
+ box.insertAdjacentHTML("afterend",`<button class="gn-btn" id="ics24" onclick="icsOpen()"><b>🔔</b><span><strong>Напоминания о тренировках</strong><em>в Календарь iPhone, за час до начала</em></span></button>`);};
+/* --- еженедельный отчёт: тренер пишет первым в понедельник --- */
+function weekKeyNow(){const x=new Date();x.setDate(x.getDate()-((x.getDay()+6)%7));return dkey(x);}
+function weekReport24(){const mon=new Date();mon.setDate(mon.getDate()-((mon.getDay()+6)%7)-7);const from=dkey(mon),toD=new Date(mon);toD.setDate(mon.getDate()+6);const to=dkey(toD);
+ const h=(DB.hist||[]).filter(x=>x.d>=from&&x.d<=to);if(!h.length&&!(DB.bw||[]).some(x=>x.d>=from&&x.d<=to))return null;
+ const ton=h.reduce((a,x)=>a+(x.ton||0),0),prs=h.reduce((a,x)=>a+(x.prs||0),0);let steps=0,sc=0,card=0;for(let i=0;i<7;i++){const d=new Date(mon);d.setDate(mon.getDate()+i);const a=(DB.act||{})[dkey(d)];if(a){if(a.s){steps+=a.s;sc++;}card+=(a.c||[]).length;}}
+ const b=(DB.bw||[]).filter(x=>x.d>=from&&x.d<=to).sort((x,y)=>x.d<y.d?-1:1);const dw=b.length>1?Math.round((b[b.length-1].w-b[0].w)*10)/10:null;
+ const L=[`🏋 Тренировок: ${h.length} из ${Object.keys(DMAP).length}`,`📦 Тоннаж: ${String(Math.round(ton/100)/10).replace(".",",")} т${prs?` · рекордов: ${prs}`:""}`];
+ if(dw!==null)L.push(`⚖️ Вес: ${dw>0?"+":""}${String(dw).replace(".",",")} кг за неделю`);if(sc)L.push(`🚶 Шагов в среднем: ${Math.round(steps/sc).toLocaleString("ru-RU")} · кардио: ${card}`);
+ const tips=[];if(h.length<Object.keys(DMAP).length)tips.push("Цель на эту неделю — все тренировки по плану. Не успеваешь — скажи «у меня 45 минут», сожму.");
+ if(dw!==null&&dw>-0.2)tips.push("Вес почти стоит — держи норму калорий и добавь шагов.");if(dw!==null&&dw<-1.1)tips.push("Вес уходит быстро — следи за белком, чтобы сохранить мышцы.");
+ if(!tips.length)tips.push("Неделя по плану — продолжаем так же 💚");
+ return `<b>Отчёт за неделю ${ddm(mon)} — ${ddm(toD)}</b>\n${L.join("\n")}\n\n${tips.join("\n")}`;}
+function weekly24(){const k=weekKeyNow();if(DB.repW===k)return;const r=weekReport24();DB.repW=k;save();if(!r)return;CH.msgs.push({who:"b",t:r});DB.repNew=1;save();}
+const _render24=render;render=function(){const r=_render24.apply(this,arguments);try{weekly24();const f=document.getElementById("fab21");if(f)f.classList.toggle("new24",!!DB.repNew);}catch(e){}return r;};
+const _chatOpen24=chatOpen;chatOpen=function(){DB.repNew=0;save();const f=document.getElementById("fab21");if(f)f.classList.remove("new24");return _chatOpen24.apply(this,arguments);};
+const _brain24=brain;brain=function(q){const t=nz(q);if(/отчет|неделя прошла|за неделю|итоги недели/.test(t)){const r=weekReport24();return{t:r||"За прошлую неделю данных нет."};}
+ if(/напомин|календар/.test(t))return{t:"Добавлю тренировки в Календарь iPhone с напоминанием за час.",a:[A("Настроить","chatClose();icsOpen()")]};return _brain24(q);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
