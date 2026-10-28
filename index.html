@@ -1474,6 +1474,16 @@ img[src^="data:image/jpeg"]{object-position:50% 12%!important}
 .ck48 .x{position:absolute;top:14px;right:14px}
 .ck48 .rdy-in{position:relative}
 
+/* v49 */
+.v49{margin:0 0 12px;padding:14px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.v49-h{margin-bottom:8px}.v49-h b{display:block;font-family:var(--disp);font-weight:400;font-size:18px}.v49-h span{font-size:11.5px;color:var(--dim)}
+.v49-r{display:grid;grid-template-columns:minmax(0,7.8em) 1fr 2.6em;gap:8px;align-items:center;padding:3px 0;font-size:12.5px;color:var(--dim)}
+.v49-r span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.v49-r b{text-align:right;color:var(--tx);font-variant-numeric:tabular-nums}
+.v49-r i{position:relative;height:7px;border-radius:4px;background:var(--line)}.v49-r u{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:#C9A96E}
+.v49-r s{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--tx);opacity:.5;text-decoration:none}
+.v49-r.lo u{background:#FFC850}.v49-r.lo b{color:#FFC850}.v49-r.hi u{background:#FF8A7A}
+.v49 p{margin:8px 0 0;font-size:12.5px;line-height:1.45;color:var(--tx)}.v49 p.v49-l{font-size:11px;color:var(--dim);margin-top:6px}
+
 </style>
 </head>
 <body>
@@ -4423,7 +4433,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="48";
+const APPV="49";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4435,6 +4445,9 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>⚖️</i><p><b>Точный объём</b>тренер считает подходы как профи: жим засчитывается ½ трицепсу, тяга — ½ бицепсу, жим ногами — ½ ягодицам. Оценка программ стала честнее</p></div>
+ <div><i>🧮</i><p><b>Автобаланс программ</b>при составлении тренер сам добирает мышцам подходы до нормы — но только если укладывается в твоё время. Видно в предпросмотре: шкала по каждой мышце</p></div>
+ <div><i>🦵</i><p><b>Ноги при больных коленях дома</b>присед до скамьи и испанский присед с петлёй</p></div>
  <div><i>🎯</i><p><b>Брифинг тренера</b>перед стартом: цель дня в главных упражнениях (вес × повторы и что было в прошлый раз), фокус техники и на что обратить внимание</p></div>
  <div><i>📝</i><p><b>Чек-ин с тренером</b>в выходные 5 вопросов о неделе: сон, силы, боль, голод, настрой. Тренер сам решает: облегчить неделю, включить разгрузку, поправить калории, заменить упражнения</p></div>
  <div><i>💬</i><p><b>Ещё умнее чат</b>«оцени тренировку», «что делать на этой неделе», «чек-ин»</p></div>
@@ -7008,7 +7021,7 @@ function spec46(P,c){const S=(c.spec||[]).filter(g=>POOL[g]);if(!S.length)return
    const pool=(POOL[g]||[]).filter(p=>EX[p[0]]&&!used.has(p[0])&&eqOK(c,p[2])&&!(c.inj||[]).some(j=>p[3].split(" ").includes(j))&&!(DB.ban||{})[p[0]]);
    const b=pool.find(p=>p[1]==="b"),i=pool.find(p=>p[1]==="i"&&(!b||p[0]!==b[0]));const add=[];const light=wi>0&&c.weeks==="alt";
    if(b)add.push(I(b[0],3,light?12:8,light?15:10,90,"1–2",{spec:g}));if(i)add.push(I(i[0],3,12,15,60,"0–1",{spec:g}));if(!add.length)return;
-   d.items.splice(0,0,...add);let cut=0;for(let k=d.items.length-1;k>=add.length&&cut<2;k--){const x=d.items[k];if(x.s>2&&grp(EX[x.id])!==g&&grp(EX[x.id])!=="Пресс"){x.s--;cut++;}}
+   d.items.splice(0,0,...add);let cut=0;for(let pass=0;pass<3;pass++)for(let k=d.items.length-1;k>=add.length;k--){if(cut>=2&&estMin(d.items)<=c.time+5)break;const x=d.items[k];if(x.s>2&&grp(EX[x.id])!==g&&grp(EX[x.id])!=="Пресс"){x.s--;cut++;}}
    if(wi===0)log.push(`${g}: 2-я тренировка в неделю — «${EX[add[0].id].n}»${add[1]?` и «${EX[add[1].id].n}»`:""} в начале дня «${d.t.split(" · ")[0].toLowerCase()}»`);});});
  return log;}
 let SPEC46=[];
@@ -7232,7 +7245,7 @@ vProg=function(){_vProg47.apply(this,arguments);try{const app=document.getElemen
 /* ---- 5. Сравнение новой программы с текущей ---- */
 function cmp47(){const o=document.getElementById("exd");if(!o||!GP||!GQ)return;const box=o.querySelector(".cmp47b");if(box){box.remove();return;}
  const c=cfg36();const cur=curProg36();let q1=null,q2=null;try{q1=quality33(cur,c);}catch(e){}try{q2=quality33(GP,GQ);}catch(e){}
- const vol=P=>{const v={};P[0].days.forEach(d=>d.items.forEach(x=>{const g=grp(EX[x.id]);v[g]=(v[g]||0)+x.s;}));return v;};const v1=vol(cur),v2=vol(GP);
+ const vol=P=>effVol49(P[0].days);const v1=vol(cur),v2=vol(GP);
  const mins=P=>Math.round(P[0].days.reduce((a,d)=>a+estMin(d.items),0)/P[0].days.length);
  const rows=BIG31.concat(["Трицепс","Бицепс"]).filter((g,i,a)=>a.indexOf(g)===i&&(v1[g]||v2[g])).map(g=>{let lo=0,hi=0;try{[lo,hi]=rng33(g,c);}catch(e){}const z=v=>v<lo?"lo":v>hi+3?"hi":"ok";return `<tr><td>${g}</td><td class="${z(v1[g]||0)}">${v1[g]||0}</td><td class="${z(v2[g]||0)}">${v2[g]||0}</td><td>${lo}–${hi}</td></tr>`;}).join("");
  const low47=BIG31.filter(g=>{try{return (v2[g]||0)>0&&(v2[g]||0)<rng33(g,c)[0];}catch(e){return false;}}).map(g=>g.toLowerCase());const html=`<div class="cmp47b"><b>Новая или текущая?</b><table><tr><th></th><th>Сейчас</th><th>Новая</th><th>Норма</th></tr>
@@ -7307,6 +7320,65 @@ brain=function(q){const t=nz(q);if(/чек-?ин|check-?in|опрос трене
  if(/что (мне )?делать на (этой )?неделе|задач.{0,6}на неделю|цел[ьи] на неделю/.test(t)){const P=plan47();const B=blk41();const tg=target();
   return{t:`<b>Задачи на неделю</b> — неделя ${B.wb} из 9, «${B.ph}»\n• Тренировки: ${P.L.map(x=>W().days[x.di].t.split(" · ")[0].toLowerCase()).join(", ")}\n• ${B.txt}\n• Еда: ${tg.k} ккал, белок ${tg.p} г каждый день\n• Шаги: 8–10 тыс. в день\n• Сон: 7+ часов\n• В воскресенье — чек-ин с тренером`};}
  return _brain48(q);};
+
+/* ===== v49: точный объём (косвенная работа базовых упражнений), автобаланс программ, упражнения для ног при больных коленях дома ===== */
+Object.assign(EX,{
+box_sq_db:{n:"Присед с гантелью до скамьи",cg:"Квадрицепс",eq:"гантель, скамья",m:"Квадрицепс, ягодицы",st:"20–30 кг",f:0,alt:["goblet_sq","lp_one","step_up"],img:"",
+ why:"Скамья ограничивает глубину: колено сгибается не больше 90°, нагрузка на коленную чашечку умеренная. Квадрицепс работает, колени не страдают.",
+ t:"Гантель у груди, скамья сзади. Медленно садишься, пока ягодицы мягко не коснутся скамьи, без расслабления. Встаёшь через всю стопу, колени смотрят по носкам.",
+ err:"Плюхаться на скамью. Колени внутрь. Наклон корпуса.",feel:"Бёдра и ягодицы, колено без боли."},
+spanish_sq:{n:"Испанский присед с петлёй",cg:"Квадрицепс",eq:"резиновая петля или ремень вокруг опоры",m:"Квадрицепс",st:"свой вес, 3×30–45 с",f:1,alt:["leg_ext_part","box_sq_db","lp_one"],img:"",
+ why:"Петля под коленями оттягивает голени назад — колено разгружено. Упражнение из реабилитации: квадрицепс сильно работает без боли в коленях.",
+ t:"Петля вокруг стойки на уровне колен, обе ноги в петле, петля под коленями. Отклоняешься назад и садишься до угла 60–90°, голени вертикально. Держишь или делаешь медленные повторы.",
+ err:"Голени уходят вперёд. Слишком глубокий присед.",feel:"Сильное жжение в квадрицепсе, колено спокойно."}});
+(function(){[["box_sq_db","b","D",""],["spanish_sq","i","W",""]].forEach(p=>{if(!POOL["Квадрицепс"].some(q=>q[0]===p[0]))POOL["Квадрицепс"].push(p);});["box_sq_db","spanish_sq"].forEach(k=>{if(EX[k]&&!EX[k].img){EX[k].img="__ph46";EX[k].nw=1;}});try{NEW46.push("box_sq_db","spanish_sq");}catch(e){}})();
+/* ---- 1. эффективный объём: базовое упражнение засчитывается и соседним мышцам ---- */
+const FR49={"Грудь":{"Трицепс":.5,"Передняя дельта":.5},"Широчайшие":{"Середина спины":.5,"Бицепс":.5,"Задняя дельта":.25},"Середина спины":{"Широчайшие":.5,"Бицепс":.5,"Задняя дельта":.5},
+ "Квадрицепс":{"Ягодицы":.5},"Ягодицы":{"Бицепс бедра":.25,"Квадрицепс":.25},"Бицепс бедра":{"Ягодицы":.5,"Поясница":.25},"Передняя дельта":{"Трицепс":.5,"Средняя дельта":.25},"Трицепс":{"Грудь":.25}};
+function isB49(id){const g=grp(EX[id]);const p=(POOL[g]||[]).find(q=>q[0]===id);if(p)return p[1]==="b";return/жим|тяга|подтяг|присед|гакк|выпад|мост|румынск/.test(EX[id].n.toLowerCase());}
+function effAdd49(v,id,s){const g=grp(EX[id]);v[g]=(v[g]||0)+s;if(isB49(id)){const f=FR49[g];if(f){const p=pat29(EX[id]);for(const k in f){if(g==="Квадрицепс"&&p==="legext")continue;v[k]=(v[k]||0)+s*f[k];}}}}
+function effVol49(days){const v={};days.forEach(d=>(d.items||d).forEach(x=>effAdd49(v,x.id,x.s)));Object.keys(v).forEach(k=>v[k]=Math.round(v[k]*2)/2);return v;}
+/* оценка программы — по эффективному объёму */
+quality33=function(P,c){const days=P[0].days,vol=effVol49(days),fq={};days.forEach(d=>{const seen={};d.items.forEach(x=>{const g=grp(EX[x.id]);if(!seen[g]){seen[g]=1;fq[g]=(fq[g]||0)+1;}});});
+ const cv=g=>{const[lo,hi]=rng33(g,c),v=vol[g]||0;return Math.min(1,v/lo)-(v>hi+2?Math.min(.5,(v-hi-2)/hi):0);};
+ const big=BIG31.reduce((a,g)=>a+cv(g),0)/BIG31.length,small=SMALL33.reduce((a,g)=>a+cv(g),0)/SMALL33.length;
+ const dv={};days.forEach(d=>d.items.forEach(x=>{const g=grp(EX[x.id]);dv[g]=(dv[g]||0)+x.s;}));const push=PUSH.reduce((a,g)=>a+(dv[g]||0),0),pull=PULL.reduce((a,g)=>a+(dv[g]||0),0),bal=pull>=push*.9?1:pull/Math.max(1,push*.9);
+ const fr=BIG31.reduce((a,g)=>a+Math.min(fq[g]||0,2)/2,0)/BIG31.length,frW=c.goal==="fit"||c.goal==="cut"?.6:1;
+ const tm=days.reduce((a,d)=>a+(estMin(d.items)<=c.time+5?1:Math.max(0,1-(estMin(d.items)-c.time)/30)),0)/days.length;
+ const parts={"Объём на большие мышцы":big,"Руки, плечи, икры":small,"Баланс тяг и жимов":bal,"Частота: 2 раза в неделю":fr*frW+(1-frW),"Укладывается во время":tm};
+ const W8={"Объём на большие мышцы":.36,"Руки, плечи, икры":.16,"Баланс тяг и жимов":.16,"Частота: 2 раза в неделю":.17,"Укладывается во время":.15};
+ const s=Object.keys(parts).reduce((a,k)=>a+Math.max(0,parts[k])*W8[k],0);return{score:Math.round(s*100),parts,vol};};
+/* ---- 2. автобаланс при составлении: недобор → +подход или упражнение, но в пределах времени ---- */
+let BAL49=[];
+function bal49(P,c){const log=[];const seen=new Set();c=Object.assign({},c);try{c.inj=c.inj||userInj36();}catch(e){}
+ P.forEach((w,wi)=>{if(seen.has(w.days))return;seen.add(w.days);const light=wi>0&&c.weeks==="alt";
+  /* сначала срезать явный перебор (часто бицепс: тяги уже дают ему половину) */
+  for(let it=0;it<20;it++){const v=effVol49(w.days);const over=BIG31.concat(SMALL33).find(g=>{const hi=rng33(g,c)[1];return(v[g]||0)>hi+3;});if(!over)break;
+   const x=w.days.flatMap(d=>d.items).filter(y=>grp(EX[y.id])===over&&!isB49(y.id)&&y.s>2).sort((a,b)=>b.s-a.s)[0];if(!x)break;x.s--;if(!light)log.push(over+":-1");}
+  for(let it=0;it<40;it++){const v=effVol49(w.days);const nf=L=>L.map(g=>{const lo=rng33(g,c)[0];return[g,lo-(v[g]||0)];}).filter(x=>x[1]>=1.5).sort((a,b)=>b[1]-a[1]);const need=nf(BIG31).concat(nf(SMALL33.filter(g=>g!=="Бицепс"&&g!=="Трицепс")));if(!need.length)break;const[g]=need[0];let done=false;
+   /* а) +1 подход в уже стоящем упражнении на эту мышцу */
+   const cand=[];w.days.forEach((d,di)=>d.items.forEach(x=>{if(grp(EX[x.id])!==g||x.s>=5)return;const dayG=d.items.filter(y=>grp(EX[y.id])===g).reduce((a,y)=>a+y.s,0);if(dayG>=10)return;const m=estMin(d.items);if(m+2.5>c.time+5)return;cand.push([m,x,di]);}));
+   cand.sort((a,b)=>a[0]-b[0]);if(cand.length){const x=cand[0][1];x.s++;x.bal49=(x.bal49||0)+1;done=true;if(!light)log.push(g);}
+   /* б) новое упражнение в самый короткий день, где эта мышца ещё не работает */
+   if(!done){const used=new Set(w.days.flatMap(d=>d.items.map(x=>x.id)));const order=w.days.map((d,i)=>i).sort((a,b)=>estMin(w.days[a].items)-estMin(w.days[b].items));
+    for(const di of order){const d=w.days[di];if(estMin(d.items)+8>c.time+5)continue;if(d.items.filter(y=>grp(EX[y.id])===g).reduce((a,y)=>a+y.s,0)>=8)continue;
+     const pool=(POOL[g]||[]).filter(p=>EX[p[0]]&&!used.has(p[0])&&eqOK(c,p[2])&&!(c.inj||[]).some(j=>p[3].split(" ").includes(j))&&!(DB.ban||{})[p[0]]&&!EX[p[0]].lib&&!(light&&p[2]==="B"));
+     const p=pool.find(q=>q[1]==="i")||pool[0];if(!p)continue;const r=light?[15,20]:[10,12];const k=d.items.findIndex(y=>grp(EX[y.id])==="Пресс");const item=I(p[0],3,r[0],r[1],light?45:75,"1–2",{bal49:"new"});
+     if(k>=0)d.items.splice(k,0,item);else d.items.push(item);done=true;if(!light)log.push(g+": +«"+EX[p[0]].n+"»");break;}}
+   if(!done)break;}});
+ const cnt={},cut={};log.forEach(x=>{const g=x.split(":")[0];if(x.endsWith(":-1")){cut[g]=(cut[g]||0)+1;return;}cnt[g]=cnt[g]||[];if(x.includes("«"))cnt[g].push(x.split(": ")[1]);else cnt[g].push("+1");});
+ const cutTxt=Object.keys(cut).map(g=>`${g.toLowerCase()}: −${cut[g]} (перебор, тяги и жимы уже нагружают)`);
+ return Object.keys(cnt).map(g=>{const a=cnt[g].filter(x=>x==="+1").length,ex=cnt[g].filter(x=>x!=="+1");return`${g.toLowerCase()}: ${a?`+${a} ${pl(a,"подход","подхода","подходов")}`:""}${a&&ex.length?", ":""}${ex.join(", ")}`;}).concat(cutTxt);}
+const _gp49=genProgram;
+genProgram=function(c){const P=_gp49(c);try{BAL49=bal49(P,c);}catch(e){BAL49=[];}return P;};
+/* в предпросмотре — что добрал тренер и объём с учётом базы */
+const _gv49=genView;
+genView=function(){_gv49.apply(this,arguments);try{const o=document.getElementById("exd");if(!o||!GP||!GQ||o.querySelector(".v49"))return;const v=effVol49(GP[0].days);
+ const rows=BIG31.concat(SMALL33).map(g=>{const[lo,hi]=rng33(g,GQ);const n=v[g]||0;const z=n<lo-1?"lo":n>hi+3?"hi":"ok";const pct=Math.min(100,n/Math.max(1,hi)*100);return`<div class="v49-r ${z}"><span>${g}</span><i><u style="width:${pct}%"></u><s style="left:${lo/Math.max(1,hi)*100}%"></s></i><b>${String(n).replace(".",",")}</b></div>`;}).join("");
+ const at=o.querySelector(".cmp47")||o.querySelector(".pro44")||o.querySelector(".gn-why");if(at)at.insertAdjacentHTML("beforebegin",`<div class="v49"><div class="v49-h"><b>Подходы в неделю</b><span>с учётом базы: жим даёт ½ трицепсу, тяга — ½ бицепсу</span></div>${rows}${BAL49.length?`<p>⚖️ Тренер выровнял объём: ${BAL49.join("; ")}.</p>`:""}<p class="v49-l">черта — нижняя граница нормы</p></div>`);}catch(e){}};
+/* таблица сравнения — тоже по эффективному объёму */
+const _cmp49=cmp47;
+cmp47=function(){_cmp49();try{const b=document.querySelector(".cmp47b");if(!b)return;const p=b.querySelector("p");if(p)p.insertAdjacentHTML("afterbegin","Подходы засчитаны с учётом базы. ");}catch(e){}};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
