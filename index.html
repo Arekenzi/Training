@@ -1146,6 +1146,26 @@ textarea.cx-i{resize:vertical;min-height:96px}
 .ch-go,.ch-mic{flex:0 0 48px;height:48px;border-radius:50%;border:0;background:var(--lime);color:#06100D;font-size:20px;font-weight:700}
 .ch-mic{background:rgba(255,255,255,.08);color:#fff}.ch-mic.rec{background:#FF6A5A;animation:dpulse 1s infinite}
 
+.act22{grid-column:1/-1;min-height:0!important;padding:14px 16px!important;cursor:default}
+.a22-h{display:flex;justify-content:space-between;align-items:center}.a22-h em{font-style:normal;font-family:var(--cond);font-size:13px;color:#6CC6FF}
+.a22-r b{font-size:26px!important;margin:4px 0 6px!important}.a22-r small{font-size:13px;color:var(--dim);font-weight:500}
+.act22 .r15{height:8px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden}.act22 .r15 i{display:block;height:100%;border-radius:4px}
+.a22-b{display:flex;gap:6px;margin-top:10px}.a22-b button{flex:1;padding:9px 4px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--tx);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.a22-c{display:block;margin-top:8px;font-size:11.5px;color:var(--dim)}
+.gl22,.mo22{padding:14px 16px;margin:0 0 14px}
+.gl-e{font-size:13px;color:var(--dim);margin:6px 0 10px}
+.gl-i{padding:10px 0;border-top:1px solid var(--line)}.gl-i:first-of-type{border-top:0}
+.gl-t{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}.gl-t b{font-family:var(--cond);font-weight:600;font-size:15px}.gl-t em{font-style:normal;font-family:var(--cond);font-size:15px;color:var(--lime)}
+.gl22 .r15{height:8px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden}.gl22 .r15 i{display:block;height:100%;border-radius:4px}
+.gl-i span{display:block;margin-top:5px;font-size:12px;color:var(--dim)}.gl-n{font-size:11.5px;color:var(--dim);margin:8px 0 0}
+.mo-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:8px;text-align:center}
+.mo-g b{display:block;font-family:var(--cond);font-weight:700;font-size:22px;color:var(--tx)}.mo-g span{display:block;font-size:10.5px;color:var(--dim)}
+.mo-g small{display:block;font-size:11px;font-family:var(--cond)}.mo-g small.up{color:var(--lime)}.mo-g small.dn{color:#FF8A7A}
+.mo22 p{margin:10px 0 0;font-size:13px}.mo22 p b{color:var(--lime)}
+.rv22{text-align:left;margin:0 0 14px;padding:14px 16px;border-radius:20px;background:rgba(59,240,106,.08);border:1px solid rgba(59,240,106,.28)}
+.rv22>b{display:block;font-family:var(--cond);font-weight:700;font-size:18px;margin-bottom:6px}.rv22 div{font-size:13.5px;margin-top:4px}.rv22 p{margin:8px 0 0;font-size:12.5px;color:var(--dim)}
+body.fxon #fab21,body:has(#done.on) #fab21,body:has(.exd) #fab21,body:has(#rdy) #fab21,body:has(.wn) #fab21{display:none!important}
+
 </style>
 </head>
 <body>
@@ -4094,7 +4114,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="21";
+const APPV="22";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4106,6 +4126,11 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🚶</i><p><b>Шаги и кардио</b>на главной: шаги, «🏃 20 мин», сожжённые калории. Или скажи тренеру «прошёл 8500 шагов»</p></div>
+ <div><i>🎯</i><p><b>Цели по силе</b>«цель жим 100» — тренер покажет, когда дойдёшь</p></div>
+ <div><i>🧠</i><p><b>Разбор после тренировки</b>что выросло, что просело и что дальше</p></div>
+ <div><i>🍽</i><p><b>Меню на день</b>«составь меню» — блюда под твою норму, одной кнопкой в дневник</p></div>
+ <div><i>📅</i><p><b>Итоги месяца</b>и «не люблю X» — тренер запомнит и больше не предложит</p></div>
  <div><i>💬</i><p><b>«Спроси тренера»</b>кнопка справа внизу: пиши или говори как другу — «что сегодня», «сколько жал», «что съесть», «болит плечо», «замени гакк». Отвечает по твоим данным и сам меняет программу</p></div>
  <div><i>😎</i><p><b>«Как прошёл подход?»</b>Легко / Норм / Тяжело вместо цифр — тренер сам решит, прибавлять ли вес и сколько отдыхать</p></div>
  <div><i>🪜</i><p><b>Разминочная лесенка</b>перед базой: 50 % × 8 → 70 % × 4 → 85 % × 1, всё посчитано</p></div>
@@ -4923,9 +4948,106 @@ const _render21=render;render=function(){const r=_render21.apply(this,arguments)
  if(!f){f=document.createElement("button");f.id="fab21";f.setAttribute("aria-label","Спросить тренера");f.innerHTML='<span>🧠</span><b>Спроси</b>';f.onclick=chatOpen;document.body.appendChild(f);}
  f.style.display=(session&&session.focus)||document.body.classList.contains("fxon")?"none":"";}catch(e){}return r;};
 
+/* ===== v22: тренер ещё умнее — активность, цели по силе, разбор тренировки, меню на день, итоги месяца, «больше не предлагай» ===== */
+if(F.lentil)F.lentil.n="Чечевица отварная";
+const MSHORT=["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];
+const ddm=d=>{const x=new Date(d);return x.getDate()+" "+MSHORT[x.getMonth()];};
+/* ---------- активность: шаги и кардио ---------- */
+function actDay(d){DB.act=DB.act||{};const k=d||today();DB.act[k]=DB.act[k]||{s:0,c:[]};return DB.act[k];}
+function stepKcal(s){return Math.round(s*0.0004*bw());}
+function cardioKcal(min,met){return Math.round(min*(met||7)*3.5*bw()/200);}
+function actKcal(d){const a=(DB.act||{})[d||today()];if(!a)return 0;return stepKcal(a.s||0)+(a.c||[]).reduce((x,c)=>x+cardioKcal(c[1],c[2]),0);}
+function actStep(n){const a=actDay();if(n==="?"){const v=prompt("Сколько шагов сегодня? (посмотри в «Здоровье» на iPhone)",a.s||"");if(v===null)return;a.s=Math.max(0,parseInt(String(v).replace(/\D/g,""))||0);}else a.s=(a.s||0)+n;save();render();}
+function actCardio(min,name,met){actDay().c.push([name||"Кардио",min,met||7]);save();render();}
+function stepsAvg(n){let s=0,c=0;for(let i=1;i<=n;i++){const a=(DB.act||{})[dkAgo(i)];if(a&&a.s){s+=a.s;c++;}}return c?Math.round(s/c):null;}
+function cardioWeek(){let c=0;const mon=new Date();mon.setDate(mon.getDate()-((mon.getDay()+6)%7));for(let i=0;i<7;i++){const x=new Date(mon);x.setDate(mon.getDate()+i);const a=(DB.act||{})[dkey(x)];if(a&&a.c)c+=a.c.length;}return c;}
+const _vGym22=vGym;
+vGym=function(){_vGym22.apply(this,arguments);if(session)return;const bt=document.querySelector("#app .bento");if(!bt)return;const a=(DB.act||{})[today()]||{s:0,c:[]},goal=9000,p=Math.min(100,Math.round((a.s||0)/goal*100)),cw=cardioWeek();
+ bt.insertAdjacentHTML("beforeend",`<div class="bt act22"><div class="a22-h"><span class="bt-k">активность</span><em>${actKcal()?`−${actKcal()} ккал`:""}</em></div>
+ <div class="a22-r"><b>${(a.s||0).toLocaleString("ru-RU")}<small> / ${goal.toLocaleString("ru-RU")} шагов</small></b></div><div class="r15"><i style="width:${p}%;background:${p>=100?"var(--lime)":"#6CC6FF"}"></i></div>
+ <div class="a22-b"><button onclick="event.stopPropagation();actStep('?')">Ввести шаги</button><button onclick="event.stopPropagation();actStep(1000)">+1000</button><button onclick="event.stopPropagation();actCardio(20,'Дорожка',7)">🏃 20 мин</button></div>
+ <span class="a22-c">кардио на неделе: ${cw} из 3${(a.c||[]).length?` · сегодня ${a.c.map(c=>c[0].toLowerCase()+" "+c[1]+" мин").join(", ")}`:""}</span></div>`);};
+/* ---------- цели по силе ---------- */
+function goalFc(id,g){const s=e1series(id).slice(-8);if(!s.length)return{cur:0};const cur=s[s.length-1].v;if(cur>=g)return{cur,done:1};if(s.length<3)return{cur};
+ const t0=new Date(s[0].d).getTime(),pts=s.map(x=>[(new Date(x.d).getTime()-t0)/864e5,x.v]);const n=pts.length,sx=pts.reduce((a,p)=>a+p[0],0),sy=pts.reduce((a,p)=>a+p[1],0),sxx=pts.reduce((a,p)=>a+p[0]*p[0],0),sxy=pts.reduce((a,p)=>a+p[0]*p[1],0);
+ const k=(n*sxy-sx*sy)/(n*sxx-sx*sx||1);if(!(k>0.01))return{cur,stall:1};const days=(g-cur)/k;if(days>540)return{cur,far:1};const d=new Date();d.setDate(d.getDate()+Math.round(days));return{cur,date:d,perWk:Math.round(k*7*10)/10};}
+function goalsCard(){const G=DB.goals||{};const ids=Object.keys(G).filter(id=>EX[id]);if(!ids.length)return `<div class="card7 gl22"><span class="k13">цели по силе</span><p class="gl-e">Поставь цель — тренер посчитает, когда дойдёшь. Напиши тренеру: «цель жим 100».</p><button class="btn sm" onclick="chatOpen();chatAsk('цель жим 100')">Поставить цель</button></div>`;
+ return `<div class="card7 gl22"><span class="k13">цели по силе</span>${ids.map(id=>{const g=G[id],f=goalFc(id,g),p=Math.min(100,Math.round((f.cur||0)/g*100));
+  return `<div class="gl-i"><div class="gl-t"><b>${EX[id].n}</b><em>${f.cur||0} / ${g} кг</em></div><div class="r15"><i style="width:${p}%;background:${f.done?"var(--lime)":"#F2C46B"}"></i></div>
+  <span>${f.done?"🏆 Цель достигнута! Поставь новую":f.date?`≈ к ${ddm(f.date)} · +${String(f.perWk).replace(".",",")} кг в неделю`:f.stall?"сейчас не растёт — тренер сменит упражнение":f.far?"дольше полутора лет при текущем темпе":"нужно ещё 2–3 тренировки для прогноза"}</span></div>`;}).join("")}
+  <p class="gl-n">Считается по расчётному максимуму на 1 повтор, рисковать тяжёлыми одиночками не нужно.</p></div>`;}
+/* ---------- итоги месяца ---------- */
+function monthStats(off){const now=new Date(),y=now.getFullYear(),m=now.getMonth()-(off||0),from=dkey(new Date(y,m,1)),to=dkey(new Date(y,m+1,0));
+ const h=(DB.hist||[]).filter(x=>x.d>=from&&x.d<=to);const ton=h.reduce((a,x)=>a+(x.ton||0),0),dur=h.length?Math.round(h.reduce((a,x)=>a+(x.dur||0),0)/h.length):0;
+ const b=(DB.bw||[]).filter(x=>x.d>=from&&x.d<=to).sort((a,c)=>a.d<c.d?-1:1);const dw=b.length>1?Math.round((b[b.length-1].w-b[0].w)*10)/10:null;
+ let best=null;Object.keys(DB.log||{}).forEach(id=>{if(!EX[id])return;const a=e1At(id,"0",dkey(new Date(y,m,0))),c=e1At(id,from,to);if(a&&c&&c>a&&(!best||c-a>best.d))best={id,d:c-a};});
+ return{n:h.length,ton,dur,dw,best,name:["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"][(m+12)%12]};}
+function monthCard(){const a=monthStats(0),b=monthStats(1);if(!a.n&&!b.n)return "";const df=(x,y,u)=>y?`<small class="${x>=y?"up":"dn"}">${x>=y?"▲":"▼"} ${Math.abs(Math.round((x-y)*10)/10)}${u||""}</small>`:"";
+ return `<div class="card7 mo22"><span class="k13">итоги месяца · ${a.name}</span><div class="mo-g">
+ <div><b>${a.n}</b><span>тренировок</span>${df(a.n,b.n)}</div><div><b>${String(Math.round(a.ton/100)/10).replace(".",",")} т</b><span>тоннаж</span>${df(a.ton/1000,b.ton/1000," т")}</div>
+ <div><b>${a.dw===null?"—":(a.dw>0?"+":"")+String(a.dw).replace(".",",")}</b><span>кг веса</span></div><div><b>${a.dur||"—"}</b><span>мин в среднем</span></div></div>
+ ${a.best?`<p>💪 Лучший рост месяца: <b>${EX[a.best.id].n}</b> +${a.best.d} кг к максимуму.</p>`:""}</div>`;}
+const _vProg22=vProg;
+vProg=function(){_vProg22.apply(this,arguments);if(progSub!=="o")return;const app=document.getElementById("app"),seg=app&&app.querySelector(".seg-p");if(!seg)return;seg.insertAdjacentHTML("afterend",monthCard()+goalsCard());};
+/* ---------- разбор тренировки ---------- */
+function review22(){const D=typeof DONE15!=="undefined"&&DONE15;if(!D||!D.ex)return null;const out=[];let up=0,dn=0;
+ D.ex.forEach(x=>{const l=DB.log[x.id]||[];if(l.length<2)return;const prev=l[l.length-2],cur=l[l.length-1];const pv=Math.max(...prev.sets.filter(s=>!s.warm&&!s.drop).map(s=>e1rm(s.w,s.r)),0),cv=Math.max(...cur.sets.filter(s=>!s.warm&&!s.drop).map(s=>e1rm(s.w,s.r)),0);
+  if(!pv||!cv)return;const d=Math.round(cv-pv);if(d>=2){up++;out.push(`✅ ${x.n}: +${d} кг к силе`);}else if(d<=-3){dn++;out.push(`⚠️ ${x.n}: слабее на ${-d} кг — в следующий раз тот же вес`);}});
+ const head=up&&!dn?"Отличная тренировка — сила растёт.":dn>up?"Тренировка тяжелее обычного. Сон и белок сегодня важнее всего.":up?"Хорошая работа, есть прибавки.":"Ровная тренировка — веса держатся.";
+ const nd=nextDay();const t=W().days[nd.di].t.split(" · ")[0];const tip=dn>=2?"Если завтра тоже тяжело — скажи тренеру «устал», он облегчит.":`Следующая: ${DAYN[nd.di]?DAYN[nd.di].toLowerCase():""} — ${t[0]+t.slice(1).toLowerCase()}.`;
+ return{head,lines:out.slice(0,4),tip};}
+const _doneScreen22=doneScreen;
+doneScreen=function(o){_doneScreen22(o);setTimeout(()=>{const r=review22();if(!r)return;const b=document.querySelector("#done .dn-btns");if(!b)return;
+ b.insertAdjacentHTML("beforebegin",`<div class="rv22"><span class="dn-k" style="margin:0 0 6px">🧠 разбор тренера</span><b>${r.head}</b>${r.lines.map(l=>`<div>${l}</div>`).join("")}<p>${r.tip}</p></div>`);
+ CH.msgs.push({who:"b",t:`<b>Разбор тренировки</b>\n${r.head}\n${r.lines.join("\n")}\n${r.tip}`});},60);};
+/* ---------- меню на день ---------- */
+const MEALS=[["Завтрак",[["oat",250,"c"],["egg",3,"p"],["cottage5",120,"p"],["berries",100,"v"]]],["Обед",[["chick",200,"p"],["buck",250,"c"],["cuc",200,"v"],["oil_oliv",8,"f"]]],
+ ["Перекус",[["cottage0",250,"p"],["apple",150,"v"]]],["Ужин",[["cod",300,"p"],["zuc",300,"v"],["rice",150,"c"]]]];
+function menu22(){const T=target(),f=dayFood(),c0=calc(allItems());const left=MEALS.map((m,i)=>[i,m]).filter(([i])=>!(f[i]&&f[i].length));if(!left.length)return null;
+ let plan=left.map(([i,m])=>[i,m[0],m[1].filter(x=>F[x[0]]).map(x=>x.slice())]);
+ const tot=()=>calc([].concat(...plan.map(p=>p[2].map(x=>[x[0],x[1]]))));
+ let t=tot();const needP=T.p-c0.p;if(t.p>0&&needP>0){const pP=plan.map(p=>p[2].filter(x=>x[2]==="p")).flat();const cur=calc(pP.map(x=>[x[0],x[1]])).p;const k=Math.max(.6,Math.min(1.6,(needP-(t.p-cur))/cur));pP.forEach(x=>{x[1]=F[x[0]].unit?Math.max(1,Math.round(x[1]*k)):Math.round(x[1]*k/10)*10;});}
+ t=tot();const needK=T.k-c0.k;const cI=plan.map(p=>p[2].filter(x=>x[2]==="c")).flat();if(cI.length){const ck=calc(cI.map(x=>[x[0],x[1]])).k;const k=Math.max(.3,Math.min(1.8,(needK-(t.k-ck))/ck));cI.forEach(x=>{x[1]=Math.round(x[1]*k/10)*10;});}
+ t=tot();return{plan,t,T,c0};}
+function menuAdd(){const r=menu22();if(!r)return;const f=dayFood();r.plan.forEach(([i,,items])=>{items.forEach(x=>f[i].push([x[0],x[1]]));});save();render();chatSay("Добавил меню в дневник питания. Отметки можно поправить во вкладке «Еда».");}
+/* ---------- «больше не предлагай» ---------- */
+function banApply(){const B=DB.ban||{};Object.keys(B).forEach(id=>{Object.keys(EX).forEach(k=>{if(EX[k].alt)EX[k].alt=EX[k].alt.filter(a=>a!==id);});Object.keys(POOL).forEach(m=>{POOL[m]=POOL[m].filter(p=>p[0]!==id);});});}
+let _bn22=-1;const _render22=render;render=function(){const n=Object.keys(DB.ban||{}).length;if(n!==_bn22){_bn22=n;banApply();}return _render22.apply(this,arguments);};
+/* ---------- новые умения чата ---------- */
+const _brain22=brain;
+brain=function(q){const t=nz(q);
+ let m=t.match(/(прош[её]л|сделал|наш[её]л|шагов|шаги|шаг)\D*(\d[\d\s.,]*)|(\d[\d\s.,]*)\s*(тыс\S*\s*)?шаг/);
+ if(m&&/шаг/.test(t)){let n=parseInt(String(m[2]||m[3]).replace(/[\s.,]/g,""))||0;if(/тыс/.test(t)&&n<100)n*=1000;actDay().s=n;save();render();const a=stepsAvg(7);
+  return{t:`Записал: ${n.toLocaleString("ru-RU")} шагов, это −${stepKcal(n)} ккал. ${n>=9000?"Цель дня выполнена 💚":`До цели ${(9000-n).toLocaleString("ru-RU")}.`}${a?` В среднем за неделю ${a.toLocaleString("ru-RU")}.`:""}`};}
+ m=t.match(/(кардио|дорожк|велосипед|эллипс|бег|ходьб|плаван)\D*(\d+)\s*мин|(\d+)\s*мин\D*(кардио|дорожк|велосипед|эллипс|бег|ходьб|плаван)/);
+ if(m){const min=+(m[2]||m[3]),w=(m[1]||m[4]);const nm=/дорожк|ходьб/.test(w)?"Дорожка":/велос/.test(w)?"Велосипед":/эллипс/.test(w)?"Эллипс":/бег/.test(w)?"Бег":/плав/.test(w)?"Плавание":"Кардио";const met=/бег/.test(w)?9.5:/плав/.test(w)?8:/велос|эллипс/.test(w)?7:6;
+  actCardio(min,nm,met);return{t:`Записал: ${nm.toLowerCase()} ${min} мин, −${cardioKcal(min,met)} ккал. Кардио на этой неделе: ${cardioWeek()} из 3.`};}
+ if(/цел/.test(t)&&/\d/.test(t)){const g=+t.match(/(\d+(?:[.,]\d+)?)/)[1].replace(",",".");const id=findEx(q.replace(/цель|\d+([.,]\d+)?|кг/gi," "));if(id&&g){DB.goals=DB.goals||{};DB.goals[id]=g;save();const f=goalFc(id,g);
+  return{t:`Цель поставлена: <b>${EX[id].n} — ${g} кг</b> (максимум на 1 повтор). Сейчас ${f.cur||"—"} кг.${f.date?` При текущем темпе дойдёшь ≈ к ${ddm(f.date)}.`:f.done?" Уже достигнута!":" Прогноз появится после 2–3 тренировок."}`,a:[A("Смотреть цели","chatClose();progSub='o';setTab('prog')")]};}}
+ if(/цел/.test(t)&&!/\d/.test(t)){const G=DB.goals||{};const ids=Object.keys(G).filter(id=>EX[id]);if(!ids.length)return{t:"Целей пока нет. Напиши, например: «цель жим 100» или «цель подтягивания 30»."};
+  return{t:"<b>Твои цели:</b>\n"+ids.map(id=>{const f=goalFc(id,G[id]);return `• ${EX[id].n}: ${f.cur||0} из ${G[id]} кг${f.date?` → ≈ ${ddm(f.date)}`:f.done?" ✓":""}`;}).join("\n")};}
+ if(/итог|за месяц|месяц/.test(t)){const a=monthStats(0),b=monthStats(1);return{t:`<b>Итоги: ${a.name}</b>\nТренировок: ${a.n}${b.n?` (в прошлом месяце ${b.n})`:""}\nТоннаж: ${String(Math.round(a.ton/100)/10).replace(".",",")} т\nВес: ${a.dw===null?"мало замеров":(a.dw>0?"+":"")+String(a.dw).replace(".",",")+" кг"}\nСредняя тренировка: ${a.dur||"—"} мин${a.best?`\nЛучший рост: ${EX[a.best.id].n} +${a.best.d} кг`:""}`};}
+ if(/меню|рацион|составь.*(еду|питан)|что есть на день|на весь день/.test(t)){const r=menu22();if(!r)return{t:"Все приёмы пищи на сегодня уже заполнены. Посмотри «Еда» — там видно, сколько осталось."};
+  return{t:`<b>Меню на остаток дня</b> (норма ${r.T.k} ккал, белок ${r.T.p} г):\n`+r.plan.map(([i,nm,items])=>`<b>${nm}:</b> `+items.map(x=>`${F[x[0]].n.replace(/, 1 шт/,"").toLowerCase()} ${F[x[0]].unit?x[1]+" шт":x[1]+" г"}`).join(", ")).join("\n")+`\n\nИтого с уже съеденным: ${r.c0.k+r.t.k} ккал, белок ${r.c0.p+r.t.p} г.`,a:[A("Добавить всё в дневник","menuAdd()")]};}
+ if(/не люблю|ненавижу|не нравится|больше не предлагай|убери навсегда|не хочу делать/.test(t)){const id=findEx(q);if(id){DB.ban=DB.ban||{};DB.ban[id]=1;save();banApply();let orig=null;W().days.forEach((d,di)=>itemsFor(di).forEach(x=>{if(x.id===id)orig=x.orig||x.id;}));
+  let msg=`Запомнил: «${EX[id].n}» больше не предлагаю — ни в заменах, ни в конструкторе.`;if(orig){const e=EX[id];const used=[];W().days.forEach((d,di)=>itemsFor(di).forEach(x=>used.push(x.id)));
+   const nx=(e.alt||[]).concat(Object.keys(EX).filter(k=>grp(EX[k])===grp(e)&&EX[k].img)).find(a=>EX[a]&&a!==id&&!used.includes(a)&&!DB.ban[a]);if(nx){doSwap(orig,nx);msg+=` В программе заменил на «${EX[nx].n}».`;}}
+  return{t:msg,a:[A("Вернуть",`delete DB.ban['${id}'];save();chatSay('Вернул в список.')`)]};}}
+ if(/разбор|как прошла|как я сегодня/.test(t)){const r=review22();if(r)return{t:`<b>Разбор</b>\n${r.head}\n${r.lines.join("\n")}\n${r.tip}`};}
+ if(/актив|шаг|кардио/.test(t)){const a=(DB.act||{})[today()]||{s:0,c:[]},av=stepsAvg(7);return{t:`Сегодня: ${(a.s||0).toLocaleString("ru-RU")} шагов${(a.c||[]).length?`, кардио: ${a.c.map(c=>c[0].toLowerCase()+" "+c[1]+" мин").join(", ")}`:""} — сожжено ${actKcal()} ккал.\nКардио на неделе: ${cardioWeek()} из 3.${av?`\nСреднее за 7 дней: ${av.toLocaleString("ru-RU")} шагов.`:""}\nСкажи «прошёл 8500 шагов» или «дорожка 25 минут» — запишу.`};}
+ return _brain22(q);};
+const _sugg22=sugg;sugg=function(){return["Что сегодня?","Составь меню","Прошёл 8000 шагов","Цель жим 100","Итоги месяца","Сколько я жал в жиме лёжа?","Болит плечо","У меня 45 минут"];};
+/* --- активность и цели в «Тренер заметил» --- */
+const _insights22=insights;
+insights=function(){const out=_insights22();const av=stepsAvg(7);
+ if(av!==null&&av<6000)out.splice(1,0,{i:"🚶",t:`Шагов в среднем ${av.toLocaleString("ru-RU")} в день. +3000 шагов — это ещё −150 ккал в день без голода. Цель — 9000.`});
+ const cw=cardioWeek(),dow=(new Date().getDay()+6)%7;if(dow>=4&&cw<2)out.push({i:"🏃",t:`Кардио на этой неделе: ${cw} из 3. После силовой — 20 минут дорожки в спокойном темпе.`});
+ Object.keys(DB.goals||{}).forEach(id=>{if(!EX[id])return;const f=goalFc(id,DB.goals[id]);if(f.done)out.unshift({i:"🏆",t:`Цель «${EX[id].n} — ${DB.goals[id]} кг» достигнута! Поставь новую — скажи тренеру.`});});
+ return out.slice(0,5);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
