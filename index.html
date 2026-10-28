@@ -1533,6 +1533,28 @@ body.light .c50l li{border-top-color:rgba(0,0,0,.06)}
 .pk53{margin:0 0 12px;padding:12px 14px;border-radius:16px;background:var(--surface);border:1px solid rgba(201,169,110,.25);font-size:13px}
 .pk53 summary{cursor:pointer;font-weight:600}.pk53 p{margin:8px 0 0;line-height:1.4}.pk53 small{display:block;margin-top:8px;color:var(--dim);font-size:11.5px}
 
+/* v54 редизайн: навигация и «Сегодня» */
+#fab21{display:none!important}
+.face54{display:block;width:100%;height:100%;border-radius:50%;background:var(--anb-face) 50% 22%/cover;box-shadow:0 0 0 1.5px var(--gold,#C9A96E)}
+#nav .coach54 .ni{width:34px;height:34px;margin-top:-8px;border-radius:50%;box-shadow:0 6px 18px -6px rgba(201,169,110,.8)}
+#nav .coach54{position:relative}#nav .coach54.new54:after{content:"";position:absolute;top:2px;right:calc(50% - 22px);width:10px;height:10px;border-radius:50%;background:#FF6A5A;box-shadow:0 0 0 2px #0A0A0A}
+.coach54w{margin:14px 0 6px}
+.c54h{display:flex;justify-content:space-between;align-items:center;margin:0 2px 8px}.c54h span{display:flex;align-items:center;gap:8px;font-family:var(--disp);font-size:20px}
+.c54h .face54{width:24px;height:24px}.c54h em{font-style:normal;font-size:11.5px;color:var(--dim)}
+.car54{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none;align-items:stretch}.car54::-webkit-scrollbar{display:none}
+.sl54{flex:0 0 86%;scroll-snap-align:start;scroll-margin-left:16px;display:flex;min-width:0}
+.sl54>*{flex:1;margin:0!important;min-width:0;max-height:360px;overflow:auto}
+.sl54 .tr18 .more37{display:none}.sl54 .tr18 .tr18-i{display:flex!important}
+.dots54{display:flex;justify-content:center;gap:6px;margin-top:10px}.dots54 i{width:6px;height:6px;border-radius:3px;background:var(--line);transition:width .25s,background .25s}.dots54 i.on{width:18px;background:#C9A96E}
+.rd54{display:block;width:100%;padding:16px;border-radius:22px;border:1px solid rgba(201,169,110,.4);background:radial-gradient(120% 90% at 100% 0%,rgba(201,169,110,.18),transparent 60%),var(--surface);color:var(--tx);font:inherit;text-align:left;cursor:pointer}
+.rd54 span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#C9A96E}.rd54 b{display:block;font-family:var(--disp);font-weight:400;font-size:22px;margin:3px 0}.rd54 em{display:block;font-style:normal;font-size:12.5px;line-height:1.45;color:var(--dim)}
+.days54{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 10px;padding:0 16px 4px;scrollbar-width:none}.days54::-webkit-scrollbar{display:none}
+.days54 .dcard{flex:0 0 78%;scroll-snap-align:start;scroll-margin-left:16px;margin:0!important}
+.bk54{display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 12px;border-radius:14px;border:1px dashed rgba(201,169,110,.35);font-size:12.5px;color:var(--dim)}.bk54 span{flex:1;min-width:0}
+.bk54 .bk54b{flex:0 0 auto;font:inherit;font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:999px;border:0;background:#C9A96E;color:#0A0A0A;cursor:pointer;width:auto!important;height:auto!important;min-height:0!important;box-shadow:none!important}
+.ref54{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 14px;padding:14px;border-radius:20px;border:1px solid rgba(201,169,110,.35);background:var(--surface);color:var(--tx);font:inherit;text-align:left;cursor:pointer}
+.ref54 i{font-style:normal;font-size:24px}.ref54 div{flex:1}.ref54 b{display:block;font-size:15px}.ref54 span{display:block;font-size:12px;color:var(--dim);margin-top:2px}.ref54 em{font-style:normal;font-size:22px;color:#C9A96E}
+
 </style>
 </head>
 <body>
@@ -4482,7 +4504,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="53";
+const APPV="54";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4494,6 +4516,8 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🧭</i><p><b>Новый дизайн: навигация</b>Анубис-тренер — в центре нижней панели, вкладка «Сегодня» вместо «Зал», справочник упражнений — в «Ещё»</p></div>
+ <div><i>📱</i><p><b>Главный экран короче</b>план, заметки тренера, чек-ин, блок и дорожная карта — в одной ленте, листается вбок. Дни недели — тоже карусель</p></div>
  <div><i>🎯</i><p><b>Умный подбор упражнений</b>тренер оценивает каждого кандидата: нагрузка в растяжении, бережность к суставам, твой рост силы, разнообразие, что есть в зале — и берёт лучшее, а не первое в списке. Видно в предпросмотре программы</p></div>
  <div><i>🔢</i><p><b>Повторы под упражнение</b>махи и задняя дельта 12–20, икры 10–20, пресс 12–20, ноги при больных коленях не тяжелее 8 повторов</p></div>
  <div><i>🧠</i><p><b>Чат помнит разговор</b>спросил про жим — дальше можно «а в приседе?», «как его делать?», «замени его» без названия упражнения</p></div>
@@ -7619,6 +7643,38 @@ genProgram=function(c){const P=_gp53(c);try{PICK53=pick53(P,c);reps53(P,c);}catc
 const _gv53=genView;
 genView=function(){_gv53.apply(this,arguments);try{const o=document.getElementById("exd");if(!o||!GP||o.querySelector(".pk53")||!PICK53.length)return;const at=o.querySelector(".v49")||o.querySelector(".pro44");
  if(at)at.insertAdjacentHTML("afterend",`<details class="pk53"><summary>🧠 Тренер выбрал упражнения лучше (${PICK53.length})</summary>${PICK53.map(x=>`<p>${x}</p>`).join("")}<small>Оценка: нагрузка в растяжении, бережность к суставам, твой рост силы, разнообразие, что есть в зале.</small></details>`);}catch(e){}};
+
+/* ===== v54: редизайн, этап 1 — новая навигация (Тренер в центре), главный экран «Сегодня» с лентой тренера и неделей-каруселью ===== */
+const NAV54=[["gym","Сегодня"],["food","Еда"],["coach","Тренер"],["prog","Прогресс"],["more","Ещё"]];
+nav=function(){const el=document.getElementById("nav");if(!el)return;let inn=el.querySelector(".navin");
+ if(!inn||!inn.dataset.v54){el.innerHTML='<div class="navin" data-v54="1"><span class="nind"></span>'+NAV54.map(([k,l])=>k==="coach"?`<button data-k="coach" class="coach54" onclick="chatOpen()" aria-label="Тренер"><span class="ni"><i class="face54"></i></span><span class="nl">${l}</span></button>`:`<button data-k="${k}" onclick="setTab('${k}')" aria-label="${l}"><span class="ni"><svg viewBox="0 0 24 24">${IC2[k]}</svg></span><span class="nl">${l}</span></button>`).join("")+"</div>";inn=el.querySelector(".navin");}
+ const cur=tab==="ref"?"more":tab;inn.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.k===cur));const c=inn.querySelector(".coach54");if(c)c.classList.toggle("new54",!!DB.repNew);
+ navPos(navPrev!==null&&navPrev!==tab);navPrev=tab;};
+/* справочник — из «Ещё» */
+const _vMore54=vMore;
+vMore=function(){_vMore54.apply(this,arguments);try{const app=document.getElementById("app");if(!app||app.querySelector(".ref54"))return;const h=app.querySelector(".head")||app.firstElementChild;
+ const n=Object.keys(EX).length;if(h)h.insertAdjacentHTML("afterend",`<button class="ref54" onclick="setTab('ref')"><i>📚</i><div><b>Упражнения</b><span>справочник: ${n} упражнений, техника, замены, «если болит»</span></div><em>›</em></button>`);}catch(e){}};
+/* ---- главный экран ---- */
+function dots54(car){const d=car.nextElementSibling;if(!d||!d.classList.contains("dots54"))return;const w=car.firstElementChild?car.firstElementChild.getBoundingClientRect().width+10:1;const i=Math.round(car.scrollLeft/w);d.querySelectorAll("i").forEach((x,k)=>x.classList.toggle("on",k===i));}
+let CARX54=0;
+const _vGym54=vGym;
+vGym=function(){_vGym54.apply(this,arguments);try{if(session)return;const app=document.getElementById("app");if(!app||app.querySelector(".car54"))return;const hero=app.querySelector(".hero");if(!hero)return;
+ /* лента тренера: план, заметки, чек-ин, блок, дорожная карта */
+ const slides=[];const add=(el,k,t)=>{if(el){slides.push([el,k,t]);}};
+ add(app.querySelector(".ck48c"),"ck","Чек-ин");add(app.querySelector(".pl20"),"pl","План");add(app.querySelector(".tr18"),"tr","Тренер заметил");add(app.querySelector(".blk41"),"bl","Блок");
+ let rd=null;try{const R=road51();const div=document.createElement("button");div.className="rd54";div.setAttribute("onclick","roadOpen51()");
+  div.innerHTML=`<span>дорожная карта</span><b>${R.tGoal&&R.w-R.goal>0.3?"95 кг ≈ "+dd51(R.tGoal):"Цель по весу достигнута"}</b><em>${R.ms.filter(m=>!/Вес/.test(m.t)).slice(0,2).map(m=>`${m.i} ${m.t} ≈ ${dd51(m.d)}`).join("<br>")||"план на 6 месяцев"}</em>${roadSvg51(R)}`;rd=div;}catch(e){}
+ if(rd)add(rd,"rd","Карта");
+ if(slides.length>=2){const wrap=document.createElement("div");wrap.className="coach54w";wrap.innerHTML=`<div class="c54h"><span><i class="face54"></i>Тренер</span><em>листай →</em></div><div class="car54"></div><div class="dots54">${slides.map((_,i)=>`<i class="${i===0?"on":""}"></i>`).join("")}</div>`;
+  const car=wrap.querySelector(".car54");slides.forEach(([el,k])=>{const s=document.createElement("div");s.className="sl54 sl54-"+k;s.appendChild(el);car.appendChild(s);});
+  hero.insertAdjacentElement("afterend",wrap);car.addEventListener("scroll",()=>{CARX54=car.scrollLeft;dots54(car);},{passive:true});if(CARX54)setTimeout(()=>{car.scrollLeft=CARX54;dots54(car);},0);}
+ /* неделя: карточки дней — горизонтально */
+ const dc=[...app.querySelectorAll(".dcard")];if(dc.length>=2){const row=document.createElement("div");row.className="days54";dc[0].parentNode.insertBefore(row,dc[0]);dc.forEach(x=>row.appendChild(x));
+  const on=row.querySelector(".dcard:not(.ok)");if(on)setTimeout(()=>{row.scrollLeft=Math.max(0,on.offsetLeft-16);},0);}
+ /* резервная копия — тонкой строкой внизу */
+ const bk=app.querySelector(".bk7");if(bk){const t=bk.querySelector("b,h3,strong");const btn=bk.querySelector("button");const slim=document.createElement("div");slim.className="bk54";slim.innerHTML=`<span>💾 ${t?t.textContent:"Резервная копия"}</span>`;if(btn){btn.className="bk54b";slim.appendChild(btn);}bk.replaceWith(slim);
+  const tail=app.querySelector("details.fold37:last-of-type");if(tail)tail.insertAdjacentElement("beforebegin",slim);}
+ }catch(e){}};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
