@@ -1372,6 +1372,23 @@ body.light .hello>div:first-child:before{color:#9A7A45}
 .fx-ph:has(img[src^="data:image/jpeg"]),.exd-shot:has(img[src^="data:image/jpeg"]),.zoom figure:has(img[src^="data:image/jpeg"]){background:radial-gradient(70% 80% at 50% 40%,#3A2D1F 0,#141210 60%,#0A0A0A 100%)!important}
 .fx-ph img[src^="data:image/jpeg"],.exd-shot img[src^="data:image/jpeg"],.zoom img[src^="data:image/jpeg"]{object-fit:contain!important;object-position:50% 50%!important}
 
+/* v40 Анубис в фокусе */
+#fx.anb40 .fx-ph{height:auto!important;max-height:none!important;min-height:0!important;background:none!important;overflow:visible!important;display:block!important}
+#fx.anb40 .fx-ph>img,#fx.anb40 .fx-ph:after{display:none!important}
+#fx.anb40 .fx-cap{position:static!important;padding:2px 0 0!important;text-align:center}
+.row40{display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
+.fxa40{position:relative;flex:0 0 auto;width:min(42vw,190px);aspect-ratio:3/4;border-radius:20px;overflow:hidden;border:1px solid rgba(201,169,110,.25);
+ background:radial-gradient(70% 80% at 50% 40%,#3A2D1F 0,#141210 60%,#0A0A0A 100%);box-shadow:0 10px 30px -12px rgba(201,169,110,.35)}
+.fxa40 img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fxa40 img.b{animation:anb40 2.6s ease-in-out infinite}
+@keyframes anb40{0%,18%{opacity:0}42%,68%{opacity:1}92%,100%{opacity:0}}
+.fxa40 span{position:absolute;left:6px;right:6px;bottom:6px;font-size:10px;text-align:center;padding:3px;border-radius:8px;background:rgba(10,10,10,.7);color:#C9A96E}
+#fx.anb40 .row40 .ring{flex:0 0 auto;transform:scale(.9);transform-origin:center}
+@media (max-width:360px){.fxa40{width:40vw}#fx.anb40 .row40 .ring{transform:scale(.8)}}
+@media (prefers-reduced-motion:reduce){.fxa40 img.b{animation:none;opacity:0}}
+@media (max-height:700px){.fxa40{width:30vw;max-width:130px}#fx.anb40 .row40 .ring{transform:scale(.72);margin:-16px -10px}#fx.anb40 .fx-cap p{display:none}}
+@media (max-height:600px){.fxa40{width:25vw;max-width:105px;border-radius:14px}#fx.anb40 .row40 .ring{transform:scale(.64);margin:-26px -16px}}
+
 </style>
 </head>
 <body>
@@ -4321,7 +4338,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="38";
+const APPV="40";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4333,6 +4350,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>☥</i><p><b>Анубис в упражнениях</b>в тренировке рядом с кругом подходов Анубис показывает движение: начало ↔ конец. Пока нарисованы первые упражнения, остальные появятся с обновлениями. «Ещё» → «Показ упражнений»: Анубис или фото</p></div>
  <div><i>☥</i><p><b>Новый стиль ANUBIS</b>чёрный и золото, заголовки как у логотипа, твой Анубис на главной, в чате и в выборе программ. Скоро — Анубис в каждом упражнении</p></div>
  <div><i>✨</i><p><b>Главный экран короче</b>справка и правила недели свёрнуты, «Тренер заметил» — только главное</p></div>
  <div><i>💬</i><p><b>Тренер понимает лучше</b>исправляет опечатки и английскую раскладку, отвечает по твоим цифрам: «прогресс в жиме», «почему такой вес», «чем заменить гакк», «сколько подходов на спину», «разбор моей программы» — оценка и что улучшить</p></div>
@@ -6295,6 +6313,16 @@ const _vMore39=vMore;
 vMore=function(){_vMore39.apply(this,arguments);try{const n=Object.keys(ANB).filter(id=>EX[id]).length;if(!n)return;const g=document.getElementById("gear32");if(!g||document.getElementById("anb39"))return;
  const all=Object.keys(EX).filter(id=>EX[id].anbId).length;
  g.insertAdjacentHTML("beforebegin",`<div class="card7" id="anb39"><span class="k13">показ упражнений</span><div class="seg7" style="display:flex"><button style="flex:1" class="${DB.anbOff===1?"":"on"}" onclick="DB.anbOff===1&&anbToggle()">Анубис</button><button style="flex:1" class="${DB.anbOff===1?"on":""}" onclick="DB.anbOff!==1&&anbToggle()">Фото</button></div><p class="gr-p" style="margin-top:8px">Анубис нарисован в ${all} из ${Object.keys(EX).length} упражнений. В остальных пока фото.</p></div>`);}catch(e){}};
+
+/* ===== v40: Анубис в тренировке — кадры рядом с кругом подходов, плавная анимация начало ↔ конец ===== */
+function anbFx40(){const fx=document.getElementById("fx");if(!fx||!session)return;const x=itemsFor(session.di)[session.fx];if(!x)return;const e=EX[x.id];
+ const on=!!(e&&e.anbId&&ANB[e.anbId]&&DB.anbOff!==1);fx.classList.toggle("anb40",on);if(!on)return;
+ const ring=fx.querySelector(".fx-mid .ring");if(!ring||fx.querySelector(".fxa40"))return;const f=ANB[e.anbId];
+ const row=document.createElement("div");row.className="row40";ring.parentNode.insertBefore(row,ring);row.appendChild(ring);
+ row.insertAdjacentHTML("afterbegin",`<div class="fxa40" onclick="zoom('${x.id}')"><img src="data:image/jpeg;base64,${f[0]}" alt=""><img class="b" src="data:image/jpeg;base64,${f[1]}" alt="">${e.anbRel?`<span>похожее движение</span>`:""}</div>`);}
+const _render40=render;render=function(){const r=_render40.apply(this,arguments);try{anbFx40();}catch(e){}return r;};
+/* родственник — только с тем же снарядом */
+const _anbMap40=anbMap39;anbMap39=function(){_anbMap40();Object.keys(EX).forEach(id=>{const e=EX[id];if(e.anbRel&&eqT32(e)!==eqT32(EX[e.anbId])){delete e.anbId;delete e.anbRel;}});};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
