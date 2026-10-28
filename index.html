@@ -1214,6 +1214,29 @@ body.light .gx-s button{border-color:rgba(0,0,0,.12);background:#fff}
 .m29{display:block;font-style:normal;font-size:11.5px;color:var(--dim);margin-top:2px}
 body.light .t1{color:#0E7A35!important}body.light .t2{color:#2E74D0!important}
 
+/* v30 баланс мышц */
+.pri30{font-size:12px;font-weight:600;color:var(--lime);background:rgba(59,240,106,.09);border:1px solid rgba(59,240,106,.25);border-radius:12px;padding:7px 10px;margin:0 0 8px}
+#fx .pri30{margin:6px 0 0;font-size:11.5px;padding:5px 9px}
+.lag30 .tr18-h em{font-style:normal;font-size:11.5px;color:var(--lime);font-weight:600;text-align:right;max-width:55%}
+.lag30 .lg-t{margin:6px 0 10px;font-size:13px;line-height:1.45;color:var(--tx)}
+.lg-l{display:flex;flex-direction:column;gap:6px}
+.lg-r{display:grid;grid-template-columns:minmax(0,7.5em) 1fr 3.6em;align-items:center;gap:8px;font-size:12px;color:var(--dim)}
+.lg-r.lag{color:var(--tx);font-weight:700}
+.lg-n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lg-b{position:relative;height:8px;border-radius:5px;background:var(--line)}
+.lg-b i{position:absolute;top:0;bottom:0;border-radius:5px}
+.lg-b i.pos{left:50%;background:var(--lime)}
+.lg-b i.neg{right:50%;background:#FF8A7A}
+.lg-b:after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--dim);opacity:.5}
+.lg-r.lag .lg-b i{background:#FF8A7A}
+.lg-v{text-align:right;font-variant-numeric:tabular-nums}
+.lg-s{margin:6px 0 0;font-size:10.5px;color:var(--dim)}
+.lg-h{display:block;margin:14px 0 7px;font-size:11.5px;color:var(--dim)}
+.lg-c{display:flex;flex-wrap:wrap;gap:6px}
+.lg-c button{font:inherit;font-size:12px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--tx);cursor:pointer}
+.lg-c button.on{background:var(--lime);border-color:var(--lime);color:#091411;font-weight:700}
+.lg-a{margin-top:12px;font:inherit;font-size:12px;background:none;border:0;color:var(--dim);text-decoration:underline;padding:0;cursor:pointer}
+
 </style>
 </head>
 <body>
@@ -4162,7 +4185,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="29";
+const APPV="30";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4174,6 +4197,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>⚖️</i><p><b>Отстающие мышцы</b>тренер сам сравнивает рост силы всех мышц за 6 недель. Если какая-то отстаёт — +1 подход в первом упражнении на неё. Можно выбрать и самому: «подтяни грудь». Карточка «Баланс мышц» — в Прогрессе</p></div>
  <div><i>🎯</i><p><b>Умные замены</b>везде — в тренировке, «Занято?», конструкторе, плато — сначала то же движение и та же зона: верх груди → верх груди, тяга сверху → тяга сверху, молотки → молотки. Метка «точная замена»</p></div>
  <div><i>🛠</i><p><b>Конструктор 2.0</b>перед применением можно заменить любое упражнение, убрать, добавить и поменять подходы. Видно баланс тяг и жимов и где мало объёма</p></div>
  <div><i>🔄</i><p><b>Блоки по 8 недель</b>упражнения сами меняются на похожие, объём растёт внутри блока, 9-я — разгрузка</p></div>
@@ -5408,9 +5432,76 @@ busy17=function(){if(!session)return;const it=itemsFor(session.di),x=it[session.
  const nx=altsFor(orig,{exclude:it.map(y=>y.id).concat(tried)})[0];if(!nx)return;session.tmp=session.tmp||{};session.tmp[orig]=nx;delete session.sets[x.id];session.auto=session.auto||[];session.auto.push([EX[x.id].n,EX[nx].n,"занят"]);
  if(navigator.vibrate)navigator.vibrate(20);save();render();};
 
+/* ===== v30: отстающие мышцы — тренер сам находит и подтягивает (+1 подход) ===== */
+const LAGG=["Грудь","Широчайшие","Середина спины","Средняя дельта","Задняя дельта","Бицепс","Трицепс","Квадрицепс","Бицепс бедра","Ягодицы"];
+const LAGN={"Грудь":"грудь","Широчайшие":"широчайшие","Середина спины":"середина спины","Средняя дельта":"средняя дельта","Задняя дельта":"задняя дельта","Бицепс":"бицепс","Трицепс":"трицепс","Квадрицепс":"квадрицепс","Бицепс бедра":"бицепс бедра","Ягодицы":"ягодицы"};
+/* сила по каждой мышце: первые 3 недели из 6 против последних 3 */
+function lagStats(){const to=today(),mid=dkAgo(21),m1=dkAgo(22),from=dkAgo(42),s14=dkAgo(14);const G={};
+ Object.keys(DB.log||{}).forEach(id=>{const e=EX[id];if(!e)return;const g=grp(e);if(!LAGG.includes(g))return;const o=G[g]=G[g]||{tr:[],sets:0};
+  (DB.log[id]||[]).forEach(l=>{if(l.d>=s14)o.sets+=(l.sets||[]).filter(x=>!x.warm&&!x.drop).length;});
+  const a=e1At(id,from,m1),b=e1At(id,mid,to);if(a&&b)o.tr.push((b-a)/a*100);});
+ for(const g in G){const o=G[g];o.trend=o.tr.length?Math.round(o.tr.reduce((x,y)=>x+y,0)/o.tr.length*10)/10:null;o.wk=Math.round(o.sets/2);}
+ return G;}
+function lagFind(){const n=(DB.hist||[]).filter(h=>h.d>=dkAgo(42)).length;if(n<6)return{list:[],n,G:{},need:6-n};const G=lagStats();
+ const tr=Object.values(G).filter(o=>o.trend!==null).map(o=>o.trend).sort((a,b)=>a-b);if(tr.length<4)return{list:[],n,G,need:0};const med=tr[Math.floor(tr.length/2)];
+ const list=Object.keys(G).filter(g=>G[g].trend!==null&&G[g].trend<=Math.min(med-2.5,1)).sort((a,b)=>G[a].trend-G[b].trend).slice(0,2);
+ return{list,med,n,G,need:0};}
+/* приоритет: авто (пересчёт раз в неделю) + выбранный вручную, максимум 2 мышцы */
+function priUpd(){const P=DB.pri=DB.pri||{man:[],auto:[],wk:0,off:0};const w=weekNow();if(P.wk!==w){P.wk=w;try{P.auto=lagFind().list;}catch(e){P.auto=[];}save();}return P;}
+function priGroups(){const P=priUpd();const a=P.off?P.man:P.man.concat(P.auto);return[...new Set(a)].slice(0,3);}
+function pri30Toggle(g){const P=priUpd();const i=P.man.indexOf(g);if(i>=0)P.man.splice(i,1);else{P.man.push(g);if(P.man.length>2)P.man.shift();P.auto=P.auto.filter(x=>x!==g);}if(navigator.vibrate)navigator.vibrate(15);save();render();}
+function pri30Auto(){const P=priUpd();P.off=P.off?0:1;save();render();}
+function pri30Open(){progSub="o";setTab('prog');setTimeout(()=>{const c=document.querySelector("#app .lag30");if(c)c.scrollIntoView({behavior:"smooth",block:"center"});},80);}
+/* +1 рабочий подход в первом упражнении на приоритетную мышцу (не в разгрузку и не при сжатой тренировке) */
+const _if30=itemsFor;
+itemsFor=function(di){const a=_if30(di);try{if(isDeload())return a;if(session&&session.di===di&&session.budget)return a;const P=priGroups();if(!P.length)return a;const seen={};
+ return a.map(x=>{const g=grp(EX[x.id]);if(P.includes(g)&&!seen[g]){seen[g]=1;return Object.assign({},x,{s:x.s+1,pri:g});}return x;});}catch(e){return a;}};
+/* метка в списке упражнений */
+const _exBody30=exBody;
+exBody=function(it,n,items){const h=_exBody30(it,n,items);return it.pri?`<div class="pri30">🎯 Отстаёт ${LAGN[it.pri]} — тренер добавил +1 подход</div>`+h:h;};
+/* метка в режиме фокуса */
+const _coachLine30=coachLine;
+coachLine=function(){_coachLine30();if(!session||!session.focus)return;const fx=document.getElementById("fx");if(!fx||fx.querySelector(".pri30"))return;const x=itemsFor(session.di)[session.fx];if(!x||!x.pri)return;
+ const cl=fx.querySelector(".coach17");if(cl)cl.insertAdjacentHTML("afterend",`<div class="pri30">🎯 ${LAGN[x.pri][0].toUpperCase()+LAGN[x.pri].slice(1)} в приоритете — сегодня +1 подход</div>`);};
+/* карточка «Баланс мышц» во вкладке Прогресс */
+function lagCard(){const L=lagFind(),P=priUpd(),pg=priGroups();const gs=Object.keys(L.G).filter(g=>L.G[g].trend!==null).sort((a,b)=>L.G[a].trend-L.G[b].trend);
+ const mx=Math.max(5,...gs.map(g=>Math.abs(L.G[g].trend)));
+ const rows=gs.map(g=>{const v=L.G[g].trend,w=Math.round(Math.abs(v)/mx*50);const lag=L.list.includes(g);
+  return `<div class="lg-r${lag?" lag":""}"><span class="lg-n">${g}</span><span class="lg-b"><i class="${v<0||L.list.includes(g)?"neg":"pos"}" style="width:${w}%"></i></span><span class="lg-v">${v>0?"+":""}${String(v).replace(".",",")}%</span></div>`;}).join("");
+ const head=L.need?`Чтобы тренер увидел отстающие мышцы, нужно ещё ${L.need} ${pl(L.need,"тренировка","тренировки","тренировок")} за 6 недель. Пока можешь выбрать приоритет сам.`
+  :L.list.length?`Отстаёт: <b>${L.list.map(g=>LAGN[g]).join(" и ")}</b> — сила почти не растёт, у остальных мышц в среднем ${L.med>0?"+":""}${String(L.med).replace(".",",")}%. ${P.off?"Автоприоритет выключен.":"Тренер добавил +1 подход в первом упражнении на эту мышцу, пока она не догонит."}`
+  :`Все мышцы растут ровно — отстающих нет 👍`;
+ return `<div class="card7 lag30"><div class="tr18-h"><span class="k13">баланс мышц</span><em>${pg.length?"🎯 "+pg.map(g=>LAGN[g]).join(", "):""}</em></div>
+ <p class="lg-t">${head}</p>${rows?`<div class="lg-l">${rows}</div><p class="lg-s">рост силы за 6 недель по расчётному максимуму</p>`:""}
+ <span class="lg-h">Подтянуть вручную (до двух мышц):</span>
+ <div class="lg-c">${LAGG.map(g=>`<button class="${P.man.includes(g)?"on":""}" onclick="pri30Toggle('${g}')">${LAGN[g]}</button>`).join("")}</div>
+ <button class="lg-a" onclick="pri30Auto()">${P.off?"Включить автоприоритет":"Выключить автоприоритет"}</button></div>`;}
+const _vProg30=vProg;
+vProg=function(){_vProg30.apply(this,arguments);if(progSub!=="o")return;const app=document.getElementById("app");if(!app||app.querySelector(".lag30"))return;
+ const at=app.querySelector(".hm25")||app.querySelector(".gl22")||app.querySelector(".mo22");if(at)at.insertAdjacentHTML("afterend",lagCard());else app.insertAdjacentHTML("beforeend",lagCard());};
+/* «Тренер заметил» */
+const _insights30=insights;
+insights=function(){const out=_insights30();try{const P=priUpd();if(!P.off&&P.auto.length){const L=lagFind();if(L.list.length)out.unshift({i:"🎯",t:`Отстаёт ${L.list.map(g=>LAGN[g]).join(" и ")}: сила за 6 недель ${L.list.map(g=>(L.G[g].trend>0?"+":"")+String(L.G[g].trend).replace(".",",")+"%").join(" и ")}, у остальных ${L.med>0?"+":""}${String(L.med).replace(".",",")}%. Добавил +1 подход.`,a:"pri30Open()",al:"Подробнее"});}}catch(e){}return out.slice(0,4);};
+/* тренер в чате */
+function lagGroupOf(t){if(/бицепс бедр|задн.*бедр|бедр/.test(t))return"Бицепс бедра";if(/ягодиц|попу|попа/.test(t))return"Ягодицы";if(/квадр|ног/.test(t))return"Квадрицепс";if(/задн.*дельт|задн.*плеч/.test(t))return"Задняя дельта";if(/дельт|плеч/.test(t))return"Средняя дельта";
+ if(/широч|крыл/.test(t))return"Широчайшие";if(/середин.*спин|толщ|ромб/.test(t))return"Середина спины";if(/спин/.test(t))return"Широчайшие";if(/груд/.test(t))return"Грудь";if(/трицеп/.test(t))return"Трицепс";if(/бицеп|рук/.test(t))return"Бицепс";return null;}
+const _brain30=brain;
+brain=function(q){const t=nz(q);
+ if(/отста|слаб.* мышц|приоритет|подтян(и|уть)|отстающ|баланс мышц/.test(t)&&!/подтягиван/.test(t)){const P=priUpd(),g=lagGroupOf(t);
+  if(/авто/.test(t)&&/выключ|отключ|убер|не надо/.test(t)){P.off=1;save();render();return{t:"Автоприоритет выключен. Ручной выбор остаётся."};}
+  if(/авто/.test(t)&&/включ/.test(t)){P.off=0;save();render();return{t:"Автоприоритет включён: раз в неделю ищу отстающие мышцы."};}
+  if(g&&/убер|сним|не надо|выключ|хватит|отмен/.test(t)){P.man=P.man.filter(x=>x!==g);P.auto=P.auto.filter(x=>x!==g);save();render();return{t:`Убрал приоритет: ${LAGN[g]}. Подходы как в программе.`};}
+  if(g){if(!P.man.includes(g)){P.man.push(g);if(P.man.length>2)P.man.shift();}save();render();
+   return{t:`Готово: <b>${LAGN[g]}</b> в приоритете. В первом упражнении на эту мышцу +1 рабочий подход в каждой тренировке (кроме разгрузки). Приоритетов сейчас: ${priGroups().map(x=>LAGN[x]).join(", ")}.`,a:[A("Убрать",`chatAsk('убери приоритет ${LAGN[g]}')`)]};}
+  const L=lagFind();if(L.need)return{t:`Пока мало данных: нужно ещё ${L.need} ${pl(L.need,"тренировка","тренировки","тренировок")} за 6 недель. Можешь сам выбрать мышцу: «подтяни грудь».`,a:[A("Баланс мышц","chatClose();pri30Open()")]};
+  const gs=Object.keys(L.G).filter(g=>L.G[g].trend!==null).sort((a,b)=>L.G[a].trend-L.G[b].trend);
+  return{t:`<b>Рост силы за 6 недель</b>\n${gs.map(g=>`${L.list.includes(g)?"🎯":"•"} ${g}: ${L.G[g].trend>0?"+":""}${String(L.G[g].trend).replace(".",",")}% · ${L.G[g].wk} подх./нед`).join("\n")}\n\n${L.list.length?`Отстаёт ${L.list.map(g=>LAGN[g]).join(" и ")} — ${P.off?"скажи «включи автоприоритет», и я добавлю +1 подход.":"уже добавил +1 подход."}`:"Отстающих нет — все мышцы растут ровно."}`,a:[A("Баланс мышц","chatClose();pri30Open()")]};}
+ return _brain30(q);};
+const _sugg30=sugg;sugg=function(){const a=_sugg30();a.splice(4,0,"Что отстаёт?");return a.slice(0,9);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
