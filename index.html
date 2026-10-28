@@ -4358,7 +4358,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="41";
+const APPV="43";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4370,6 +4370,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>✅</i><p><b>Точнее и понятнее</b>«Разбор моей программы» в чате теперь может сам добрать подходы мышцам, которым не хватает объёма. Сила в отчётах сравнивается с такой же неделей (тяжёлая с тяжёлой). Запас «0» пишется как «до отказа», исправлены падежи и числа</p></div>
  <div><i>📈</i><p><b>Волна нагрузки по блоку</b>9 недель: вход → накопление → пик → разгрузка. Запас повторов меняется по фазе, и тренер считает веса под неё. Карточка блока — на главной</p></div>
  <div><i>🔍</i><p><b>Разбор после тренировки</b>процент выполнения плана, где выросла сила, где упали повторы (тогда отдых станет дольше), где будет прибавка</p></div>
  <div><i>🗓</i><p><b>Недельный отчёт с решениями</b>подходы на каждую мышцу против нормы, кто вырос, что поменять. «Итоги недели», «что в следующей тренировке», «какая фаза» — в чате</p></div>
@@ -6414,9 +6415,72 @@ const _render42=render;render=function(){const r=_render42.apply(this,arguments)
 anbMap39=function(){ANB=window.ANB||{};Object.keys(EX).forEach(id=>{delete EX[id].anbId;delete EX[id].anbRel;});Object.keys(ANB).forEach(id=>{if(EX[id])EX[id].anbId=id;});};
 try{anbMap39();}catch(e){}
 
+/* ===== v43: корректность и ясность — авто-досыпка объёма по норме, чистые запасы повторов, честные отчёты, грамотные тексты ===== */
+/* ---- 1. Запас повторов: понятные значения вместо «0,5–1,5» ---- */
+const RIRUP={"0":"1","0–1":"1–2","1":"2","1–2":"2–3","2":"3","2–3":"3"},RIRDN={"3":"2","2–3":"1–2","2":"1–2","1–2":"1","1":"1","0–1":"0–1","0":"0"};
+rirShift41=function(r,sh){if(!sh||!r)return r;const k=String(r).replace("-","–").trim();if(sh>0)return RIRUP[k]||r;return RIRDN[k]||r;};
+function rirTxt(r){const k=String(r||"").trim();return k==="0"?"до отказа":k==="0–1"?"0–1 (почти до отказа)":k;}
+/* ---- 2. Авто-досыпка объёма: если мышце не хватает подходов до нормы ---- */
+function volNeed43(w){const c=cfg36(),vol={},where={};w.days.forEach((d,di)=>(d.items||[]).forEach(x=>{const id=swapOf(x.id),g=grp(EX[id]);vol[g]=(vol[g]||0)+x.s;(where[g]=where[g]||[]).push([di,x.id]);}));
+ const out={};BIG31.forEach(g=>{const[lo]=rng33(g,c);const v=vol[g]||0;if(v&&v<lo)out[g]={v,lo,need:Math.min(6,lo-v),where:where[g]||[]};});return out;}
+function volFixApply(){DB.volFix={};const inj=userInj36(),B=DB.ban||{};WEEKS.forEach(w=>{const N=volNeed43(w),al={};const used=[];w.days.forEach(d=>(d.items||[]).forEach(x=>used.push(swapOf(x.id))));
+  Object.keys(N).forEach(g=>{let left=N[g].need;const ws=N[g].where;
+   if(left>=3&&ws.length){const[di,oid]=ws[ws.length-1];const ref=w.days[di].items.find(x=>x.id===oid)||{};
+    const bad=id=>{const p=(POOL[g]||[]).find(q=>q[0]===id);return p&&inj.some(j=>p[3].split(" ").includes(j));};
+    const pats=new Set(ws.map(([,o])=>feat(swapOf(o)).p));
+    const cand=(POOL[g]||[]).map(p=>p[0]).filter(id=>EX[id]&&!used.includes(id)&&!B[id]&&!bad(id));
+    const nx=cand.find(id=>!pats.has(feat(id).p))||cand[0]||altsFor(swapOf(oid),{exclude:used}).find(a=>grp(EX[a])===g);
+    if(nx){const s=Math.min(4,left);used.push(nx);(al.extra=al.extra||[]).push({di,after:oid,it:Object.assign({},ref,{id:nx,s,drop:0,ss:0,vfix:"new"})});left-=s;}}
+   for(const[di,oid]of ws){if(left<=0)break;const k=di+"|"+oid;al[k]=(al[k]||0)+1;left--;}});
+  DB.volFix[w.code]=al;});DB.volFixD=today();save();render();}
+function volFixDo43(){volFixApply();let n=0,ex=[];Object.values(DB.volFix||{}).forEach(o=>Object.entries(o).forEach(([k,v])=>{if(k==='extra')v.forEach(e=>{n+=e.it.s;ex.push(EX[e.it.id].n);});else n+=v;}));chatSay(`Готово: добавил ${n} ${pl(n,'подход','подхода','подходов')} в неделю мышцам, которым не хватало объёма — до нижней границы нормы: не больше +2 на упражнение${ex.length?`, плюс ${ex.length===1?'упражнение':'упражнения'}: ${[...new Set(ex)].join(', ')}`:''}. ${volTime43()}`,[A('Вернуть как было','volFixUndo43()')]);}
+function volTime43(){const keep=DB.volFix;const wk0=DB.wk;const rows=[];WEEKS.forEach((w,wi)=>{DB.wk=wi;w.days.forEach((d,di)=>{const a=estMin(itemsFor(di));DB.volFix=null;const b=estMin(itemsFor(di));DB.volFix=keep;if(a>b)rows.push([w.short||w.name,d.t.split(" · ")[0],b,a]);});});if(wk0===undefined)delete DB.wk;else DB.wk=wk0;
+ const long=rows.filter(r=>r[3]>100);return `\nДлительность: ${rows.map(r=>`${r[0].toLowerCase()} ${r[1].toLowerCase()} ${r[2]}→${r[3]} мин`).join(", ")}.${long.length?" Дольше 100 минут к концу падает качество — если не успеваешь, перед стартом выбери «60 мин» или «75 мин», тренер сам сожмёт.":""}`;}
+function volFixUndo43(){volFixOff();chatSay('Вернул подходы как в программе.');}
+function volFixOff(){DB.volFix=null;save();render();}
+const _if43=itemsFor;
+itemsFor=function(di){const a=_if43(di);try{const F=DB.volFix&&DB.volFix[W().code];if(!F||isDeload())return a;let out=a.map(x=>{const add=F[di+"|"+(x.orig||x.id)];return add?Object.assign({},x,{s:x.s+add,vfix:add}):x;});
+ (F.extra||[]).filter(e=>e.di===di&&EX[e.it.id]&&!out.some(x=>x.id===e.it.id)).forEach(e=>{const i=out.findIndex(x=>(x.orig||x.id)===e.after);const it=Object.assign({},e.it,{orig:e.it.id});out.splice(i>=0?i+1:out.length,0,it);});return out;}catch(e){return a;}};
+const LACC={"Грудь":"грудь","Широчайшие":"широчайшие","Середина спины":"середину спины","Квадрицепс":"квадрицепсы","Бицепс бедра":"бицепс бедра","Ягодицы":"ягодицы","Средняя дельта":"средние дельты","Задняя дельта":"задние дельты","Бицепс":"бицепс","Трицепс":"трицепс"};
+review36=function(){const c=cfg36(),P=curProg36();let Q=null;try{Q=quality33(P,c);}catch(e){}const rec=[];const vol={};P[0].days.forEach((d,di)=>itemsFor(di).forEach(x=>{const g=grp(EX[x.id]);vol[g]=(vol[g]||0)+x.s;}));
+ const low=[];BIG31.forEach(g=>{const[lo,hi]=rng33(g,c),v=vol[g]||0;if(v<lo){low.push(g);rec.push(`${g}: ${v} ${pl(v,"подход","подхода","подходов")} в неделю при норме ${lo}–${hi}.`);}else if(v>hi+3)rec.push(`${g}: ${v} ${pl(v,"подход","подхода","подходов")} — больше, чем успеешь восстановить (норма ${lo}–${hi}).`);});
+ const push=PUSH.reduce((a,g)=>a+(vol[g]||0),0),pull=PULL.reduce((a,g)=>a+(vol[g]||0),0);if(pull<push*.9)rec.push(`Тяг (${pull}) меньше жимов (${push}) — для здоровья плеч добавь тягу каната к лицу.`);
+ try{const L=lagFind();if(L.list.length)rec.push(`Отстаёт по силе: ${L.list.map(g=>LAGN[g]).join(", ")} — уже даю +1 подход.`);}catch(e){}
+ const fixed=!!DB.volFix;const a=[];if(low.length&&!fixed)a.push(A("Добрать подходы автоматически","volFixDo43()"));if(fixed)a.push(A("Вернуть подходы как было","volFixUndo43()"));a.push(A("Пересобрать по тесту","chatClose();genOpen()"));
+ return{t:`<b>Разбор твоей программы</b>${Q?`\nОценка: <b>${Q.score}/100</b>\n${Object.keys(Q.parts).map(k=>`• ${k}: ${Math.max(0,Math.round(Q.parts[k]*100))}`).join("\n")}`:""}${fixed?"\n\n✅ Подходы уже добраны автоматически.":""}\n\n<b>Что улучшить:</b>\n${rec.length?rec.slice(0,6).map((r,i)=>`${i+1}. ${r}`).join("\n"):"Программа сбалансирована — менять нечего. Главное: регулярность и прогрессия весов."}${low.length&&!fixed?"\n\nМогу сам добавить подходы этим мышцам — кнопка ниже.":""}`,a};};
+/* «подтяни …» — правильный падеж в советах */
+const _wr43=weekReport24;weekReport24=function(){let r=_wr43();if(r)r=r.replace(/Мало подходов на ([^—]+) —/,(m,l)=>`Мало подходов на ${l.split(", ").map(g=>{const k=Object.keys(LACC).find(x=>x.toLowerCase()===g.trim());return k?LACC[k]:g;}).join(", ")} —`).replace(/«подтяни ([^»]+)»/g,(m,g)=>{const k=Object.keys(LACC).find(x=>x.toLowerCase()===g.trim());return `«подтяни ${k?LACC[k]:g}»`;});return r;};
+/* ---- 3. Недельный отчёт: сила сравнивается только с тем же типом недели ---- */
+const _wr43b=weekReport24;
+weekReport24=function(){let r=_wr43b();if(!r)return r;try{const mon=new Date();mon.setDate(mon.getDate()-((mon.getDay()+6)%7)-7);const from=dkey(mon),toD=new Date(mon);toD.setDate(mon.getDate()+6);const to=dkey(toD);
+ const mv=[];Object.keys(DB.log||{}).forEach(id=>{if(!EX[id])return;const T=eqT32(EX[id]),l=DB.log[id];const b=l.filter(e=>e.d>=from&&e.d<=to).slice(-1)[0];if(!b)return;const a=l.filter(e=>e.d<from&&(!b.wk||!e.wk||e.wk===b.wk)&&(!b.lo||!e.lo||Math.abs(e.lo-b.lo)<=2)).slice(-1)[0];if(!a)return;const x=sessE1(id,a,T),y=sessE1(id,b,T);if(x&&y)mv.push([id,(y-x)/x*100]);});mv.sort((p,q)=>q[1]-p[1]);
+ const ok=mv.filter(x=>Math.abs(x[1])<=15),up=ok.filter(x=>x[1]>=1).slice(0,3),dn=ok.filter(x=>x[1]<=-4).slice(-2);
+ r=r.replace(/\n\n<b>Сила:<\/b>[^\n]*/,`\n\n<b>Сила</b> (к прошлой такой же неделе): ${up.length?up.map(x=>`${EX[x[0]].n} +${Math.round(x[1])}%`).join(", "):"без заметных изменений"}${dn.length?`; просело: ${dn.map(x=>`${EX[x[0]].n} ${Math.round(x[1])}%`).join(", ")}`:""}`);}catch(e){}return r;};
+/* ---- 4. Итоги недели в «Прогрессе»: верные дни и честное сравнение ---- */
+weekReport=function(){const a=weekSum(0),b=weekSum(1),nd=Object.keys(DMAP).length||3;
+ let best=null;Object.keys(DB.log).forEach(id=>{const l=DB.log[id].filter(s=>s.d>=a.from&&s.d<a.to),p=DB.log[id].filter(s=>s.d<a.from);if(!l.length||!p.length||!EX[id])return;const T=eqT32(EX[id]);
+  const c=Math.max(...l.map(s=>sessE1(id,s,T))),o=Math.max(...p.map(s=>sessE1(id,s,T)));if(o&&c>o&&(!best||(c-o)/o>best.p))best={id,p:(c-o)/o};});
+ const closed=a.n>=nd,dt=closed&&b.ton?Math.round((a.ton-b.ton)/b.ton*100):null;
+ return `<div class="card7 wr"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><div><span class="ph7-e">итоги недели</span><b class="t7" style="font-size:22px">${closed?"Неделя закрыта 🔥":a.n?"Неделя в процессе":"Неделя ещё не начата"}</b></div>
+ <div class="wr-ring">${ringMini(Math.min(1,a.n/nd),"#C9A96E",58)}<b>${a.n}/${nd}</b></div></div>
+ <div class="wr-g"><div><b>${(a.ton/1000).toFixed(1).replace(".",",")} т</b><span>тоннаж${dt!==null?` <em class="${dt>=0?"up":"dn"}">${dt>=0?"+":""}${dt}%</em>`:a.n?" (неделя идёт)":""}</span></div>
+ <div><b>${a.min}</b><span>минут в зале</span></div><div><b>${a.prs}</b><span>${pl(a.prs,"рекорд","рекорда","рекордов")}</span></div></div>
+ ${best?`<div class="wr-best">${thumb(best.id)}<div><span>лучший прогресс силы</span><b>${EX[best.id].n}</b></div><em>+${Math.round(best.p*100)}%</em></div>`:""}</div>`;};
+/* ---- 5. Грамотный текст на всех экранах ---- */
+function polish43(s){return String(s)
+ .replace(/(\d+) подходов/g,(m,n)=>`${n} ${pl(+n,"подход","подхода","подходов")}`)
+ .replace(/(\d+) упражнений(?! [а-я])/g,(m,n)=>`${n} ${pl(+n,"упражнение","упражнения","упражнений")}`)
+ .replace(/(\d)\.(\d+)( ?кг)/g,"$1,$2$3").replace(/−(\d)\.(\d+)/g,"−$1,$2")
+ .replace(/запас 0(?![,–\d])/g,"до отказа").replace(/с запасом 0(?![,–\d])/g,"до отказа")
+ .replace(/^0,00 из 3 л$/,"0 из 3 л").replace(/^= кг$/,"без изм.");}
+function polishDom43(root){if(!root)return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;const ch=[];while(n=w.nextNode()){const t=n.nodeValue;if(!/\d/.test(t))continue;const p=polish43(t);if(p!==t)ch.push([n,p]);}ch.forEach(([n,p])=>n.nodeValue=p);}
+const _render43=render;render=function(){const r=_render43.apply(this,arguments);try{polishDom43(document.getElementById("app"));polishDom43(document.getElementById("fx"));}catch(e){}return r;};
+const _brain43=brain;brain=function(q){const r=_brain43(q);if(r&&r.t)r.t=polish43(r.t);return r;};
+const _chatPaint43=chatPaint;chatPaint=function(){_chatPaint43();try{polishDom43(document.getElementById("chList"));}catch(e){}};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
