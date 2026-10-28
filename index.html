@@ -4149,7 +4149,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="25";
+const APPV="27";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4161,6 +4161,10 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🍗</i><p><b>Еда словами</b>«съел 200 г курицы и гречку», «на ужин 3 яйца» — тренер сам запишет в нужный приём</p></div>
+ <div><i>🔎</i><p><b>КБЖУ продуктов</b>«сколько белка в твороге», «калории в 250 г риса»</p></div>
+ <div><i>🗂</i><p><b>«Последняя тренировка», «сравни жим и рычажный», «лучшее на грудь»</b></p></div>
+ <div><i>☀️</i><p><b>Утреннее сообщение</b>тренер каждый день пишет план и норму — точка на кнопке 🧠</p></div>
  <div><i>⇄</i><p><b>Суперсеты кнопкой</b>«Суперсет со следующим» — тренер ведёт по кругу и даёт отдых после пары. Экономит 10–15 минут</p></div>
  <div><i>⚖️</i><p><b>«Вешу 101,2», «выпил 2 стакана»</b>— тренер запишет вес и воду сам</p></div>
  <div><i>🟩</i><p><b>Карта тренировок за полгода</b>в «Прогресс → Обзор»</p></div>
@@ -4905,9 +4909,9 @@ const CH={msgs:[],open:false};
 const nz=t=>String(t||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9%,.\s-]/g," ").replace(/\s+/g," ").trim();
 const stems=t=>nz(t).split(/[\s-]+/).filter(w=>w.length>2&&!/^(как|что|мой|мне|для|сколько|был|было|раз|прошлый|последний|делал|жал|поднимал|техника|делать|покажи|замени|поменяй|рекорд|вес|кг|это|такое|упражнение|упражнения)$/.test(w)).map(w=>{const x=w.replace(/(ами|ями|ого|его|ому|ему|ыми|ими|ая|яя|ую|юю|ой|ей|ий|ый|ом|ем|ах|ях|ов|ев|а|я|у|ю|ы|и|е|о|ь)$/,"");return (x.length>=3?x:w).slice(0,5);});
 const SYN={"жим лежа":"bp","жим штанги":"bp","скамь":"bp","подтяг":"pullup_w","гакк":"hack","жим ногами":"leg_press","т-гриф":"tbar","тгриф":"tbar","мост":"hip_thrust","махи":"lat_db","бицепс":"ez","брусья":"dips_tri","французск":"fr_press","шраг":"shrug_db"};
-function findEx(q){const t=nz(q);for(const k in SYN)if(t.includes(k)&&EX[SYN[k]]){const inProg=W().days.some(d=>itemsFor(W().days.indexOf(d)).some(x=>x.id===SYN[k]));if(inProg||DB.log[SYN[k]])return SYN[k];}
+function findEx(q,excl){const t=nz(q);for(const k in SYN)if(t.includes(k)&&EX[SYN[k]]&&SYN[k]!==excl){const inProg=W().days.some(d=>itemsFor(W().days.indexOf(d)).some(x=>x.id===SYN[k]));if(inProg||DB.log[SYN[k]])return SYN[k];}
  const qs=stems(q);if(!qs.length)return null;const prog=new Set();W().days.forEach((d,i)=>itemsFor(i).forEach(x=>prog.add(x.id)));let best=null,bs=0;
- Object.keys(EX).forEach(id=>{const ns=stems(EX[id].n);let s=0;qs.forEach(a=>{if(ns.some(b=>b.startsWith(a)||a.startsWith(b)))s+=1;});if(!s)return;s=s/qs.length*10+(prog.has(id)?3:0)+(DB.log[id]?2:0)-ns.length*0.1;if(s>bs){bs=s;best=id;}});
+ Object.keys(EX).forEach(id=>{if(id===excl)return;const ns=stems(EX[id].n);let s=0;qs.forEach(a=>{if(ns.some(b=>b.startsWith(a)||a.startsWith(b)))s+=1;});if(!s)return;s=s/qs.length*10+(prog.has(id)?3:0)+(DB.log[id]?2:0)-ns.length*0.1;if(s>bs){bs=s;best=id;}});
  return bs>=6?best:null;}
 const fk=v=>fmtKg(v)+" кг";
 function A(label,js){return {l:label,js};}
@@ -5210,6 +5214,56 @@ function heatCard(){const wk=26,now=new Date(),end=new Date(now);end.setDate(now
  <div class="hm-l"><span>меньше</span><i class="h1"></i><i class="h2"></i><i class="h3"></i><i class="h4"></i><span>больше тоннажа</span><i class="h0 a"></i><span>кардио/шаги</span></div></div>`;}
 const _vProg25=vProg;
 vProg=function(){_vProg25.apply(this,arguments);if(progSub!=="o")return;const at=document.querySelector("#app .gl22")||document.querySelector("#app .mo22");if(at)at.insertAdjacentHTML("afterend",heatCard());};
+
+/* ===== v27: тренер — запись еды словами, КБЖУ продуктов, последняя тренировка, сравнение, контекст разговора, утреннее сообщение ===== */
+const FSYN={"куриц":"chick","грудк":"chick","бедр":"chick_th","индейк":"turkey","говядин":"beef","фарш":"mince_ch","печен":"liver","рыб":"cod","треск":"cod","лосос":"salmon","форел":"salmon","тунец":"tuna_can","тунц":"tuna_can","кревет":"shrimp",
+ "яйц":"egg","яиц":"egg","белк":"egg_wh","творог":"cottage5","творож":"cottage5","кефир":"kefir1","молок":"milk25","йогурт":"yog_nat","сыр":"cheese","гречк":"buck","греч":"buck","рис":"rice","макарон":"pasta","овсян":"oat","овсянк":"oat","картош":"potato","картоф":"potato",
+ "хлеб":"bread_w","лаваш":"lavash","лепешк":"lepeshka","банан":"banana","яблок":"apple","огур":"cuc","помидор":"tomato","томат":"tomato","овощ":"cabb","салат":"cuc","брокколи":"broc","орех":"nuts_wal","миндал":"nuts_al","арахис":"peanut","протеин":"prot_wh","батончик":"prot","масл":"oil_oliv","авокадо":"avo","чечевиц":"lentil","фасол":"beans","кускус":"couscous"};
+function findFood(t){t=nz(t);let best=null,bl=0;for(const k in FSYN)if(t.includes(k)&&F[FSYN[k]]&&k.length>bl){best=FSYN[k];bl=k.length;}
+ if(best)return best;const ws=stems(t);let bs=0;Object.keys(F).forEach(id=>{const ns=stems(F[id].n);let s=0;ws.forEach(a=>{if(ns.some(b=>b.startsWith(a)||a.startsWith(b)))s++;});if(s>bs){bs=s;best=id;}});return bs?best:null;}
+function mealOf(t){return /завтрак|утр/.test(t)?0:/обед|днем|днём/.test(t)?1:/перекус|полдник/.test(t)?2:/ужин|вечер/.test(t)?3:(()=>{const h=new Date().getHours();return h<11?0:h<15?1:h<19?2:3;})();}
+const MEALN=["завтрак","обед","перекус","ужин"];
+function parseFoods(q){const t=nz(q).replace(/(\d),(\d)/g,"$1.$2");const parts=t.split(/,| и | плюс | с /).map(x=>x.trim()).filter(Boolean);const out=[];
+ parts.forEach(p=>{const id=findFood(p);if(!id)return;const x=F[id];let m=p.match(/(\d+(?:\.\d+)?)\s*(кг|г|гр|грамм\S*|шт\S*|штук\S*|мл|л|порц\S*|стакан\S*|ложк\S*)?/);let g;
+  if(x.unit){g=m?Math.round(+m[1]):1;}else if(m){const v=+m[1],u=m[2]||"";g=/кг|^л$/.test(u)?v*1000:/стакан/.test(u)?v*250:/ложк/.test(u)?v*15:/порц|шт/.test(u)?v*(id==="prot_wh"?1:150):v<20?v*150:v;}else g=id==="egg"?2:/oat|buck|rice|pasta/.test(id)?250:/oil/.test(id)?10:150;
+  out.push([id,Math.round(g)]);});return out;}
+function foodTxt(id,g){const x=F[id];return `${x.n.replace(/, 1 шт|, порция 30 г/,"").toLowerCase()} ${x.unit?g+" шт":g+" г"}`;}
+let CTX27=null;
+const _brain27=brain;
+brain=function(q){const t=nz(q);let r;
+ /* запись еды словами */
+ if(/(съел|поел|выпил|скушал|добавь|запиши|на завтрак|на обед|на ужин|на перекус)/.test(t)&&!/шаг|вод|стакан воды|литр воды|кардио/.test(t)){const it=parseFoods(q.replace(/съел|поел|скушал|добавь|запиши|на завтрак|на обед|на ужин|на перекус/gi," "));
+  if(it.length){const m=mealOf(t),f=dayFood();it.forEach(x=>f[m].push(x));save();render();const c=calc(it),all=calc(allItems()),T=target();CTX27={k:"food"};
+   return{t:`Записал в ${MEALN[m]}: ${it.map(x=>foodTxt(x[0],x[1])).join(", ")} — ${c.k} ккал, белок ${c.p} г.\nЗа день: ${all.k} из ${T.k} ккал, белок ${all.p} из ${T.p} г.`,a:[A("Отменить",`(()=>{const f=dayFood();f[${m}].splice(-${it.length},${it.length});save();render();chatSay('Убрал.')})()`)]};}}
+ /* КБЖУ продукта */
+ if(/(сколько|кбжу|калори|белк).*(в |у )/.test(t)&&!/осталось|сегодня|мне/.test(t)){const it=parseFoods(t.replace(/сколько|кбжу|калорий|калории|белка|белков|в |у /g," "));if(it.length){const[id,g]=it[0];const c=calc([[id,g]]);
+  return{t:`<b>${F[id].n}</b>, ${F[id].unit?g+" шт":g+" г"}: ${c.k} ккал · белок ${c.p} г · жиры ${c.f} г · углеводы ${c.c} г.`,a:[A("Записать",`chatAsk('съел ${foodTxt(id,g).replace(/'/g,"")}')`)]};}}
+ /* последняя тренировка */
+ if(/последн.*трениров|прошл.*трениров|что я делал|как прошла последн/.test(t)){const h=(DB.hist||[]).slice(-1)[0];if(!h)return{t:"Тренировок ещё не было."};
+  const ex=Object.keys(DB.log||{}).filter(id=>EX[id]&&(DB.log[id]||[]).some(l=>l.d===h.d)).map(id=>{const l=DB.log[id].find(x=>x.d===h.d);const ws=l.sets.filter(s=>!s.warm&&!s.drop);return `• ${EX[id].n}: ${ws.map(s=>`${s.w}×${s.r}`).join(", ")}`;});
+  const d=W().days[h.day];return{t:`<b>${String(h.d).slice(8,10)}.${String(h.d).slice(5,7)} — ${d?d.t.split(" · ")[0][0]+d.t.split(" · ")[0].slice(1).toLowerCase():"тренировка"}</b> · ${h.dur} мин · ${String(Math.round((h.ton||0)/100)/10).replace(".",",")} т${h.prs?` · рекордов: ${h.prs}`:""}\n${ex.join("\n")||"подходы не записаны"}`};}
+ /* сравнение */
+ if(/сравни|что лучше|или/.test(t)&&/ (и|или|с) /.test(" "+t+" ")){const ps=t.replace(/сравни|что лучше/g,"").split(/ или | и | с /);if(ps.length>=2){const a=findEx(ps[0]),b=findEx(ps[1],a);if(a&&b&&a!==b){const row=id=>`<b>${EX[id].n}</b>: ${DB.log[id]?`лучший ${fk(bestOf(id))}, максимум ${best1rm(id)} кг, ${DB.log[id].length} ${pl(DB.log[id].length,"раз","раза","раз")}`:"ещё не делал"} · ${EX[id].eq}`;
+  return{t:row(a)+"\n"+row(b)+`\n\nОба на ${grp(EX[a]).toLowerCase()}${grp(EX[a])!==grp(EX[b])?" и "+grp(EX[b]).toLowerCase():""}. ${EX[a].f&&!EX[b].f?`«${EX[a].n}» безопаснее довести до отказа.`:!EX[a].f&&EX[b].f?`«${EX[b].n}» безопаснее довести до отказа.`:"Лучше то, в котором ты чувствуешь целевую мышцу и растёшь в весе."}`};}}}
+ /* лучшее упражнение на мышцу */
+ if(/лучш.*(упражн|на )|что делать на|чем качать/.test(t)){const g=GNAMES.find(n=>t.includes(nz(n).slice(0,5)))||(/спин/.test(t)?"Широчайшие":/ног/.test(t)?"Квадрицепс":/плеч/.test(t)?"Средняя дельта":/рук/.test(t)?"Бицепс":null);
+  if(g&&POOL[g]){const ids=POOL[g].map(p=>p[0]).filter(id=>EX[id]&&!(DB.ban||{})[id]).slice(0,4);return{t:`<b>Лучшее на ${g.toLowerCase()}</b> (с учётом твоих суставов — по порядку):\n`+ids.map((id,i)=>`${i+1}. ${EX[id].n}${DB.log[id]?` — твой лучший ${fk(bestOf(id))}`:""}`).join("\n"),a:ids.slice(0,2).map(id=>A(EX[id].n,`chatClose();exDetail('${id}')`))};}}
+ /* сколько отдыхать */
+ if(/сколько отдых|отдых между/.test(t))return{t:"Отдых между подходами:\n• база (жимы, тяги, ноги) — 2–3 мин\n• изоляция — 60–90 с\n• лёгкая неделя — 45–60 с\nТаймер в тренировке ставится сам и подстраивается: тяжёлый подход — +30 с."};
+ /* мотивация */
+ if(/мотивац|лень|не хочу|нет настроени|не хочется/.test(t)){const sw=streakWeeks(),n=(DB.hist||[]).length;return{t:`Понимаю. Договоримся о минимуме: приди и сделай только первые 3 упражнения — это база, 40 минут. Скажи «у меня 45 минут», и я сожму тренировку.\n${sw?`Серия ${sw} ${pl(sw,"неделя","недели","недель")} — жалко терять.`:""} ${n?`Позади уже ${n} ${pl(n,"тренировка","тренировки","тренировок")}.`:""} Самая трудная часть — дойти до зала 💪`,a:[A("Сжать до 45 минут","chatAsk('у меня 45 минут')")]};}
+ /* продолжение темы: «а в тяге?» */
+ if(t.split(" ").length<=4&&/^(а |и |в |по )/.test(t)&&CTX27&&CTX27.k==="ex"){const id=findEx(q);if(id){CTX27={k:"ex",id};return _brain27("сколько "+EX[id].n);}}
+ r=_brain27(q);const id=findEx(q);if(id&&/(сколько|последн|прошл|какой вес|результат)/.test(t))CTX27={k:"ex",id};return r;};
+const _sugg27=sugg;sugg=function(){return["Что сегодня?","Съел 200 г курицы и гречку","Последняя тренировка","Сколько белка в твороге","Лучшее на грудь","Составь меню","Вешу 101,2","Что ты знаешь обо мне?"];};
+/* --- утреннее сообщение: раз в день --- */
+function morning27(){if(DB.mornD===today())return;DB.mornD=today();save();const h=new Date().getHours();if(h<5)return;const nd=nextDay(),T=target();const parts=[];
+ if(nd.off===0){const d=W().days[nd.di].t.split(" · ")[0];const f=forecast20&&forecast20();parts.push(`Сегодня тренировка: <b>${d[0]+d.slice(1).toLowerCase()}</b>, ~${dayMeta(nd.di).mins} мин.${f&&f.pr?` Вероятный рекорд: ${f.rows.filter(r=>r.tag==="pr").map(r=>r.n).join(", ")} 🏆`:""}`);}
+ else parts.push(`Сегодня отдых. ${nd.off===1?"Завтра":"Через "+nd.off+" "+pl(nd.off,"день","дня","дней")} — ${W().days[nd.di].t.split(" · ")[0].toLowerCase()}.`);
+ parts.push(`Норма: ${T.k} ккал, белок ${T.p} г${T.day==="train"?" (день тренировки, +углеводы)":""}.`);
+ if(!(DB.bw||[]).some(x=>x.d===today()))parts.push("Взвесься натощак и напиши «вешу …» — я обновлю прогноз.");
+ CH.msgs.push({who:"b",t:`${h<12?"Доброе утро":h<18?"Привет":"Добрый вечер"}, Артур!\n${parts.join("\n")}`});DB.repNew=1;save();}
+const _render27=render;render=function(){const r=_render27.apply(this,arguments);try{if(!session)morning27();}catch(e){}return r;};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
