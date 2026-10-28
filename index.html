@@ -4114,7 +4114,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="22";
+const APPV="23";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4126,6 +4126,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🧬</i><p><b>Тренер учится на тебе</b>в упражнениях, где ты растёшь быстро, прибавляет по двойному шагу; где прибавка срывает повторы — сначала закрепляет вес. Спроси: «что ты знаешь обо мне?»</p></div>
  <div><i>🚶</i><p><b>Шаги и кардио</b>на главной: шаги, «🏃 20 мин», сожжённые калории. Или скажи тренеру «прошёл 8500 шагов»</p></div>
  <div><i>🎯</i><p><b>Цели по силе</b>«цель жим 100» — тренер покажет, когда дойдёшь</p></div>
  <div><i>🧠</i><p><b>Разбор после тренировки</b>что выросло, что просело и что дальше</p></div>
@@ -5044,6 +5045,46 @@ insights=function(){const out=_insights22();const av=stepsAvg(7);
  const cw=cardioWeek(),dow=(new Date().getDay()+6)%7;if(dow>=4&&cw<2)out.push({i:"🏃",t:`Кардио на этой неделе: ${cw} из 3. После силовой — 20 минут дорожки в спокойном темпе.`});
  Object.keys(DB.goals||{}).forEach(id=>{if(!EX[id])return;const f=goalFc(id,DB.goals[id]);if(f.done)out.unshift({i:"🏆",t:`Цель «${EX[id].n} — ${DB.goals[id]} кг» достигнута! Поставь новую — скажи тренеру.`});});
  return out.slice(0,5);};
+
+/* ===== v23: тренер учится на тебе — личный темп прибавки по каждому упражнению, профиль ===== */
+function learnRebuild(){const L={};Object.keys(DB.log||{}).forEach(id=>{const l=DB.log[id]||[];const e=EX[id];if(!e)return;let up=0,ok=0,fail=0,big=0;
+ for(let i=1;i<l.length;i++){const a=l[i-1].sets.filter(s=>!s.warm&&!s.drop&&+s.w>0),b=l[i].sets.filter(s=>!s.warm&&!s.drop&&+s.w>0);if(!a.length||!b.length)continue;
+  const wa=Math.max(...a.map(s=>+s.w)),wb=Math.max(...b.map(s=>+s.w));if(wb>wa){up++;const it=findItem(id);const lo=it?it.lo:6;if(b.every(s=>+s.r>=lo)){ok++;if(it&&b.every(s=>+s.r>=it.hi))big++;}else fail++;}}
+ if(up)L[id]={up,ok,fail,big};});DB.learn=L;}
+function findItem(id){for(const w of WEEKS)for(const d of w.days)for(const x of (d.items||[]))if(swapOf(x.id)===id||x.id===id)return x;return null;}
+function learnMode(id){const L=(DB.learn||{})[id];if(!L)return"norm";if(L.up>=2&&L.fail/L.up>=0.5)return"slow";if(L.ok>=3&&L.fail===0&&L.big>=2)return"fast";return"norm";}
+const _nextW23=nextW;
+nextW=function(it){const n=_nextW23(it);if(!n||n.k!=="up"||!it||!it.id)return n;const md=learnMode(it.id),e=EX[it.id],inc=incOf(e),l=DB.log[it.id]||[];
+ if(md==="slow"){const p=l[l.length-2];const pw=p&&p.sets.filter(s=>!s.warm&&!s.drop&&+s.w>0);const last=l[l.length-1].sets.filter(s=>!s.warm&&!s.drop);
+  const same=pw&&pw.length&&Math.max(...pw.map(s=>+s.w))===Math.max(...last.map(s=>+s.w));if(!(same&&pw.every(s=>+s.r>=it.hi)))return{w:+(n.w-n.d).toFixed(2),k:"same",d:0,why:"slow"};}
+ if(md==="fast"){const last=l[l.length-1].sets.filter(s=>!s.warm&&!s.drop);if(it.hi&&last.every(s=>+s.r>=it.hi+2))return{w:+(n.w-n.d+inc*2).toFixed(2),k:"up",d:inc*2,why:"fast"};}
+ return n;};
+const _suggestion23=suggestion;
+suggestion=function(it){const n=nextW(it);if(n&&n.why==="slow")return{k:"same",t:`Закрепляем вес: у тебя в этом упражнении прибавка часто срывает повторы. Сделай верх диапазона два раза подряд — тогда прибавлю.`};
+ if(n&&n.why==="fast")return{k:"up",t:`Ты здесь прогрессируешь быстро — прибавка ${fmtKg(n.d)} кг сразу (${fmtKg(n.w)} кг).`};return _suggestion23(it);};
+const _logEx23=logEx;logEx=function(id){const r=_logEx23(id);try{learnRebuild();}catch(e){}return r;};
+/* --- профиль: что тренер знает о тебе --- */
+function profile23(){learnRebuild();const L=DB.learn||{},ids=Object.keys(L).filter(id=>EX[id]);const fast=ids.filter(id=>learnMode(id)==="fast"),slow=ids.filter(id=>learnMode(id)==="slow");
+ const h=DB.hist||[];const dur=h.length?Math.round(h.reduce((a,x)=>a+(x.dur||0),0)/h.length):0;const dn=["воскресенье","понедельник","вторник","среду","четверг","пятницу","субботу"];const byDay={};h.forEach(x=>{const d=new Date(x.d).getDay();byDay[d]=(byDay[d]||0)+(x.ton||0);});
+ const bestDay=Object.keys(byDay).sort((a,b)=>byDay[b]-byDay[a])[0];let rp={easy:0,ok:0,hard:0};(h.length?Object.values(session&&session.sets||{}):[]).forEach(()=>{});
+ Object.keys(DB.log||{}).forEach(id=>(DB.log[id]||[]).forEach(l=>l.sets.forEach(s=>{if(s.rpe)rp[s.rpe]=(rp[s.rpe]||0)+1;})));
+ const tot=rp.easy+rp.ok+rp.hard;
+ return{fast,slow,dur,bestDay:bestDay!==undefined?dn[bestDay]:null,rp,tot,bans:Object.keys(DB.ban||{}).filter(id=>EX[id]),n:h.length};}
+const _brain23=brain;
+brain=function(q){const t=nz(q);
+ if(/обо мне|про меня|что ты знаешь|чему научил|как ты учишь|мой профиль/.test(t)){const p=profile23();
+  return{t:`<b>Что я знаю о тебе</b> (по ${p.n} ${pl(p.n,"тренировке","тренировкам","тренировкам")}):\n`+
+   (p.fast.length?`⚡ Быстро растёшь: ${p.fast.map(id=>EX[id].n).join(", ")} — здесь прибавляю по двойному шагу.\n`:"")+
+   (p.slow.length?`🐢 Прибавка даётся тяжело: ${p.slow.map(id=>EX[id].n).join(", ")} — сначала закрепляю вес, потом прибавляю.\n`:"")+
+   (!p.fast.length&&!p.slow.length?"Пока мало прибавок, чтобы понять твой темп — нужно 2–3 повышения веса в упражнении.\n":"")+
+   (p.dur?`⏱ Средняя тренировка ${p.dur} мин.\n`:"")+(p.bestDay?`📅 Сильнее всего ты работаешь в ${p.bestDay}.\n`:"")+
+   (p.tot?`💬 Подходы ты отмечаешь: легко ${Math.round(p.rp.easy/p.tot*100)}%, норм ${Math.round(p.rp.ok/p.tot*100)}%, тяжело ${Math.round(p.rp.hard/p.tot*100)}%.${p.rp.easy/p.tot>0.4?" Часто легко — веса можно смелее.":""}\n`:"")+
+   (p.bans.length?`🚫 Не предлагаю: ${p.bans.map(id=>EX[id].n).join(", ")}.`:"")};}
+ return _brain23(q);};
+const _insights23=insights;
+insights=function(){const out=_insights23();try{const p=profile23();if(p.fast.length)out.push({i:"⚡",t:`В «${EX[p.fast[0]].n}» ты прогрессируешь быстрее обычного — тренер теперь прибавляет здесь по двойному шагу.`});
+ else if(p.slow.length)out.push({i:"🐢",t:`В «${EX[p.slow[0]].n}» прибавка часто срывает повторы. Тренер сначала закрепляет вес — так рост будет стабильнее.`});}catch(e){}return out.slice(0,5);};
+const _sugg23=sugg;sugg=function(){const a=_sugg23();a.splice(2,0,"Что ты знаешь обо мне?");return a;};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
