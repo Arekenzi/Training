@@ -1401,6 +1401,12 @@ body.light .hello>div:first-child:before{color:#9A7A45}
 .b41-d i.d{background:rgba(201,169,110,.45)}.b41-d i.c{background:var(--gold);box-shadow:0 0 10px rgba(201,169,110,.6)}
 .blk41 p{margin:0;font-size:12.5px;line-height:1.45;color:var(--dim)}
 
+/* v42: полоски подходов — понятные и в цвет стиля */
+.wl-dots{gap:5px!important;margin-top:8px!important;align-items:center}
+.wl-dots i{width:18px!important;height:5px!important;border-radius:3px!important;background:rgba(201,169,110,.18)!important;border:1px solid rgba(201,169,110,.28)}
+.wl-dots i.on{background:var(--gold)!important;border-color:var(--gold);box-shadow:0 0 6px rgba(201,169,110,.5)}
+.wl-dots:after{content:attr(data-l);margin-left:4px;font-size:11px;color:var(--dim)}
+
 </style>
 </head>
 <body>
@@ -6398,6 +6404,10 @@ brain=function(q){const t=nz(fix36(q).t);
  if(/следующ.*трениров|что будет|в следующий раз|что завтра/.test(t)){const nd=nextDay();const it=itemsFor(nd.di);const B=DB.start?blk41():null;
   return{t:`<b>${nd.off===0?"Сегодня":nd.off===1?"Завтра":DN19[(new Date().getDay()+nd.off)%7]}: ${W().days[nd.di].t.split(" · ")[0].toLowerCase()}</b>${B?` · неделя ${B.wb}/9, «${B.ph}»`:""}\n${it.map(x=>{const n=nextW(x);return `• ${EX[x.id].n}: ${x.s}×${x.r}${n&&n.w?`, ${wTxt32(EX[x.id],n.w)}${n.k==="up"?" ⬆":n.k==="down"?" ⬇":""}`:", пробный подход"} · запас ${x.rir||"1–2"}`;}).join("\n")}`,a:nd.off===0?[A("Начать",`chatClose();openDay(${nd.di},1)`)]:[]};}
  return _brain41(q);};
+
+/* v42: подпись к полоскам подходов и «без отдыха» вместо «отдых 0 с» */
+const _render42=render;render=function(){const r=_render42.apply(this,arguments);try{document.querySelectorAll(".wl-dots").forEach(d=>{const n=d.children.length,on=d.querySelectorAll("i.on").length;d.dataset.l=on?`${on} из ${n}`:"подходы";});
+ document.querySelectorAll(".wl-tx em,.gn-x span").forEach(e=>{if(/отдых 0 с/.test(e.textContent))e.innerHTML=e.innerHTML.replace("отдых 0 с","без отдыха → сразу следующее");});}catch(e){}return r;};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
