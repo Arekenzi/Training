@@ -1529,6 +1529,10 @@ body.light .c50l li{border-top-color:rgba(0,0,0,.06)}
 .g52 p{margin:8px 2px 0;font-size:11px;color:var(--dim)}.g52 p i{font-style:normal;font-weight:700}.g52 p i.ok{color:#C9A96E}.g52 p i.lo{color:#FFC850}.g52 p i.hi{color:#FF8A7A}
 .g52.solo .g52-h b{display:none}
 
+/* v53 */
+.pk53{margin:0 0 12px;padding:12px 14px;border-radius:16px;background:var(--surface);border:1px solid rgba(201,169,110,.25);font-size:13px}
+.pk53 summary{cursor:pointer;font-weight:600}.pk53 p{margin:8px 0 0;line-height:1.4}.pk53 small{display:block;margin-top:8px;color:var(--dim);font-size:11.5px}
+
 </style>
 </head>
 <body>
@@ -4478,7 +4482,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="52";
+const APPV="53";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4490,6 +4494,8 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🎯</i><p><b>Умный подбор упражнений</b>тренер оценивает каждого кандидата: нагрузка в растяжении, бережность к суставам, твой рост силы, разнообразие, что есть в зале — и берёт лучшее, а не первое в списке. Видно в предпросмотре программы</p></div>
+ <div><i>🔢</i><p><b>Повторы под упражнение</b>махи и задняя дельта 12–20, икры 10–20, пресс 12–20, ноги при больных коленях не тяжелее 8 повторов</p></div>
  <div><i>🧠</i><p><b>Чат помнит разговор</b>спросил про жим — дальше можно «а в приседе?», «как его делать?», «замени его» без названия упражнения</p></div>
  <div><i>🟨</i><p><b>Неделя одним взглядом</b>таблица «мышцы × дни» в конструкторе и в разборе программы: где сколько подходов, где перебор, где пусто, сколько минут каждый день</p></div>
  <div><i>🗺</i><p><b>Дорожная карта</b>план тренера на 6 месяцев в «Прогрессе»: когда дойдёшь до 95 кг, что дальше (выход из дефицита, качественная масса), блоки тренировок, прогноз силы на 1–2–3 месяца и вехи с датами. В чате: «что будет через 3 месяца»</p></div>
@@ -7564,6 +7570,55 @@ genView=function(){_gv52.apply(this,arguments);try{const o=document.getElementBy
 /* и в разборе текущей программы — кнопкой */
 function myGrid52(){const o=exd31();const P=curProg36();const c=cfg36();o.innerHTML=`<div class="exd-in"><button class="x" onclick="closeExD()" aria-label="Закрыть">✕</button><span class="exd-g">твоя программа</span><h2>Неделя одним взглядом</h2>${grid52(P,c).replace('class="g52"','class="g52 solo"')}<button class="dn-home" onclick="closeExD();chatOpen();chatAsk('разбор моей программы')">Разбор программы в чате</button></div>`;}
 const _rv52=review36;review36=function(){const r=_rv52();try{r.a=(r.a||[]).concat([A("Неделя одним взглядом","chatClose();myGrid52()")]);}catch(e){}return r;};
+
+/* ===== v53: умный подбор упражнений (оценка каждого кандидата) и повторы под тип упражнения ===== */
+HAVE35.special=["Маятник, белт-присед, V-присед",/маятник|белт-присед|v-тренаж|v-присед/];
+HAVE35.trap=["Трэп-гриф",/трэп-гриф/];
+const RARE53=["pendulum","belt_sq","v_sq","trapbar_shrug","pullover_m","chest_sup_cable","tri_oh_m","curl_m_one","lev_low_row","lev_row_one","hack_calf","calf_donkey","glute_ham"];
+function haveOK53(c,id){const miss=Object.keys(HAVE35).filter(k=>!(c.have||Object.keys(HAVE35)).includes(k));const e=EX[id];const t=((e.eq||"")+" "+e.n).toLowerCase();return !miss.some(k=>HAVE35[k][1].test(t));}
+/* оценка кандидата: растяжение, суставы, твой прогресс, разнообразие, удобство */
+function score53(id,g,c,ctx){const e=EX[id];const p=(POOL[g]||[]).find(q=>q[0]===id)||[id,"i","M",""];const n=e.n.toLowerCase();let s=0;const why=[];
+ if(STRETCH44.test(n)&&!/дельт|Трапец/.test(g)){s+=p[1]==="i"?3:1.5;why.push("нагрузка в растяжении");}
+ const inj0=c.inj||[];if(inj0.includes("sh")&&/к лицу|ротац|y-подъём|кельсо/.test(n)){s+=3;why.push("здоровье плеча");}
+ const inj=c.inj||[];if(inj.length>=2&&(p[2]==="M"||/с упором|тренаж/.test(n))){s+=1.5;why.push("бережёт суставы");}
+ if(c.pref==="mach"&&p[2]==="M")s+=1.5;if(c.pref==="free"&&(p[2]==="D"||p[2]==="B"))s+=1.5;
+ if(ctx.light&&p[2]==="B")s-=2;if(!ctx.light&&p[1]==="b"&&(p[2]==="D"||p[2]==="B")&&ctx.first)s+=1;
+ const l=(DB.log||{})[id]||[];if(l.length>=3){const r=ctx.R?ctx.R.get(id):null;if(r&&r.ch!==null&&r.ch>=1.5){s+=2.5;why.push("у тебя на нём рост силы");}else if(r&&r.ch!==null&&r.ch<=-3){s-=1.5;}else s+=1;}
+ else if(l.length)s+=0.5;
+ try{if(typeof plateau==="function"&&l.length>=3&&plateau(id)){s-=1.5;}}catch(x){}
+ if(RARE53.includes(id)&&!l.length){s-=2;}
+ if((c.must||[]).includes(id)){s+=6;why.push("ты просил оставить");}
+ if(ctx.usedWeek.has(id))s-=3.5;if(ctx.patDay&&ctx.patDay.has(pat29(e)))s-=2.5;
+ if(e.img==="__ph46"&&!(e.anbId&&typeof ANB!=="undefined"&&ANB[e.anbId]))s-=0.4;
+ return{s,why};}
+let PICK53=[];
+function pick53(P,c){const log=[];c=Object.assign({},c);try{c.inj=c.inj||userInj36();}catch(e){}const seen=new Set();let R=null;try{R=new Map(liftRows47().map(r=>[r.id,r]));}catch(e){}
+ P.forEach((w,wi)=>{if(seen.has(w.days))return;seen.add(w.days);const light=wi>0&&c.weeks==="alt";
+  const usedWeek=new Set(w.days.flatMap(d=>d.items.map(x=>x.id)));
+  w.days.forEach(d=>{d.items.forEach((x,j)=>{if(x.spec||(c.must||[]).includes(x.id))return;const g=grp(EX[x.id]);if(g==="Пресс")return;const cur=(POOL[g]||[]).find(q=>q[0]===x.id);if(!cur)return;
+   const pat=pat29(EX[x.id]);const others=new Set(d.items.filter(y=>y!==x).map(y=>pat29(EX[y.id])));const inDay=new Set(d.items.map(y=>y.id));
+   const ctxBase={R,light,first:j<2,usedWeek:new Set([...usedWeek].filter(k=>k!==x.id)),patDay:others};
+   const cand=(POOL[g]||[]).filter(p=>p[0]!==x.id&&EX[p[0]]&&!EX[p[0]].lib&&p[1]===cur[1]&&pat29(EX[p[0]])===pat&&!inDay.has(p[0])&&eqOK(c,p[2])&&!(c.inj||[]).some(k=>p[3].split(" ").includes(k))&&!(DB.ban||{})[p[0]]&&!(c.no||[]).includes(p[0])&&haveOK53(c,p[0])&&!(light&&p[2]==="B"));
+   if(!cand.length)return;const s0=score53(x.id,g,c,ctxBase);let best=null;cand.forEach(p=>{const s=score53(p[0],g,c,ctxBase);if(!best||s.s>best.s.s)best={id:p[0],s};});
+   if(best&&best.s.s>=s0.s+2){usedWeek.delete(x.id);usedWeek.add(best.id);if(!light)log.push(`«${EX[x.id].n}» → «${EX[best.id].n}»${best.s.why.length?": "+best.s.why.slice(0,2).join(", "):""}`);x.id=best.id;x.pick53=1;}});});});
+ return log;}
+/* повторы под тип упражнения — как у профи */
+function reps53(P,c){const seen=new Set();P.forEach((w,wi)=>{if(seen.has(w.days))return;seen.add(w.days);const light=wi>0&&c.weeks==="alt";
+ w.days.forEach(d=>d.items.forEach(x=>{const e=EX[x.id],g=grp(e),n=e.n.toLowerCase(),p=pat29(e);let lo=+x.lo,hi=+x.hi;const set=(a,b)=>{lo=Math.max(lo,a);hi=Math.max(hi,b,lo+2);};
+  if(g==="Средняя дельта"||g==="Задняя дельта"||/к лицу/.test(n))set(light?15:12,light?20:15);
+  else if(g==="Икры")set(light?15:10,light?20:15);
+  else if(g==="Предплечья"||g==="Пресс")set(light?15:12,light?20:15);
+  else if(g==="Трапеции")set(10,light?15:12);
+  else if((p==="squat"||p==="lunge")&&(c.inj||[]).includes("kn"))set(8,12);
+  else if(p==="hinge"&&(c.inj||[]).includes("lb"))set(10,12);
+  else if(/подтяг/.test(n)&&bwNow()>95&&!/гравитрон/.test(n))set(5,8);
+  if(lo!==+x.lo||hi!==+x.hi){x.lo=lo;x.hi=hi;x.r=lo+"–"+hi;if(lo>=12)x.rest=Math.min(x.rest||75,75);}}));});}
+const _gp53=genProgram;
+genProgram=function(c){const P=_gp53(c);try{PICK53=pick53(P,c);reps53(P,c);}catch(e){PICK53=[];}return P;};
+/* в предпросмотре — «Почему эти упражнения» */
+const _gv53=genView;
+genView=function(){_gv53.apply(this,arguments);try{const o=document.getElementById("exd");if(!o||!GP||o.querySelector(".pk53")||!PICK53.length)return;const at=o.querySelector(".v49")||o.querySelector(".pro44");
+ if(at)at.insertAdjacentHTML("afterend",`<details class="pk53"><summary>🧠 Тренер выбрал упражнения лучше (${PICK53.length})</summary>${PICK53.map(x=>`<p>${x}</p>`).join("")}<small>Оценка: нагрузка в растяжении, бережность к суставам, твой рост силы, разнообразие, что есть в зале.</small></details>`);}catch(e){}};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
