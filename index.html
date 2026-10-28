@@ -1393,6 +1393,14 @@ body.light .hello>div:first-child:before{color:#9A7A45}
 @keyframes in40{from{opacity:0;transform:translateX(18px) scale(.96)}to{opacity:1;transform:none}}
 .shot img.b,.fxa40 img.b{animation-play-state:running!important}
 
+/* v41 блок */
+.blk41{margin:0 0 12px;padding:14px 16px;border-radius:20px;background:var(--surface);border:1px solid rgba(201,169,110,.2);cursor:pointer}
+.b41-h{display:flex;justify-content:space-between;align-items:baseline}.b41-h span{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.b41-h b{font-family:var(--disp);font-weight:400;font-size:20px;color:var(--tx)}
+.b41-d{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin:10px 0 8px}.b41-d i{height:6px;border-radius:4px;background:var(--line)}
+.b41-d i.d{background:rgba(201,169,110,.45)}.b41-d i.c{background:var(--gold);box-shadow:0 0 10px rgba(201,169,110,.6)}
+.blk41 p{margin:0;font-size:12.5px;line-height:1.45;color:var(--dim)}
+
 </style>
 </head>
 <body>
@@ -4342,7 +4350,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="40";
+const APPV="41";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4354,6 +4362,9 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>📈</i><p><b>Волна нагрузки по блоку</b>9 недель: вход → накопление → пик → разгрузка. Запас повторов меняется по фазе, и тренер считает веса под неё. Карточка блока — на главной</p></div>
+ <div><i>🔍</i><p><b>Разбор после тренировки</b>процент выполнения плана, где выросла сила, где упали повторы (тогда отдых станет дольше), где будет прибавка</p></div>
+ <div><i>🗓</i><p><b>Недельный отчёт с решениями</b>подходы на каждую мышцу против нормы, кто вырос, что поменять. «Итоги недели», «что в следующей тренировке», «какая фаза» — в чате</p></div>
  <div><i>☥</i><p><b>Анубис в упражнениях</b>в тренировке рядом с кругом подходов Анубис показывает движение: начало ↔ конец. Пока нарисованы первые упражнения, остальные появятся с обновлениями. «Ещё» → «Показ упражнений»: Анубис или фото</p></div>
  <div><i>☥</i><p><b>Новый стиль ANUBIS</b>чёрный и золото, заголовки как у логотипа, твой Анубис на главной, в чате и в выборе программ. Скоро — Анубис в каждом упражнении</p></div>
  <div><i>✨</i><p><b>Главный экран короче</b>справка и правила недели свёрнуты, «Тренер заметил» — только главное</p></div>
@@ -6329,6 +6340,64 @@ function anbFx40(){const fx=document.getElementById("fx");if(!fx||!session)retur
 const _render40=render;render=function(){const r=_render40.apply(this,arguments);try{anbFx40();}catch(e){}return r;};
 /* родственник — только с тем же снарядом */
 const _anbMap40=anbMap39;anbMap39=function(){_anbMap40();Object.keys(EX).forEach(id=>{const e=EX[id];if(e.anbRel&&eqT32(e)!==eqT32(EX[e.anbId])){delete e.anbId;delete e.anbRel;}});};
+
+/* ===== v41: тренер думает наперёд — волна нагрузки по блоку, глубокий разбор тренировки, личный отдых по упражнению, недельный отчёт с решениями ===== */
+/* ---- 1. Периодизация: запас повторов меняется по неделям 9-недельного блока ---- */
+function blk41(){const wb=((weekNow()-1)%9)+1;
+ if(wb===9||isDeload())return{wb,ph:"Разгрузка",sh:0,txt:"подходов вдвое меньше, вес −10 %, без отказа — суставы и нервная система восстанавливаются"};
+ if(wb<=2)return{wb,ph:"Вход",sh:1,txt:"запас на 1 повтор больше обычного: техника, связки, точные веса"};
+ if(wb<=6)return{wb,ph:"Накопление",sh:0,txt:"рабочий запас по плану: главная фаза роста"};
+ return{wb,ph:"Пик",sh:-0.5,txt:"ближе к отказу: выжимаем рост перед разгрузкой"};}
+function rirShift41(r,sh){if(!sh||!r)return r;const m=String(r).replace(",",".").match(/(\d+(?:\.\d+)?)(?:\s*[–-]\s*(\d+(?:\.\d+)?))?/);if(!m)return r;
+ const f=v=>{const x=Math.max(0,Math.round((+v+sh)*2)/2);return String(x).replace(".",",");};return m[2]?`${f(m[1])}–${f(m[2])}`:f(m[1]);}
+const _if41=itemsFor;
+itemsFor=function(di){const a=_if41(di);try{if(!DB.start||isDeload())return a;const B=blk41();if(!B.sh)return a;
+ return a.map(x=>{if(!x.rir)return x;let sh=B.sh;if(sh<0&&(x.care||/^2/.test(x.rir)))sh=0;return Object.assign({},x,{rir:rirShift41(x.rir,sh),rir0:x.rir});});}catch(e){return a;}};
+const _vGym41=vGym;
+vGym=function(){_vGym41.apply(this,arguments);try{if(session||!DB.start)return;const app=document.getElementById("app");if(!app||app.querySelector(".blk41"))return;const B=blk41();
+ const dots=Array.from({length:9},(_,i)=>`<i class="${i+1<B.wb?"d":i+1===B.wb?"c":""} ${i<2?"p1":i<6?"p2":i<8?"p3":"p4"}"></i>`).join("");
+ const at=app.querySelector(".bento")||app.querySelector(".sec");if(at)at.insertAdjacentHTML("beforebegin",`<div class="blk41" onclick="chatOpen();chatAsk('Какая сейчас фаза?')"><div class="b41-h"><span>блок · неделя ${B.wb} из 9</span><b>${B.ph}</b></div><div class="b41-d">${dots}</div><p>${B.txt}</p></div>`);}catch(e){}};
+/* ---- 2. Личный отдых: если повторы сильно падают к последнему подходу — отдых дольше ---- */
+const _startTimer41=startTimer;
+startTimer=function(s,name,what){try{if(session&&s>0){const x=itemsFor(session.di)[session.fx];const a=x&&(DB.restAdj||{})[x.id];if(a){s+=a;REST17=(REST17?REST17+" · ":"")+`+${a} с: в прошлый раз повторы падали к концу`;}}}catch(e){}return _startTimer41(s,name,what);};
+/* ---- 3. Глубокий разбор тренировки ---- */
+review22=function(){const D=typeof DONE15!=="undefined"&&DONE15;if(!D||!D.ex)return null;const L=[],nx=[];let up=0,dn=0,hit=0,tot=0,easy=0,hard=0;DB.restAdj=DB.restAdj||{};
+ D.ex.forEach(x=>{const l=DB.log[x.id]||[];const cur=l[l.length-1];if(!cur||cur.d!==today())return;const ws=cur.sets.filter(s=>!s.warm&&!s.drop&&+s.r>0);if(!ws.length)return;tot++;
+  const it=findItem(x.id)||{};const lo=+cur.lo||+it.lo||0,hi=+cur.hi||+it.hi||0;const T=eqT32(EX[x.id]);
+  const okAll=lo?ws.every(s=>+s.r>=lo):true;if(okAll)hit++;ws.forEach(s=>{if(s.rpe==="easy")easy++;if(s.rpe==="hard")hard++;});
+  const prev=l.slice(0,-1).reverse().find(e=>same33(e,{lo,hi}));const pv=prev?sessE1(x.id,prev,T):0,cv=sessE1(x.id,cur,T);
+  if(pv&&cv){const p=(cv-pv)/pv*100;if(p>=1.5){up++;L.push(`✅ ${x.n}: сила +${Math.round(p)}%`);}else if(p<=-4){dn++;L.push(`⚠️ ${x.n}: сила −${Math.round(-p)}% — вес оставлю, сначала восстановление`);}}
+  const sameW=ws.filter(s=>+s.w===+ws[0].w);if(sameW.length>=3){const f=+sameW[0].r,la=+sameW[sameW.length-1].r;if(f>=6&&la<=f*0.7){DB.restAdj[x.id]=30;x._ra=1;L.push(`⏱ ${x.n}: повторы упали ${f}→${la} — следующий раз отдых +30 с`);}else if(DB.restAdj[x.id]&&la>=f-1)delete DB.restAdj[x.id];}
+  if(lo&&!okAll&&!x._ra&&!(pv&&cv&&cv<pv*0.96))L.push(`🎯 ${x.n}: ниже ${lo} повторов — вес тот же, цель добрать`);
+  try{const n=nextW(Object.assign({},it,{id:x.id,lo,hi}));if(n&&n.w&&n.k==="up")nx.push(`${x.n} → ${wTxt32(EX[x.id],n.w)}`);}catch(e){}});
+ save();const pct=tot?Math.round(hit/tot*100):0;
+ const head=dn>=2||hard>=4?`Тяжёлый день: план выполнен на ${pct}%. Это нормально — один такой день ничего не решает. Сон 7+ часов и норма белка сегодня.`:pct>=80&&up>=1||pct>=95?`Сильная тренировка: план выполнен на ${pct}%${up?`, сила выросла в ${up} ${pl(up,"упражнении","упражнениях","упражнениях")}`:""}.`:up?`План выполнен на ${pct}%, но сила растёт в ${up} ${pl(up,"упражнении","упражнениях","упражнениях")} — недобор повторов из-за более тяжёлых весов, это нормально.`:`Ровная тренировка: план выполнен на ${pct}%.`;
+ const B=DB.start?blk41():null;const tips=[];if(nx.length)tips.push(`<b>В следующий раз прибавка:</b> ${nx.slice(0,3).join("; ")}.`);
+ if(easy>=4&&hard===0)tips.push("Много «легко» — значит, веса были с запасом. Тренер уже учёл это в следующих весах.");
+ if(B&&B.wb===8)tips.push("Следующая неделя — разгрузка. Не пропускай её: после неё обычно идут рекорды.");
+ const nd=nextDay();const t=W().days[nd.di].t.split(" · ")[0];tips.push(`Следующая тренировка: ${DAYN[nd.di]?DAYN[nd.di].toLowerCase():""} — ${t[0]+t.slice(1).toLowerCase()}.`);
+ return{head,lines:L.slice(0,6),tip:tips.join("\n")};};
+/* ---- 4. Недельный отчёт: объём по мышцам и решения ---- */
+const _wr41=weekReport24;
+weekReport24=function(){let r=_wr41();if(!r)return r;try{const mon=new Date();mon.setDate(mon.getDate()-((mon.getDay()+6)%7)-7);const from=dkey(mon),toD=new Date(mon);toD.setDate(mon.getDate()+6);const to=dkey(toD);
+ const vol={};Object.keys(DB.log||{}).forEach(id=>{if(!EX[id])return;(DB.log[id]||[]).forEach(e=>{if(e.d<from||e.d>to)return;const g=grp(EX[id]);vol[g]=(vol[g]||0)+e.sets.filter(s=>!s.warm&&!s.drop).length;});});
+ const c=cfg36();const rows=BIG31.map(g=>{const[lo,hi]=rng33(g,c),v=vol[g]||0;return{g,v,lo,hi};});const low=rows.filter(x=>x.v<x.lo&&x.v>0),none=rows.filter(x=>!x.v);
+ const mv=[];Object.keys(DB.log||{}).forEach(id=>{if(!EX[id])return;const T=eqT32(EX[id]);const l=DB.log[id];const a=l.filter(e=>e.d<from).slice(-1)[0],b=l.filter(e=>e.d>=from&&e.d<=to).slice(-1)[0];if(a&&b){const x=sessE1(id,a,T),y=sessE1(id,b,T);if(x&&y)mv.push([id,(y-x)/x*100]);}});mv.sort((p,q)=>q[1]-p[1]);
+ const B=DB.start?blk41():null;let add=`\n\n<b>Объём за неделю</b> (подходов · норма):\n${rows.filter(x=>x.v).map(x=>`${x.v<x.lo?"▫️":x.v>x.hi+3?"🔸":"▪️"} ${x.g}: ${x.v} · ${x.lo}–${x.hi}`).join("\n")}`;
+ if(mv.length)add+=`\n\n<b>Сила:</b> ${mv.slice(0,2).filter(x=>x[1]>0.5).map(x=>`${EX[x[0]].n} +${Math.round(x[1])}%`).join(", ")||"без изменений"}${mv.length&&mv[mv.length-1][1]<-3?`; просело: ${EX[mv[mv.length-1][0]].n}`:""}`;
+ const dec=[];if(low.length)dec.push(`Мало подходов на ${low.map(x=>x.g.toLowerCase()).join(", ")} — не пропускай тренировки с этими мышцами или скажи «подтяни ${low[0].g.toLowerCase()}».`);
+ if(none.length&&none.length<BIG31.length)dec.push(`Не было работы на ${none.map(x=>x.g.toLowerCase()).join(", ")}.`);
+ if(B)dec.push(`Эта неделя — ${B.wb} из 9, фаза «${B.ph}»: ${B.txt}.`);
+ add+=`\n\n<b>Решения тренера:</b>\n${dec.map(x=>"• "+x).join("\n")}`;r+=add;}catch(e){}return r;};
+/* ---- 5. Чат ---- */
+const _brain41=brain;
+brain=function(q){const t=nz(fix36(q).t);
+ if(/фаз|блок|период|почему (такой )?запас|запас сегодня|волн/.test(t)){if(!DB.start)return{t:"Блок начнётся с первой тренировки."};const B=blk41();
+  return{t:`<b>Неделя ${B.wb} из 9 — «${B.ph}»</b>\n${B.txt}.\n\nКак устроен блок:\n• 1–2 — вход: запас +1 повтор\n• 3–6 — накопление: запас по плану\n• 7–8 — пик: на полповтора ближе к отказу\n• 9 — разгрузка\n\nЗапас повторов входит в расчёт веса: чем он меньше, тем тяжелее вес при тех же повторах. Поэтому веса растут волной, без застоя и перегрузки.`};}
+ if(/итог.*недел|отчет|отчёт|как прошла неделя/.test(t)){const r=weekReport24();return{t:r||"За прошлую неделю данных нет."};}
+ if(/следующ.*трениров|что будет|в следующий раз|что завтра/.test(t)){const nd=nextDay();const it=itemsFor(nd.di);const B=DB.start?blk41():null;
+  return{t:`<b>${nd.off===0?"Сегодня":nd.off===1?"Завтра":DN19[(new Date().getDay()+nd.off)%7]}: ${W().days[nd.di].t.split(" · ")[0].toLowerCase()}</b>${B?` · неделя ${B.wb}/9, «${B.ph}»`:""}\n${it.map(x=>{const n=nextW(x);return `• ${EX[x.id].n}: ${x.s}×${x.r}${n&&n.w?`, ${wTxt32(EX[x.id],n.w)}${n.k==="up"?" ⬆":n.k==="down"?" ⬇":""}`:", пробный подход"} · запас ${x.rir||"1–2"}`;}).join("\n")}`,a:nd.off===0?[A("Начать",`chatClose();openDay(${nd.di},1)`)]:[]};}
+ return _brain41(q);};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
