@@ -1296,6 +1296,17 @@ body.light .t1{color:#0E7A35!important}body.light .t2{color:#2E74D0!important}
 .pn33 b{display:block;margin-bottom:7px}.pn33 div{display:flex;flex-wrap:wrap;gap:6px}.pn33 small{display:block;margin-top:8px;color:var(--dim);font-size:11.5px}
 .pn33 button{font:inherit;font-size:12.5px;padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--tx);cursor:pointer}
 
+/* v35 тест 2.0 */
+.lf35{display:flex;align-items:center;gap:10px;margin:16px 0 4px}.lf35>b{font-size:22px;color:var(--dim)}
+.lf35 label{flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 8px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.lf35 input{width:100%;text-align:center;font-family:var(--cond);font-size:34px;font-weight:700;background:transparent;border:0;color:var(--tx);outline:none}
+.lf35 span{font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.ph35{margin:8px 0 0;height:120px;border-radius:18px;overflow:hidden}.ph35 img,.ph35 .th{width:100%!important;height:120px!important;object-fit:cover;border-radius:18px}
+.cal35{position:relative;margin:0 0 12px;padding:14px 16px 16px;border-radius:20px;background:rgba(59,240,106,.08);border:1px solid rgba(59,240,106,.3);font-size:12.5px;line-height:1.45;overflow:hidden}
+.cal35 b{display:block;font-size:15px;color:var(--lime);margin-bottom:3px}.cal35 span{color:var(--dim)}
+.cal35 i{position:absolute;left:0;bottom:0;height:4px;background:var(--lime)}
+@media (max-height:600px){#fx .coach17 span{font-size:11.5px;line-height:1.3}#fx .coach17{padding-top:7px;padding-bottom:7px}#fx .ramp20{display:none}}
+
 </style>
 </head>
 <body>
@@ -4244,7 +4255,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="33";
+const APPV="35";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4256,6 +4267,9 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>📋</i><p><b>Тест 2.0 — 46 вопросов</b>10 разделов: твоя сила в 8 упражнениях, каждый сустав по степени, что есть в зале, повторы, отдых, суперсеты, что не увеличивать. Ответы сохраняются — можно продолжить позже</p></div>
+ <div><i>🎯</i><p><b>Неделя замера</b>первый подход каждого нового упражнения — пробный, тренер выставляет точные стартовые веса</p></div>
+ <div><i>🧮</i><p><b>Веса 2.0</b>один точный расчёт: сила по каждому упражнению по всем тренировкам и твоим «Легко/Норм/Тяжело». Вес под любой диапазон повторов, прибавка по стажу, без скачков. Под весом — понятная причина</p></div>
  <div><i>🏆</i><p><b>Идеальная программа</b>тренер сравнивает все подходящие схемы на твоих данных и выбирает лучшую. Оценка программы 0–100: объём, частота, баланс, время. В тесте 21 вопрос: отказ, любимое оборудование, нелюбимые упражнения, приоритет первым</p></div>
  <div><i>⚖️</i><p><b>Веса для тяжёлой и лёгкой недели отдельно</b>прогрессия сравнивается с прошлой такой же неделей; новый диапазон — вес пересчитан по силе. Выше твоего предела вес не ставится</p></div>
  <div><i>🛑</i><p><b>Пределы и боль</b>два подхода подряд ниже диапазона — тренер предложит закончить упражнение. «Больно в суставе» — сразу замена, бережёт это место. Плато: 3 тренировки в другом диапазоне, потом замена упражнения</p></div>
@@ -5946,9 +5960,154 @@ brain=function(q){const t=nz(q);
   return{t:`<b>Как я работаю с плато</b>\n1. 3 тренировки без роста силы — меняю диапазон повторов (6–8 ↔ 10–12) на 3 тренировки.\n2. Не помогло — заменяю на точную замену (то же движение, другой угол).\n3. Два плато за 4 месяца в одной мышце — это близко к твоему пределу: работаем повторами и темпом, вес не форсируем.\n4. В тренировке: два подхода подряд ниже диапазона — предлагаю закончить упражнение.\n\n${ps.length?`Сейчас в протоколе: ${ps.map(id=>`${EX[id].n} (${P[id].n} из 3)`).join(", ")}.`:"Сейчас плато нет."}${c.length?`\nБлизко к пределу: ${c.join(", ").toLowerCase()}.`:""}`};}
  return _brain33(q);};
 
+/* ===== v34: Веса 2.0 — единая модель силы: сглаженный расчётный максимум по всем тренировкам и ощущениям, вес под любой диапазон, плавная прогрессия по стажу, ограничения шага, объяснение ===== */
+/* ощущения подходов теперь хранятся в истории */
+const _logEx34=logEx;
+logEx=function(id){const st=(session&&session.sets[id])||{};const l0=(DB.log[id]||[]).length;const r=_logEx34(id);
+ try{const l=DB.log[id]||[];if(l.length>l0){const en=l[l.length-1];const ks=Object.keys(st).filter(k=>/^s\d+$/.test(k)&&st[k]&&st[k].ok).sort((a,b)=>+a.slice(1)-+b.slice(1));let i=0;
+  en.sets.forEach(s=>{if(s.drop)return;const k=ks[i++];if(k&&st[k].rpe)s.rpe=st[k].rpe;});if(session&&session.mode==="easy")en.easy=1;}}catch(e){}return r;};
+/* сила по одной тренировке: лучший подход с учётом запаса */
+function sessE1(id,en,T){let m=0;(en.sets||[]).forEach(s=>{if(s.warm||s.drop)return;const r=Math.min(+s.r||0,15);if(!r)return;const L=toLoad32(T,+s.w||0);if(!(L>0))return;
+ const rir=s.rpe?RPEQ[s.rpe]:(r>=12?2:1);m=Math.max(m,L*(1+(r+rir)/30));});return m;}
+/* стартовая сила из теста (DB.seed) */
+function seedE1(id){const S=(DB.seed||{})[id];if(!S)return 0;const T=eqT32(EX[id]);return toLoad32(T,S.w)*(1+(Math.min(S.r,15)+1)/30)*(S.f||1);}
+/* сглаженная сила: последние тренировки весят больше, старше 5 месяцев — не считаем */
+function str34(id){const e=EX[id];if(!e)return null;const T=eqT32(e);const l=(DB.log[id]||[]).filter(x=>x.d>=dkAgo(150));let v=null,n=0;
+ l.forEach(x=>{const s=sessE1(id,x,T);if(!s)return;n++;v=v===null?s:v*0.45+s*0.55;});
+ if(v===null){const s=seedE1(id);if(s)return{e1:s,T,n:0,seed:1};return null;}
+ const last=l.length?sessE1(id,l[l.length-1],T):0;if(last&&last>v)v=v*0.4+last*0.6;return{e1:v,T,n};}
+const G34={new:.02,mid:.01,adv:.005};
+function exp34(){return(DB.gen&&DB.gen.cfg&&DB.gen.cfg.exp)||"mid";}
+function isBig34(id){const e=EX[id],T=eqT32(e);if(/^(bar|ez|smith|plate|land)$/.test(T))return true;for(const m in POOL){const p=POOL[m].find(x=>x[0]===id);if(p)return p[1]==="b";}return false;}
+const _nw34=nextW;
+nextW=function(it){try{if(!it||!it.id||!EX[it.id])return _nw34(it);const id=it.id,e=EX[id],T=eqT32(e);if(T==="other")return _nw34(it);const S=str34(id);if(!S)return _nw34(it);
+ const l=DB.log[id]||[],tg=tgt32(it),rir=rir32(it),inc=incOf(e);
+ let sk=null;for(let i=l.length-1;i>=0;i--)if(same33(l[i],it)){sk=l[i];break;}
+ const skw=sk?sk.sets.filter(s=>!s.warm&&!s.drop&&+s.r>0):[];
+ const hitTop=!!(skw.length&&it.hi&&skw.every(s=>+s.r>=it.hi)),hitTgt=!!(skw.length&&skw.every(s=>+s.r>=tg)),miss=!!(skw.length&&it.lo&&skw.filter(s=>+s.r<it.lo).length>=Math.ceil(skw.length/2)),hard=skw.some(s=>s.rpe==="hard");
+ const md=learnMode(id),gb=G34[exp34()]*(md==="fast"?1.5:md==="slow"?.5:1);let g=0;
+ if(sk&&!sk.easy){if(hitTop)g=gb*2;else if(hitTgt&&!hard)g=gb;else if(miss)g=-0.02;}
+ let L=S.e1*(1+g)/(1+(tg+rir)/30);const easy=isDeload()||(session&&session.mode==="easy")||((DB.reentry||"")>=today());if(easy)L*=0.9;
+ let w=fromLoad32(T,L);w=T==="assist"?snap32(e,w,"up"):snap32(e,w,"down");
+ const ref=sk?Math.max(0,...skw.map(s=>+s.w||0)):null;
+ if(ref!==null&&!easy){if(T!=="assist"){if(hitTop&&w<=ref){const big=ref>0&&inc/ref>0.12,ext=(+it.hi||0)+3;if(big&&skw.some(s=>+s.r<ext)){w=ref;var bigStep=ext;}else w=snap32(e,ref+inc,"round");}if(!miss&&!hitTop&&w<ref)w=ref;
+   const cap=Math.max(inc,ref*(isBig34(id)?0.05:0.075));if(w>ref+cap+1e-9)w=Math.max(ref,snap32(e,ref+cap,"down"));if(w<ref*0.85)w=snap32(e,ref*0.85,"round");if(miss&&w>=ref&&ref>inc)w=snap32(e,ref-inc,"round");}
+  else{if(hitTop&&w>=ref)w=Math.max(0,ref-inc);if(!miss&&!hitTop&&w>ref)w=ref;}}
+ const k=ref===null?"same":T==="assist"?(w<ref?"up":w>ref?"down":"same"):(w>ref?"up":w<ref?"down":"same");
+ return{w,k,d:ref!==null?+(w-ref).toFixed(2):0,why:"e34",bigStep:typeof bigStep!=="undefined"?bigStep:0,e1:S.e1,seed:S.seed,n:S.n,tg,ref,hitTop,miss,sk:!!sk,g,easy,skd:sk&&sk.d};}catch(err){return _nw34(it);}};
+/* повторы на первый подход: при новом диапазоне — цель, а не прошлые повторы */
+const _prefill34=prefill;
+prefill=function(it,k,i){const r=_prefill34(it,k,i);try{if(!session||k==="d0"||i!==0)return r;const c=((session.sets[it.id]||{})[k])||{};if(c.r)return r;const n=nextW(it);
+ if(n&&n.why==="e34"){if(!n.sk)r.r=n.tg;else if(n.k==="up")r.r=it.lo||n.tg;}}catch(e){}return r;};
+/* понятное объяснение веса */
+function e1Txt34(id,e1){const T=eqT32(EX[id]);if(T==="bw")return`${fmtKg(Math.round(e1))} кг вместе с тобой`;if(T==="assist")return`тянешь ≈${fmtKg(Math.round(e1))} кг`;return`${fmtKg(Math.round(e1/(T==="db"?1:1)))} кг${T==="db"?" на гантель":""}`;}
+const _sug34=suggestion;
+suggestion=function(it){const n=nextW(it);if(!n||n.why!=="e34")return _sug34(it);const e=EX[it.id],wt=wTxt32(e,n.w),dd=n.skd?`${String(n.skd).slice(8,10)}.${String(n.skd).slice(5,7)}`:"";
+ const base=`Расчётный максимум ${e1Txt34(it.id,n.e1)}${n.seed?" (по тесту)":n.n?` (по ${n.n} ${pl(n.n,"тренировке","тренировкам","тренировкам")})`:""}`;
+ if(n.easy)return{k:"same",t:`Лёгкий режим / разгрузка: ${wt}, без отказа. ${base}.`};
+ if(!n.sk)return{k:"same",t:`${it.r} повторов — пересчитал по силе: <b>${wt}</b>. ${base}.`};
+ if(n.miss)return{k:"down",t:`${dd}: недобрал до ${it.lo} → <b>${wt}</b>, набираем повторы заново.`};
+ if(n.bigStep)return{k:"same",t:`Следующая гантель — сразу +${Math.round(incOf(e)/n.w*100)}%, это слишком резко. Сначала добери до ${n.bigStep} повторов с <b>${wt}</b> — потом прибавка.`};
+ if(n.hitTop)return{k:"up",t:`${dd}: ${it.hi}+ во всех подходах → прибавка, <b>${wt}</b>. Цель ${it.lo}+ повторов.`};
+ if(n.k==="up")return{k:"up",t:`Сила растёт → <b>${wt}</b> (+${fmtKg(Math.abs(n.d))}). Цель ${n.tg} повторов с запасом ${it.rir||"1–2"}.`};
+ return{k:"same",t:`Держим <b>${wt}</b>: добери до ${it.hi||n.tg} во всех подходах — будет прибавка.`};};
+
+/* ===== v35: Тест 2.0 — 46 вопросов в 10 разделах (сила, суставы по степени, оборудование зала, стиль), черновик, неделя-замер ===== */
+Object.assign(GDEF,{brk:"no",bwv:0,lift:{},steps:"5_10",protein:"mid",j_sh:"2",j_el:"0",j_wr:"0",j_lb:"2",j_kn:"2",skips:"rare",busy:"no",
+ have:["smith","hammer","hack","cross","tbar","grav","scott","lpress","calf"],repstyle:"mid",rest:"norm",ss:"no",must:[],nogrow:[],calib:"yes",care:[]});
+const HAVE35={smith:["Смит",/смит/],hammer:["Хаммер / рычажные",/хаммер|рычажн/],hack:["Гакк-машина",/гакк/],cross:["Кроссовер",/кроссовер/],tbar:["Т-гриф",/т-гриф/],grav:["Гравитрон",/гравитрон/],scott:["Скамья Скотта",/скотт/],lpress:["Жим ногами",/жим ногами/],calf:["Тренажёр для икр",/икры сидя|икры стоя в тренаж|икры в тренаж/]};
+const LIFT35=[["bp","Жим штанги лёжа"],["flat_db","Жим гантелей лёжа"],["lat_w","Тяга верхнего блока"],["seated_row","Горизонтальная тяга в блоке"],["leg_press","Жим ногами"],["ez","Подъём EZ-штанги на бицепс"],["pushdown","Разгибания на блоке (трицепс)"],["lat_db","Махи гантелями в стороны"]].filter(x=>EX[x[0]]);
+const JQ35=[["sh","Плечо"],["el","Локти"],["wr","Запястья"],["lb","Поясница"],["kn","Колени"]];
+(function(){const old={};WQ.forEach(q=>old[q.k]=q);const S=(sec,q)=>Object.assign({sec},q);const N=[];
+ N.push(S("Цель",old.goal));
+ N.push(S("О тебе",old.exp),S("О тебе",{k:"brk",t:"Был перерыв больше месяца за последние 3 месяца?",h:"После перерыва сила возвращается быстро, но связки — медленнее. Первые 2 недели тренер снизит веса на 10 %.",o:[["no","Нет, тренируюсь стабильно"],["yes","Да, был перерыв"]]}),S("О тебе",old.age),
+  S("О тебе",{k:"bwv",type:"num",t:"Твой вес сейчас",h:"Нужен для подтягиваний и брусьев с весом и для расчёта питания.",u:"кг"}));
+ LIFT35.forEach(([id,n])=>N.push(S("Твоя сила",{k:"L_"+id,type:"lift",id,t:n,h:`Какой вес и сколько раз сделаешь на пределе${eqT32(EX[id])==="db"?" (вес одной гантели)":""}? Не помнишь — пропусти: замерим на первой тренировке.`})));
+ N.push(S("Восстановление",old.sleep),S("Восстановление",old.stress),S("Восстановление",old.job),
+  S("Восстановление",{k:"steps",t:"Сколько шагов в день?",h:"Много ходьбы — плюс к здоровью, но ногам и спине нужно больше времени на восстановление.",o:[["lt5","Меньше 5 000"],["5_10","5–10 тысяч"],["10_15","10–15 тысяч"],["15p","Больше 15 000"]]}),
+  S("Восстановление",old.food),S("Восстановление",{k:"protein",t:"Белка хватает?",h:"Для роста и на сушке нужно около 1,6–2 г белка на кг веса в день.",o:[["ok","Да, около 2 г на кг"],["mid","Примерно, не считаю"],["low","Скорее мало"]]}),S("Восстановление",old.cardio));
+ JQ35.forEach(([j,n])=>N.push(S("Суставы",{k:"j_"+j,t:`${n}: как сейчас?`,h:j==="sh"?"«Беречь» — уберу жимы над головой, брусья и опасные углы.":j==="lb"?"«Беречь» — уберу наклоны, становые движения и осевую нагрузку.":j==="kn"?"«Беречь» — уберу глубокие приседы, выпады, разгибания с большим весом.":"«Беречь» — уберу опасные для этого места упражнения.",o:[["0","Не беспокоит"],["1","Иногда ноет","оставлю упражнения, но с запасом 2 повтора"],["2","Болит — беречь","опасные упражнения не попадут в программу"]]})));
+ N.push(S("Расписание",old.days),S("Расписание",old.time),S("Расписание",{k:"skips",t:"Как часто пропускаешь тренировки?",h:"Если пропуски бывают, лучше схема, где каждая мышца работает 2 раза — пропуск не выбьет её на 2 недели.",o:[["rare","Почти никогда"],["some","Раз в месяц-два"],["often","Бывает часто"]]}),
+  S("Расписание",{k:"busy",t:"Зал загружен в твоё время?",h:"Если тренажёры часто заняты — больше гантелей и суперсетов.",o:[["no","Свободно"],["yes","Часто занято"]]}));
+ N.push(S("Зал",old.eq),S("Зал",{k:"have",t:"Что есть в твоём зале?",h:"Сними отметку с того, чего нет — такие упражнения не попадут в программу.",multi:1,all:1,o:Object.keys(HAVE35).map(k=>[k,HAVE35[k][0]])}),S("Зал",old.pref));
+ N.push(S("Стиль",old.effort),S("Стиль",{k:"repstyle",t:"Какие повторы нравятся?",h:"Мышцы растут в диапазоне 5–30 повторов, если подход близок к отказу. Выбирай, что приятнее — так ты будешь стараться.",o:[["heavy","Тяжело и мало: 4–8","больше силы"],["mid","Средне: 6–12","классика для массы"],["high","Много: 10–20","меньше нагрузки на суставы"]]}),
+  S("Стиль",{k:"rest",t:"Отдых между подходами",h:"Длинный отдых в базе даёт больше повторов. Короткий экономит время.",o:[["norm","Как нужно: 2–3 мин в базе"],["short","Короче: время дорого"]]}),
+  S("Стиль",{k:"ss",t:"Суперсеты на руки?",h:"Бицепс + трицепс без отдыха между ними — экономит 8–10 минут.",o:[["no","Нет"],["yes","Да"]]}),S("Стиль",old.no),
+  S("Стиль",{k:"must",t:"Что обязательно оставить?",h:"Любимые упражнения тренер поставит первыми для своей мышцы.",multi:1,none:"Неважно",o:NO33.map(id=>[id,EX[id].n])}));
+ N.push(S("Мышцы",old.prio),S("Мышцы",old.prioFirst),S("Мышцы",{k:"nogrow",t:"Что НЕ хочешь увеличивать?",h:"Этим мышцам — только поддерживающий объём.",multi:1,none:"Всё можно",o:[["Трапеции","Трапеции"],["Квадрицепс","Квадрицепсы"],["Икры","Икры"],["Предплечья","Предплечья"],["Пресс","Пресс (талия)"],["Передняя дельта","Передняя дельта"]]}));
+ N.push(S("Структура",old.split),S("Структура",old.weeks),S("Структура",old.rotate),S("Структура",old.ramp),
+  S("Структура",{k:"calib",t:"Первая неделя — замер?",h:"На каждой первой тренировке 1-й подход пробный: отмечаешь «Легко / Норм / Тяжело», тренер выставляет точные веса. Рекомендую.",o:[["yes","Да, начнём с замера"],["no","Нет, веса знаю"]]}));
+ WQ.length=0;N.filter(Boolean).forEach(q=>WQ.push(q));})();
+/* ответы → настройки программы */
+function sync35(c){c=c||GQ;if(!c)return;const inj=[],care=[];JQ35.forEach(([j])=>{const v=c["j_"+j];if(v==="2")inj.push(j);else if(v==="1")care.push(j);});c.inj=inj;c.care=care;}
+const _recov35=recov31;
+recov31=function(c){const r=_recov35(c);let s=r.s;const why=r.why.slice();if(c.steps==="15p"){s-=1;why.push("больше 15 000 шагов");}if(c.protein==="low"){s-=1;why.push("мало белка");}if(c.brk==="yes")why.push("после перерыва");
+ const f=s>=0?1:s>=-2?0.9:s>=-4?0.8:0.7;return{s,f,lvl:f>=1?"хорошее":f>=0.9?"среднее":f>=0.8?"пониженное":"низкое",why};};
+const _bs35=bestSplit33;
+bestSplit33=function(c){const r=_bs35(c).map(x=>Object.assign({},x));if(c.skips==="often"||c.skips==="some"){const k=c.skips==="often"?4:2;r.forEach(x=>{if(x.sp==="fb"||x.sp==="ul")x.adj+=k;if(x.sp==="s5"||x.sp==="ppl6"||x.sp==="pp"||x.sp==="arn")x.adj-=k;});}return r.sort((a,b)=>b.adj-a.adj);};
+const _gw35=genWeek;
+genWeek=function(c,light){sync35(c);const sp={},vf=Object.assign({},VFAC);try{
+ const miss=Object.keys(HAVE35).filter(k=>!(c.have||Object.keys(HAVE35)).includes(k));const busy=c.busy==="yes";
+ Object.keys(POOL).forEach(m=>{sp[m]=POOL[m];let a=POOL[m].filter(p=>{const e=EX[p[0]];if(!e)return false;const t=((e.eq||"")+" "+e.n).toLowerCase();return !miss.some(k=>HAVE35[k][1].test(t));});if(!a.length)a=POOL[m];
+  if(busy&&c.pref!=="mach")a=a.filter(p=>p[2]==="D").concat(a.filter(p=>p[2]!=="D"));
+  const must=(c.must||[]);if(must.length)a=a.filter(p=>must.includes(p[0])).concat(a.filter(p=>!must.includes(p[0])));POOL[m]=a;});
+ (c.nogrow||[]).forEach(g=>{if(VFAC[g])VFAC[g]=VFAC[g]*0.4;});
+ const out=_gw35(c,light);const bT=(id,g)=>{const p=(sp[g]||[]).find(q=>q[0]===id);return p&&p[1]==="b";};
+ out.forEach(d=>{d.items.forEach(x=>{const g=grp(EX[x.id]),b=bT(x.id,g);
+   if(c.repstyle==="heavy"&&b){x.lo=Math.max(4,x.lo-2);x.hi=Math.max(x.lo+2,x.hi-2);}else if(c.repstyle==="high"){x.lo=x.lo+(b?3:4);x.hi=x.hi+(b?4:5);}
+   x.r=x.lo===x.hi?String(x.lo):x.lo+"–"+x.hi;
+   if(c.rest==="short")x.rest=Math.max(45,Math.round(x.rest*0.75/15)*15);
+   const p=(sp[g]||[]).find(q=>q[0]===x.id);if(p&&(c.care||[]).some(j=>p[3].split(" ").includes(j))){x.rir="2";x.drop=0;x.care=1;}});
+  if(c.ss==="yes"||busy){const bi=d.items.findIndex(x=>grp(EX[x.id])==="Бицепс"&&!bT(x.id,"Бицепс")),ti=d.items.findIndex(x=>grp(EX[x.id])==="Трицепс"&&!bT(x.id,"Трицепс"));
+   if(bi>=0&&ti>=0){const[t]=d.items.splice(ti,1);const b2=d.items.findIndex(x=>grp(EX[x.id])==="Бицепс"&&!bT(x.id,"Бицепс"));d.items.splice(b2+1,0,t);d.items[b2].ss=1;d.items[b2].rest=Math.min(d.items[b2].rest,45);}}});
+ return out;}finally{Object.keys(sp).forEach(m=>POOL[m]=sp[m]);Object.assign(VFAC,vf);}};
+/* ---- мастер: разделы, числа, черновик ---- */
+function draft35(){try{DB.wzDraft={c:JSON.parse(JSON.stringify(GQ)),z:WZ,d:today()};save();}catch(e){}}
+const _wzPaint35=wzPaint;
+wzPaint=function(){const q=WQ[WZ];if(!q)return;sync35();draft35();const secs=[...new Set(WQ.map(x=>x.sec))],si=secs.indexOf(q.sec)+1;
+ if(!q.type){_wzPaint35();const g=document.querySelector("#exd .exd-g");if(g)g.textContent=`${q.sec} · раздел ${si} из ${secs.length} · ${WZ+1}/${WQ.length}`;
+  if(q.all){const o=document.querySelector("#exd .wz-o");if(o)o.insertAdjacentHTML("beforeend",`<button onclick="GQ.${q.k}=${JSON.stringify(q.o.map(x=>x[0])).replace(/"/g,"'")};wzPaint()"><b>Всё есть</b></button>`);}return;}
+ const o=exd31(),v=q.type==="lift"?((GQ.lift||{})[q.id]||{}):{w:GQ[q.k]||""};const db=q.type==="lift"&&eqT32(EX[q.id])==="db";
+ o.innerHTML=`<div class="exd-in"><button class="x" onclick="${WZ?"wzGo(-1)":"progHub()"}" aria-label="Назад">←</button><span class="exd-g">${q.sec} · раздел ${si} из ${secs.length} · ${WZ+1}/${WQ.length}</span>
+ <div class="wz-bar"><i style="width:${Math.round((WZ+1)/WQ.length*100)}%"></i></div><h2>${q.t}</h2><p class="gn-s">${q.h||""}</p>
+ ${q.type==="lift"?`<div class="ph35">${thumb(q.id)}</div>`:""}
+ <div class="lf35"><label><input id="lfw" type="number" inputmode="decimal" value="${v.w||""}" placeholder="0"><span>${q.type==="lift"?(db?"кг каждая":"кг"):q.u}</span></label>${q.type==="lift"?`<b>×</b><label><input id="lfr" type="number" inputmode="numeric" value="${v.r||""}" placeholder="0"><span>повторов</span></label>`:""}</div>
+ <button class="cta" onclick="wzNum35()">Дальше</button><button class="dn-home" onclick="wzSkip35()">${q.type==="lift"?"Не знаю — замерим на тренировке":"Пропустить"}</button>
+ <button class="dn-home" onclick="wzResult()">Закончить тест и собрать</button></div>`;o.querySelector(".exd-in").scrollTop=0;};
+function wzNum35(){const q=WQ[WZ];const w=parseFloat(String((document.getElementById("lfw")||{}).value||"").replace(",","."))||0;
+ if(q.type==="lift"){const r=parseInt((document.getElementById("lfr")||{}).value)||0;GQ.lift=GQ.lift||{};if(w>0&&r>0)GQ.lift[q.id]={w,r:Math.min(r,30)};else delete GQ.lift[q.id];}else GQ[q.k]=w;wzGo(1);}
+function wzSkip35(){const q=WQ[WZ];if(q.type==="lift"&&GQ.lift)delete GQ.lift[q.id];wzGo(1);}
+/* продолжить тест */
+const _progHub35=progHub;
+progHub=function(){_progHub35();const D=DB.wzDraft;if(!D||!D.c||D.done||D.z<1)return;const st=document.querySelector("#exd .wz-start");if(st&&!document.getElementById("res35"))st.insertAdjacentHTML("afterend",`<button class="wz-start" id="res35" onclick="GQ=JSON.parse(JSON.stringify(DB.wzDraft.c));WZ=Math.min(DB.wzDraft.z,WQ.length-1);wzPaint()"><b>▶ Продолжить тест</b><span>вопрос ${D.z+1} из ${WQ.length} — ответы сохранены</span></button>`);};
+/* результат: сила и замер */
+const _wzResult35=wzResult;
+wzResult=function(){sync35();if(DB.wzDraft)DB.wzDraft.done=1;_wzResult35();try{const why=document.querySelector("#exd .gn-why");if(!why)return;const L=GQ.lift||{},ids=Object.keys(L).filter(id=>EX[id]);
+ if(ids.length)why.insertAdjacentHTML("beforeend",`<div>💪 Твоя сила (расчётный максимум): ${ids.map(id=>{const T=eqT32(EX[id]);const e1=toLoad32(T,L[id].w)*(1+(Math.min(L[id].r,15)+1)/30);return `${EX[id].n.toLowerCase()} ≈ ${fmtKg(Math.round(fromLoad32(T,e1)))} кг`;}).join(", ")}. По этим цифрам тренер поставит стартовые веса.</div>`);
+ if(GQ.care.length)why.insertAdjacentHTML("beforeend",`<div>🩹 Осторожно с: ${GQ.care.map(j=>JN33[j]).join(", ")} — упражнения остаются, но с запасом 2 повтора и без дроп-сетов.</div>`);
+ if(GQ.calib==="yes")why.insertAdjacentHTML("beforeend",`<div>🎯 Первая неделя — замер: 1-й подход каждого нового упражнения пробный, остальные веса тренер выставит сам.</div>`);}catch(e){}};
+/* применение: сила из теста, вес тела, перерыв, замер */
+const _genApply35=genApply;
+genApply=function(){if(session){alert0("Сначала закончи тренировку");return;}sync35();const c=GQ;_genApply35();try{
+ if(c.bwv>40&&c.bwv<250&&!(DB.bw||[]).some(x=>x.d===today())){DB.bw=DB.bw||[];DB.bw.push({d:today(),w:c.bwv});}
+ const L=c.lift||{};DB.seed=DB.seed||{};Object.keys(L).forEach(id=>{if(!EX[id])return;DB.seed[id]={w:L[id].w,r:L[id].r,d:today()};
+  Object.keys(EX).forEach(k=>{if(k===id||DB.seed[k]&&!DB.seed[k].f||(DB.log[k]||[]).length)return;const sc=simScore(id,k);if(sc<16)return;const A=feat(id),B=feat(k);if(A.p!==B.p)return;
+   const X={BD:.38,DB:2.4,BM:.95,MB:.9,DM:2.2,MD:.42,BB:1,DD:1,MM:1};const f=X[A.q+B.q];if(!f)return;const ff=f*(A.s===B.s?.9:.8);if(DB.seed[k]&&DB.seed[k].f>=ff)return;
+   const T1=eqT32(EX[id]),T2=eqT32(EX[k]);if(T1==="bw"||T2==="bw"||T1==="assist"||T2==="assist")return;DB.seed[k]={w:L[id].w,r:L[id].r,d:today(),f:ff,from:id};});});
+ if(c.brk==="yes"){const d=new Date();d.setDate(d.getDate()+14);DB.reentry=dkey(d);}
+ if(c.calib==="yes")DB.calib={d:today()};else delete DB.calib;if(DB.wzDraft)DB.wzDraft.done=1;save();render();}catch(e){}};
+/* неделя-замер */
+function calibLeft35(){if(!DB.calib)return null;if(DB.calib.d<dkAgo(21)){delete DB.calib;save();return null;}const ids=new Set();WEEKS.forEach(w=>w.days.forEach(d=>(d.items||[]).forEach(x=>ids.add(swapOf(x.id)))));
+ const left=[...ids].filter(id=>EX[id]&&!(DB.log[id]||[]).length);if(!left.length){delete DB.calib;DB.calibDone=today();save();return null;}return{left:left.length,all:ids.size};}
+const _vGym35=vGym;
+vGym=function(){_vGym35.apply(this,arguments);try{if(session)return;const app=document.getElementById("app");if(!app||app.querySelector(".cal35"))return;const C=calibLeft35();
+ let h="";if(C)h=`<div class="cal35"><b>🎯 Неделя замера</b><span>Осталось замерить ${C.left} из ${C.all} упражнений. В каждом новом упражнении 1-й подход пробный: подбери вес на ~10 повторов с запасом 2 и отметь «Легко / Норм / Тяжело» — остальные подходы и будущие веса тренер выставит сам.</span><i style="width:${Math.round((1-C.left/C.all)*100)}%"></i></div>`;
+ else if(DB.calibDone&&DB.calibDone>=dkAgo(3))h=`<div class="cal35 ok"><b>✅ Замер завершён</b><span>Все стартовые веса выставлены по твоим подходам. Дальше — прогрессия.</span></div>`;
+ if(!h)return;const at=app.querySelector(".bento")||app.querySelector(".sec");if(at)at.insertAdjacentHTML("beforebegin",h);}catch(e){}};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
