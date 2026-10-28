@@ -1368,6 +1368,10 @@ body.light #fx{--tx:#EFE6D2;--dim:#9A927F;--soft:#BFB4A0;--surface:#151515;--rai
 body.light .wz-start{background:linear-gradient(135deg,#F3E7CF,#E9DBC0)!important}body.light .wz-start b{color:#7A5F36!important}
 body.light .hello>div:first-child:before{color:#9A7A45}
 
+/* v39 кадры Анубиса: целиком, на тёплом фоне */
+.fx-ph:has(img[src^="data:image/jpeg"]),.exd-shot:has(img[src^="data:image/jpeg"]),.zoom figure:has(img[src^="data:image/jpeg"]){background:radial-gradient(70% 80% at 50% 40%,#3A2D1F 0,#141210 60%,#0A0A0A 100%)!important}
+.fx-ph img[src^="data:image/jpeg"],.exd-shot img[src^="data:image/jpeg"],.zoom img[src^="data:image/jpeg"]{object-fit:contain!important;object-position:50% 50%!important}
+
 </style>
 </head>
 <body>
@@ -1385,6 +1389,7 @@ body.light .hello>div:first-child:before{color:#9A7A45}
  <nav class="nav" id="nav"></nav>
 </div>
 <script src="photos.js" async onload="phReady()"></script>
+<script src="anubis.js" async onload="anbReady()"></script>
 <script>
 const EX={
 bp:{n:"Жим штанги лёжа",eq:"штанга, скамья со стойками",m:"Грудь целиком",st:"75 кг",f:0,alt:["flat_db","hammer_ch","inc_bb"],
@@ -6277,9 +6282,23 @@ const _chatOpen38=chatOpen;
 chatOpen=function(){_chatOpen38.apply(this,arguments);try{const t=document.querySelector("#chat21 .ch-top b");if(t)t.textContent="Анубис";const s=document.querySelector("#chat21 .ch-top span");if(s)s.textContent="твой тренер · знает всю историю";}catch(e){}};
 document.title="ANUBIS";
 
+/* ===== v39: кадры Анубиса в упражнениях (anubis.js), похожие упражнения берут кадры «родственника» ===== */
+var ANB=window.ANB||{};
+function anbMap39(){ANB=window.ANB||{};const own=Object.keys(ANB).filter(id=>EX[id]);Object.keys(EX).forEach(id=>{delete EX[id].anbId;delete EX[id].anbRel;});
+ own.forEach(id=>{EX[id].anbId=id;});if(!own.length)return;
+ Object.keys(EX).forEach(id=>{if(EX[id].anbId)return;let best=null,bs=0;own.forEach(k=>{if(eqc29(EX[k])!==eqc29(EX[id]))return;const s=simScore(id,k);if(s>bs){bs=s;best=k;}});if(best&&bs>=21){EX[id].anbId=best;EX[id].anbRel=1;}});}
+function anbReady(){try{anbMap39();render();}catch(e){}}
+const _imgU39=imgU;
+imgU=function(e,n){if(e&&e.anbId&&ANB[e.anbId]&&DB.anbOff!==1){const f=ANB[e.anbId];return"data:image/jpeg;base64,"+(f[n]||f[0]);}return _imgU39(e,n);};
+function anbToggle(){DB.anbOff=DB.anbOff===1?0:1;save();render();}
+const _vMore39=vMore;
+vMore=function(){_vMore39.apply(this,arguments);try{const n=Object.keys(ANB).filter(id=>EX[id]).length;if(!n)return;const g=document.getElementById("gear32");if(!g||document.getElementById("anb39"))return;
+ const all=Object.keys(EX).filter(id=>EX[id].anbId).length;
+ g.insertAdjacentHTML("beforebegin",`<div class="card7" id="anb39"><span class="k13">показ упражнений</span><div class="seg7" style="display:flex"><button style="flex:1" class="${DB.anbOff===1?"":"on"}" onclick="DB.anbOff===1&&anbToggle()">Анубис</button><button style="flex:1" class="${DB.anbOff===1?"on":""}" onclick="DB.anbOff!==1&&anbToggle()">Фото</button></div><p class="gr-p" style="margin-top:8px">Анубис нарисован в ${all} из ${Object.keys(EX).length} упражнений. В остальных пока фото.</p></div>`);}catch(e){}};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
