@@ -1498,6 +1498,24 @@ img[src^="data:image/jpeg"]{object-position:50% 12%!important}
 .ch-m.b .ch-a{margin-left:0}
 body.light .c50l li{border-top-color:rgba(0,0,0,.06)}
 
+/* v51 дорожная карта */
+.rd51c{display:block;width:100%;margin:0 0 14px;padding:16px 16px 10px;border-radius:22px;border:1px solid rgba(201,169,110,.4);background:radial-gradient(120% 90% at 100% 0%,rgba(201,169,110,.18),transparent 60%),var(--surface);color:var(--tx);font:inherit;text-align:left;cursor:pointer}
+.rd51c span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#C9A96E}.rd51c b{display:block;font-family:var(--disp);font-weight:400;font-size:24px;margin:2px 0}
+.rd51c em{display:block;font-style:normal;font-size:12.5px;color:var(--dim)}
+.rd51-svg{display:block;width:100%;height:auto;margin:8px 0 2px;color:var(--tx)}
+.rd51 h3{margin:20px 0 8px}
+.rd51-lg{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--dim)}.rd51-lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}.rd51-lg i.dot{border-radius:50%;background:#F5E6C8;width:7px;height:7px}
+.rd51-p{display:flex;gap:12px;padding:12px;margin-bottom:8px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}.rd51-p.on{border-color:rgba(201,169,110,.55);background:rgba(201,169,110,.07)}
+.rd51-p>i{flex:0 0 26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;font-size:13px;background:rgba(201,169,110,.15);color:#C9A96E}.rd51-p.on>i{background:#C9A96E;color:#0A0A0A}
+.rd51-p b{display:block;font-size:15px}.rd51-p span{display:block;font-size:12px;color:#C9A96E;margin-top:1px}.rd51-p p{margin:5px 0 2px;font-size:13px;line-height:1.4}.rd51-p small{font-size:12px;color:var(--dim)}
+.rd51-b{display:grid;gap:8px}.rd51-b div{padding:11px 13px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}.rd51-b div.on{border-color:rgba(201,169,110,.55)}
+.rd51-b b{font-size:14px}.rd51-b span{margin-left:8px;font-size:12px;color:var(--dim)}.rd51-b em{display:block;font-style:normal;font-size:12.5px;color:#C9A96E;margin-top:3px}
+.rd51-l{padding:12px;margin-bottom:8px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}.rd51-l b{display:block;font-size:14px;margin-bottom:8px}
+.rd51-l>div{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.rd51-l span{text-align:center;font-size:10.5px;color:var(--dim);line-height:1.2}
+.rd51-l em{display:block;font-style:normal;font-family:var(--cond);font-size:22px;color:var(--tx);margin-bottom:2px}.rd51-l span.hi em{color:#C9A96E}
+.rd51-m{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:13.5px}.rd51-m i{font-style:normal;font-size:18px}.rd51-m b{flex:1;font-weight:600}.rd51-m span{color:#C9A96E;font-size:12.5px;white-space:nowrap}
+.rd51-n,.rd51-e{font-size:11.5px;color:var(--dim);line-height:1.45;margin:8px 0 0}
+
 </style>
 </head>
 <body>
@@ -4447,7 +4465,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="50";
+const APPV="51";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4459,6 +4477,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🗺</i><p><b>Дорожная карта</b>план тренера на 6 месяцев в «Прогрессе»: когда дойдёшь до 95 кг, что дальше (выход из дефицита, качественная масса), блоки тренировок, прогноз силы на 1–2–3 месяца и вехи с датами. В чате: «что будет через 3 месяца»</p></div>
  <div><i>💬</i><p><b>Чат: +25 тем</b>алкоголь, вода, крепатура, живот, креатин, разминка, «вес стоит», «покажи мою программу», «сделай день ног», «перенеси тренировку», «сколько я вешу», «что растёт лучше всего» и другие</p></div>
  <div><i>✨</i><p><b>Ответы тренера красивее</b>аватар Анубиса, заголовки, аккуратные списки вместо сплошного текста</p></div>
  <div><i>🎯</i><p><b>Точнее понимает упражнения</b>«максимум в жиме» — это жим лёжа, а не французский; испанский присед больше не предлагается заменой жиму ногами</p></div>
@@ -7452,9 +7471,60 @@ chatPaint=function(){_chatPaint50();try{const l=document.getElementById("chList"
  /* в приветствии не дублировать кнопки, которые уже есть внизу */
  const first=ms[0];if(first&&ms.length===1){const a=first.querySelector(".ch-a");if(a)a.remove();}}catch(e){}};
 
+/* ===== v51: «Дорожная карта» — план тренера на 6 месяцев: вес, фазы, прогноз силы, вехи ===== */
+const MON51=["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];
+const dd51=d=>`${d.getDate()} ${MON51[d.getMonth()]}`;
+function lr51(pts){const n=pts.length;if(n<2)return null;const sx=pts.reduce((a,p)=>a+p[0],0),sy=pts.reduce((a,p)=>a+p[1],0),sxx=pts.reduce((a,p)=>a+p[0]*p[0],0),sxy=pts.reduce((a,p)=>a+p[0]*p[1],0);const den=n*sxx-sx*sx;if(!den)return null;const b=(n*sxy-sx*sy)/den;return{b,a:(sy-b*sx)/n};}
+/* прогноз силы: тренд за 8 недель, рост замедляется со временем, на дефиците — медленнее */
+function liftFc51(id){const T=eqT32(EX[id]);const l=(DB.log[id]||[]).filter(e=>e.d>=dkAgo(63));if(l.length<3)return null;const t0=new Date(l[0].d).getTime();
+ const pts=l.map(e=>[(new Date(e.d).getTime()-t0)/6048e5,sessE1(id,e,T)]).filter(p=>p[1]>0);const r=lr51(pts);if(!r)return null;
+ const cur=Math.max(...pts.slice(-3).map(p=>p[1]));let wk=Math.max(0,r.b);const cap=cur*0.012;wk=Math.min(wk,cap);
+ const cut=(typeof wRate==="function"?wRate(28):null);if(cut!==null&&cut<-0.4)wk*=0.7;
+ const at=w=>cur+wk*(w-w*w/52);return{cur,wk,at,m1:at(4.3),m2:at(8.7),m3:at(13)};}
+function okLift51(id){const T=eqT32(EX[id]);return !/^(bw|assist)$/.test(T)&&!/с весом|подтяг|брусья|отжиман/i.test(EX[id].n);}
+function keyLifts51(){const ids=[];W().days.forEach((d,di)=>{const it=itemsFor(di);const b=it.find(x=>isB49(x.id)&&okLift51(x.id)&&(DB.log[x.id]||[]).length>=3);if(b&&!ids.includes(b.id))ids.push(b.id);});
+ if(DB.log.bp&&DB.log.bp.length>=3&&!ids.includes("bp"))ids.unshift("bp");
+ Object.keys(DB.log||{}).filter(id=>EX[id]&&isB49(id)&&okLift51(id)&&(DB.log[id]||[]).length>=4&&!ids.includes(id)).sort((a,b)=>DB.log[b].length-DB.log[a].length).forEach(id=>{if(ids.length<4)ids.push(id);});return ids.slice(0,4);}
+function road51(){const w=bwNow(),goal=95,r=typeof wRate==="function"?(wRate(21)??wRate(28)??wRate(56)):null;const now=new Date();const ph=[];
+ const left=w-goal;let tGoal=null;
+ if(left>0.3){const rate=r!==null&&r<-0.15?Math.min(Math.abs(r),1):0.5;const wks=Math.ceil(left/rate);tGoal=new Date(now.getTime()+wks*6048e5);
+  ph.push({k:"cut",n:"Сушка",from:now,to:tGoal,txt:`${String(w).replace(".",",")} → ${goal} кг · ${String(rate.toFixed(1)).replace(".",",")} кг в неделю${r===null?" (темп по плану)":""}`,how:`дефицит ${target().k} ккал, белок ${target().p} г, силовые держат мышцы`});}
+ else tGoal=now;
+ const rev=new Date(tGoal.getTime()+2*6048e5);ph.push({k:"rev",n:"Выход из дефицита",from:tGoal,to:rev,txt:"+100–150 ккал каждую неделю до поддержания",how:"вес держится, сила начинает расти быстрее"});
+ const end=new Date(now.getTime()+26*6048e5);ph.push({k:"lean",n:"Качество массы",from:rev,to:end>rev?end:new Date(rev.getTime()+8*6048e5),txt:"профицит 150–250 ккал, +0,25–0,5 кг в месяц",how:"основной рост мышц и силы, жир почти не прибавляется"});
+ /* блоки по 9 недель */
+ const blocks=[];if(DB.start){const s=new Date(DB.start+"T12:00:00");const wn=weekNow();const bi=Math.floor((wn-1)/9);for(let k=0;k<3;k++){const b0=new Date(s.getTime()+((bi+k)*9)*6048e5),b1=new Date(b0.getTime()+9*6048e5-864e5);blocks.push({n:bi+k+1,from:b0,to:b1,cur:k===0});}}
+ /* вехи */
+ const ms=[];if(tGoal&&left>0.3)ms.push({d:tGoal,t:`Вес ${goal} кг`,i:"⚖️"});
+ const lifts=keyLifts51().map(id=>({id,f:liftFc51(id)})).filter(x=>x.f);
+ lifts.forEach(x=>{const f=x.f;const step=f.cur>=100?10:5;const tgt=Math.ceil((f.cur+0.5)/step)*step;if(f.wk>0.05){let wk=null;for(let i=1;i<=26;i++)if(f.at(i)>=tgt){wk=i;break;}if(wk)ms.push({d:new Date(now.getTime()+wk*6048e5),t:`${EX[x.id].n}: 1ПМ ${tgt} кг`,i:"🏋️"});}});
+ Object.keys(DB.goals||{}).forEach(id=>{if(!EX[id])return;const g=DB.goals[id],f=liftFc51(id);if(!f)return;if(f.cur>=g){ms.push({d:now,t:`${EX[id].n} ${g} кг — достигнуто`,i:"🏆"});return;}let wk=null;for(let i=1;i<=52;i++)if(f.at(i)>=g){wk=i;break;}if(wk)ms.push({d:new Date(now.getTime()+wk*6048e5),t:`Цель: ${EX[id].n} ${g} кг`,i:"🎯"});});
+ const nh=(DB.hist||[]).length;[25,50,100,150,200].forEach(n=>{if(nh<n){const per=Object.keys(DMAP).length||3;const wk=Math.ceil((n-nh)/per);if(wk<=26)ms.push({d:new Date(now.getTime()+wk*6048e5),t:`${n}-я тренировка`,i:"🔥"});}});
+ ms.sort((a,b)=>a.d-b.d);return{w,goal,r,ph,blocks,ms:ms.slice(0,7),lifts,tGoal,now,end:ph[ph.length-1].to};}
+function roadSvg51(R){const W0=R.now.getTime(),W1=Math.max(R.end.getTime(),W0+26*6048e5),span=W1-W0;const X=d=>14+(Math.min(Math.max(d.getTime(),W0),W1)-W0)/span*312;const col={cut:"#C9A96E",rev:"#E8D9B7",lean:"#8C6D3F"};
+ let s=`<svg viewBox="0 0 340 74" class="rd51-svg">`;R.ph.forEach(p=>{const x1=X(p.from),x2=X(p.to);if(x2-x1<1)return;s+=`<rect x="${x1}" y="18" width="${Math.max(2,x2-x1-2)}" height="14" rx="7" fill="${col[p.k]}" opacity="${p.k==="cut"?1:.75}"/>`;});
+ for(let m=0;m<=6;m++){const d=new Date(W0);d.setMonth(d.getMonth()+m,1);if(d.getTime()<W0||d.getTime()>W1)continue;const x=X(d);s+=`<line x1="${x}" y1="38" x2="${x}" y2="44" stroke="currentColor" opacity=".35"/><text x="${x}" y="56" text-anchor="middle" font-size="9" fill="currentColor" opacity=".6">${MON51[d.getMonth()]}</text>`;}
+ R.ms.forEach(m=>{const x=X(m.d);s+=`<circle cx="${x}" cy="10" r="3.2" fill="#F5E6C8"/>`;});s+=`<circle cx="14" cy="25" r="5" fill="#0A0A0A" stroke="#F5E6C8" stroke-width="2"/><text x="14" y="70" font-size="9" fill="currentColor" opacity=".8">сейчас</text></svg>`;return s;}
+function roadOpen51(){const R=road51();const o=exd31();const lf=R.lifts.map(x=>{const f=x.f;const n=v=>Math.round(v);return`<div class="rd51-l"><b>${EX[x.id].n}</b><div><span><em>${n(f.cur)}</em>сейчас</span><span><em>${n(f.m1)}</em>через 1 мес</span><span><em>${n(f.m2)}</em>2 мес</span><span class="hi"><em>${n(f.m3)}</em>3 мес</span></div></div>`;}).join("");
+ const lag=(()=>{try{const L=lagFind();return L.list&&L.list.length?L.list.map(x=>x.g||x).slice(0,2):[];}catch(e){return[];}})();
+ o.innerHTML=`<div class="exd-in rd51"><button class="x" onclick="closeExD()" aria-label="Закрыть">✕</button><span class="exd-g">план тренера на 6 месяцев</span><h2>Дорожная карта</h2>
+ ${roadSvg51(R)}<div class="rd51-lg"><span><i style="background:#C9A96E"></i>сушка</span><span><i style="background:#E8D9B7"></i>выход</span><span><i style="background:#8C6D3F"></i>качественная масса</span><span><i class="dot"></i>вехи</span></div>
+ <h3>Фазы</h3>${R.ph.map((p,i)=>`<div class="rd51-p ${i===0?"on":""}"><i>${i+1}</i><div><b>${p.n}</b><span>${dd51(p.from)} — ${dd51(p.to)}</span><p>${p.txt}</p><small>${p.how}</small></div></div>`).join("")}
+ ${R.blocks.length?`<h3>Блоки тренировок</h3><div class="rd51-b">${R.blocks.map((b,i)=>`<div class="${b.cur?"on":""}"><b>Блок ${b.n}</b><span>${dd51(b.from)} — ${dd51(b.to)}</span><em>${b.cur?"сейчас · неделя "+blk41().wb+" из 9":i===1?(lag.length?"акцент: "+lag.join(", ").toLowerCase():"акцент на отстающие мышцы"):"новые углы и упражнения"}</em></div>`).join("")}</div>`:""}
+ <h3>Прогноз силы</h3>${lf||`<p class="rd51-e">Нужно 3+ тренировки в главных упражнениях за 2 месяца — тогда тренер посчитает прогноз.</p>`}<p class="rd51-n">Расчётный максимум на 1 повтор. Тренд за 8 недель; со временем рост замедляется, на сушке — медленнее.</p>
+ ${R.ms.length?`<h3>Вехи</h3>${R.ms.map(m=>`<div class="rd51-m"><i>${m.i}</i><b>${m.t}</b><span>≈ ${dd51(m.d)}</span></div>`).join("")}`:""}
+ <p class="rd51-n">Карта пересчитывается после каждой тренировки и взвешивания. Хочешь свою цель — напиши в чате «цель жим 110».</p></div>`;o.querySelector(".exd-in").scrollTop=0;}
+/* карточка в «Прогрессе» и на главной (раз в неделю) */
+const _vProg51=vProg;
+vProg=function(){_vProg51.apply(this,arguments);try{if(progSub!=="o")return;const app=document.getElementById("app");if(!app||app.querySelector(".rd51c"))return;const R=road51();const at=app.querySelector(".card7")||app.querySelector(".sec");
+ const m=R.ms[0];if(at)at.insertAdjacentHTML("beforebegin",`<button class="rd51c" onclick="roadOpen51()"><div><span>план на 6 месяцев</span><b>Дорожная карта</b><em>${R.tGoal&&R.w-R.goal>0.3?`95 кг ≈ ${dd51(R.tGoal)}`:"цель по весу достигнута"}${m&&!/Вес/.test(m.t)?` · ${m.t} ≈ ${dd51(m.d)}`:""}</em></div>${roadSvg51(R)}</button>`);}catch(e){}};
+const _brain51=brain;
+brain=function(q){const t=nz(q);try{if(/дорожн|план на (полгода|6 мес|месяц|год)|что будет через|через (\d+|три|два|пару) ?мес|через полгода|прогноз сил|какой (будет )?жим через|долгосрочн/.test(t)){const R=road51();
+ return{t:`<b>Дорожная карта</b>\n${R.ph.map((p,i)=>`${i+1}. ${p.n}: ${dd51(p.from)} — ${dd51(p.to)}, ${p.txt}`).join("\n")}${R.lifts.length?`\n\n<b>Прогноз силы через 3 месяца:</b>\n${R.lifts.map(x=>`• ${EX[x.id].n}: ${Math.round(x.f.cur)} → ${Math.round(x.f.m3)} кг`).join("\n")}`:""}${R.ms.length?`\n\n<b>Ближайшие вехи:</b>\n${R.ms.slice(0,4).map(m=>`• ${m.t} — ≈ ${dd51(m.d)}`).join("\n")}`:""}`,a:[A("Открыть карту","chatClose();roadOpen51()")]};}}catch(e){}return _brain51(q);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","ckOpen48","ckPick48","ckDone48","fit47","cmp47","addEx47Do","tcat46","eqf46","opt45Do","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","roadOpen51","ckOpen48","ckPick48","ckDone48","fit47","cmp47","addEx47Do","tcat46","eqf46","opt45Do","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
