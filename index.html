@@ -1307,6 +1307,16 @@ body.light .t1{color:#0E7A35!important}body.light .t2{color:#2E74D0!important}
 .cal35 i{position:absolute;left:0;bottom:0;height:4px;background:var(--lime)}
 @media (max-height:600px){#fx .coach17 span{font-size:11.5px;line-height:1.3}#fx .coach17{padding-top:7px;padding-bottom:7px}#fx .ramp20{display:none}}
 
+/* v37 удобство */
+.fold37{margin:12px 0;border-radius:18px;background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.fold37>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-size:14px;font-weight:600;color:var(--tx);cursor:pointer}
+.fold37>summary::-webkit-details-marker{display:none}.fold37>summary i{font-style:normal;font-size:20px;color:var(--dim);transition:transform .2s}
+.fold37[open]>summary i{transform:rotate(90deg)}.fold37-in{padding:0 12px 12px}
+.fold37-in>hr{display:none}
+.more37{display:block;width:100%;margin-top:8px;padding:9px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--dim);font:inherit;font-size:12.5px;cursor:pointer}
+.bk37{padding:12px 14px!important}.bk37 h2,.bk37 h3,.bk37 b:first-child{font-size:15px!important}.bk37 p,.bk37 span{font-size:12px!important;line-height:1.35!important}
+.bk37 .cta,.bk37 button{padding:10px!important;font-size:14px!important;margin-top:8px!important}
+
 </style>
 </head>
 <body>
@@ -4255,7 +4265,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="36";
+const APPV="37";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4267,6 +4277,7 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>✨</i><p><b>Главный экран короче</b>справка и правила недели свёрнуты, «Тренер заметил» — только главное</p></div>
  <div><i>💬</i><p><b>Тренер понимает лучше</b>исправляет опечатки и английскую раскладку, отвечает по твоим цифрам: «прогресс в жиме», «почему такой вес», «чем заменить гакк», «сколько подходов на спину», «разбор моей программы» — оценка и что улучшить</p></div>
  <div><i>📋</i><p><b>Тест 2.0 — 46 вопросов</b>10 разделов: твоя сила в 8 упражнениях, каждый сустав по степени, что есть в зале, повторы, отдых, суперсеты, что не увеличивать. Ответы сохраняются — можно продолжить позже</p></div>
  <div><i>🎯</i><p><b>Неделя замера</b>первый подход каждого нового упражнения — пробный, тренер выставляет точные стартовые веса</p></div>
@@ -6189,6 +6200,23 @@ function userInj36(){const c=DB.gen&&DB.gen.cfg;const k=c?JSON.stringify([c.j_sh
 const _alts36=altsFor;
 altsFor=function(id,o){o=Object.assign({},o||{});if(!o.inj)o.inj=userInj36();let r=_alts36(id,o);if(!r.length&&o.inj.length){const extra=_alts36(id,Object.assign({},o,{inj:[]})).filter(a=>!r.includes(a));r=r.concat(extra);}return r;};
 try{PAINRE.lb=new RegExp(PAINRE.lb.source+"|т-грифа стоя|становая|доброе утро","i");PAINRE.kn=new RegExp(PAINRE.kn.source+"|пистолет|прыжк","i");}catch(e){}
+
+/* ===== v37: удобство — короткий главный экран: справка и правила свёрнуты, «Тренер заметил» — 2 главных, компактная резервная копия ===== */
+let OPEN37={};
+function fold37(title,nodes,key){if(!nodes.length)return;const d=document.createElement("details");d.className="fold37";if(OPEN37[key])d.open=true;d.addEventListener("toggle",()=>{OPEN37[key]=d.open;});
+ d.innerHTML=`<summary><span>${title}</span><i>›</i></summary><div class="fold37-in"></div>`;nodes[0].parentNode.insertBefore(d,nodes[0]);const box=d.querySelector(".fold37-in");nodes.forEach(n=>box.appendChild(n));}
+const _vGym37=vGym;
+vGym=function(){_vGym37.apply(this,arguments);try{if(session)return;const app=document.getElementById("app");if(!app)return;
+ const kids=[...app.children];
+ /* справка «Как пользоваться» + разминка → одна свёрнутая строка */
+ const h=kids.findIndex(e=>e.tagName==="H3"&&/Как пользоваться/.test(e.textContent));
+ if(h>=0){let st=h;if(kids[h-1]&&kids[h-1].tagName==="HR")st=h-1;fold37("📖 Как пользоваться · разминка",kids.slice(st),"faq");}
+ /* описание недели → свёрнуто */
+ const note=kids.find(e=>e.classList&&e.classList.contains("note")&&/повтор|отдых/.test(e.textContent));if(note)fold37("📋 Правила этой недели",[note],"rules");
+ /* «Тренер заметил»: 2 главных, остальное по кнопке */
+ const tr=app.querySelector(".tr18");if(tr){const its=[...tr.querySelectorAll(".tr18-i")];if(its.length>2&&!OPEN37.ins){its.slice(2).forEach(x=>x.style.display="none");tr.insertAdjacentHTML("beforeend",`<button class="more37" onclick="OPEN37.ins=1;render()">Ещё ${its.length-2} ${pl(its.length-2,"заметка","заметки","заметок")}</button>`);}}
+ /* резервная копия — одной строкой */
+ const bk=app.querySelector(".bk7");if(bk)bk.classList.add("bk37");}catch(e){}};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
