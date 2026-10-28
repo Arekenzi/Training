@@ -1170,6 +1170,18 @@ body.fxon #fab21,body:has(#done.on) #fab21,body:has(.exd) #fab21,body:has(#rdy) 
 #fab21{position:fixed}
 #ics24{margin:0 0 14px}
 
+.ss25{display:flex;align-items:center;gap:8px;width:100%;margin:-4px 0 8px;font-size:12px;color:var(--dim)}
+.ss25 span{flex:1;color:#9AD8FF}.ss25 button{flex:0 0 auto;margin-left:auto;padding:6px 10px;border-radius:999px;border:1px solid rgba(108,198,255,.35);background:rgba(108,198,255,.08);color:#9AD8FF;font:inherit;font-size:11.5px;cursor:pointer}
+.hm25{padding:14px 16px;margin:0 0 14px}.hm25 .tr18-h em{font-style:normal;font-family:var(--cond);font-size:13px;color:var(--lime)}
+.hm-g{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px;margin-top:8px}
+.hm-g i,.hm-l i{display:block;aspect-ratio:1;border-radius:3px;background:rgba(255,255,255,.06)}
+.hm-g i.hf{background:transparent;border:1px dashed rgba(255,255,255,.06)}
+i.h1{background:rgba(59,240,106,.3)!important}i.h2{background:rgba(59,240,106,.5)!important}i.h3{background:rgba(59,240,106,.75)!important}i.h4{background:var(--lime)!important}
+i.a{box-shadow:inset 0 0 0 1.5px #6CC6FF}
+.hm-m{display:flex;justify-content:space-between;margin-top:5px;font-family:var(--cond);font-size:10.5px;color:var(--dim)}
+.hm-l{display:flex;align-items:center;gap:4px;margin-top:8px;font-size:10.5px;color:var(--dim)}.hm-l i{width:11px;height:11px}
+.hm-g{grid-template-columns:repeat(26,minmax(0,1fr))}
+
 </style>
 </head>
 <body>
@@ -4118,7 +4130,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="24";
+const APPV="25";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4130,6 +4142,9 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>⇄</i><p><b>Суперсеты кнопкой</b>«Суперсет со следующим» — тренер ведёт по кругу и даёт отдых после пары. Экономит 10–15 минут</p></div>
+ <div><i>⚖️</i><p><b>«Вешу 101,2», «выпил 2 стакана»</b>— тренер запишет вес и воду сам</p></div>
+ <div><i>🟩</i><p><b>Карта тренировок за полгода</b>в «Прогресс → Обзор»</p></div>
  <div><i>🔔</i><p><b>Напоминания о тренировках</b>«Ещё» → «Напоминания»: тренировки на 8 недель в Календарь iPhone, сигнал за час</p></div>
  <div><i>📨</i><p><b>Отчёт за неделю</b>в понедельник тренер сам пишет итоги и план — красная точка на кнопке «Спроси»</p></div>
  <div><i>🧬</i><p><b>Тренер учится на тебе</b>в упражнениях, где ты растёшь быстро, прибавляет по двойному шагу; где прибавка срывает повторы — сначала закрепляет вес. Спроси: «что ты знаешь обо мне?»</p></div>
@@ -5132,9 +5147,46 @@ const _chatOpen24=chatOpen;chatOpen=function(){DB.repNew=0;save();const f=docume
 const _brain24=brain;brain=function(q){const t=nz(q);if(/отчет|неделя прошла|за неделю|итоги недели/.test(t)){const r=weekReport24();return{t:r||"За прошлую неделю данных нет."};}
  if(/напомин|календар/.test(t))return{t:"Добавлю тренировки в Календарь iPhone с напоминанием за час.",a:[A("Настроить","chatClose();icsOpen()")]};return _brain24(q);};
 
+/* ===== v25: суперсеты кнопкой, вес и вода голосом/текстом, карта тренировок за полгода ===== */
+function ssA(x){return !!x&&((session&&session.ssx&&session.ssx[x.orig||x.id])||x.ss);}
+function ssToggle(n){if(!session)return;const it=itemsFor(session.di)[n];if(!it)return;const k=it.orig||it.id;session.ssx=session.ssx||{};session.ssx[k]=!session.ssx[k];if(navigator.vibrate)navigator.vibrate(15);save();render();}
+const _fxDone25=fxDone;
+fxDone=function(){if(!session)return _fxDone25();const items=itemsFor(session.di),n=session.fx,x=items[n];if(!x)return _fxDone25();
+ const isA=ssA(x)&&items[n+1],prev=items[n-1],isB=prev&&ssA(prev);const r=_fxDone25();
+ try{if(session&&isA){const B=items[n+1];if(curSet(B)<keysOf(B).length){stopTimer();session.fx=n+1;save();render();}}
+  else if(session&&isB){if(curSet(prev)<keysOf(prev).length&&session.fx!==n-1){session.fx=n-1;save();render();}}}catch(e){}return r;};
+const _exBody25=exBody;
+exBody=function(it,n,items){let h=_exBody25(it,n,items);if(!items[n+1])return h;const on=ssA(it);
+ return h.replace('<div class="row">',`<div class="row"><button class="btn sm ${on?"ok15":""}" onclick="ssToggle(${n})">⇄ ${on?"Суперсет включён":"Суперсет со следующим"}</button>`);};
+const _coachLine25=coachLine;
+coachLine=function(){_coachLine25();if(!session||!session.focus)return;const fx=document.getElementById("fx");if(!fx)return;const items=itemsFor(session.di),n=session.fx,x=items[n];if(!x)return;
+ const cl=fx.querySelector(".coach17:not(.ramp20)");const nx=items[n+1],pv=items[n-1];
+ if(cl&&nx&&!fx.querySelector(".ss25"))cl.insertAdjacentHTML("afterend",`<div class="ss25">${ssA(x)?`<span>⇄ Суперсет: после подхода сразу «${EX[nx.id].n}», отдых — после круга</span>`:pv&&ssA(pv)?`<span>⇄ Суперсет с «${EX[pv.id].n}» — после этого подхода отдых</span>`:""}<button onclick="ssToggle(${pv&&ssA(pv)&&!ssA(x)?n-1:n})">${ssA(x)||(pv&&ssA(pv))?"Выключить":"⇄ Суперсет со следующим"}</button></div>`);};
+/* ---------- вес и вода через тренера ---------- */
+const _brain25=brain;
+brain=function(q){const t=nz(q);let m;
+ if((m=t.match(/(вешу|вес|взвесил\S*|весы)\D{0,12}(\d{2,3}(?:[.,]\d)?)/))&&!/цел|жал|жим|кг на/.test(t)){const w=+m[2].replace(",",".");if(w>40&&w<250){DB.bw=(DB.bw||[]).filter(x=>x.d!==today());DB.bw.push({d:today(),w});save();render();
+  const b=(DB.bw||[]).slice().sort((x,y)=>x.d<y.d?-1:1),prev=b[b.length-2];const r=wRate(16),fc=forecast();
+  return{t:`Записал вес ${String(w).replace(".",",")} кг.${prev?` С ${String(prev.d).slice(8,10)}.${String(prev.d).slice(5,7)}: ${w-prev.w>0?"+":""}${String(Math.round((w-prev.w)*10)/10).replace(".",",")} кг.`:""}${r!==null?` Темп: ${rateTxt(r)}.`:""}${fc?` ${fc}.`:""}`};}}
+ if(/выпил|вода|воды|стакан/.test(t)){const n2=(m=t.match(/(\d+(?:[.,]\d)?)\s*(стакан|л\b|литр)/))?(/л\b|литр/.test(m[2])?Math.round(+m[1].replace(",",".")*4):+m[1]):/пол\s*литр/.test(t)?2:/литр/.test(t)?4:1;const d=today();DB.water[d]=Math.min(12,(DB.water[d]||0)+n2);save();render();
+  return{t:`Записал воду: ${DB.water[d]} из 12 стаканов${DB.water[d]>=12?" — норма выполнена 💧":""}.`};}
+ return _brain25(q);};
+const _sugg25=sugg;sugg=function(){const a=_sugg25();a.splice(3,0,"Вешу 101,2","Выпил 2 стакана");return a.slice(0,9);};
+/* ---------- карта тренировок за полгода ---------- */
+function heatCard(){const wk=26,now=new Date(),end=new Date(now);end.setDate(now.getDate()+(6-((now.getDay()+6)%7)));const start=new Date(end);start.setDate(end.getDate()-wk*7+1);
+ const byD={};(DB.hist||[]).forEach(h=>{byD[h.d]=(byD[h.d]||0)+(h.ton||1);});const mx=Math.max(1,...Object.values(byD));let cells="",n=0,act=0;
+ for(let i=0;i<wk*7;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=dkey(d),v=byD[k]||0,fut=d>now;if(v)n++;const a=(DB.act||{})[k];if(a&&(a.s>=9000||(a.c||[]).length))act++;
+  const lv=v?Math.min(4,1+Math.floor(v/mx*3.99)):0;cells+=`<i class="h${fut?"f":lv}${!v&&a&&(a.s>=9000||(a.c||[]).length)?" a":""}" title="${k}"></i>`;}
+ const mons=[];let lm=-1;for(let w=0;w<wk;w++){const d=new Date(start);d.setDate(start.getDate()+w*7);if(d.getMonth()!==lm&&d.getDate()<=7){lm=d.getMonth();mons.push(MSHORT[lm]);}}
+ return `<div class="card7 hm25"><div class="tr18-h"><span class="k13">тренировки за полгода</span><em>${n} ${pl(n,"тренировка","тренировки","тренировок")}</em></div>
+ <div class="hm-g">${cells}</div><div class="hm-m">${mons.map(m=>`<span>${m}</span>`).join("")}</div>
+ <div class="hm-l"><span>меньше</span><i class="h1"></i><i class="h2"></i><i class="h3"></i><i class="h4"></i><span>больше тоннажа</span><i class="h0 a"></i><span>кардио/шаги</span></div></div>`;}
+const _vProg25=vProg;
+vProg=function(){_vProg25.apply(this,arguments);if(progSub!=="o")return;const at=document.querySelector("#app .gl22")||document.querySelector("#app .mo22");if(at)at.insertAdjacentHTML("afterend",heatCard());};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
