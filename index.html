@@ -1516,6 +1516,19 @@ body.light .c50l li{border-top-color:rgba(0,0,0,.06)}
 .rd51-m{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:13.5px}.rd51-m i{font-style:normal;font-size:18px}.rd51-m b{flex:1;font-weight:600}.rd51-m span{color:#C9A96E;font-size:12.5px;white-space:nowrap}
 .rd51-n,.rd51-e{font-size:11.5px;color:var(--dim);line-height:1.45;margin:8px 0 0}
 
+/* v52 */
+.g52{margin:0 0 12px;padding:14px 12px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.g52-h{margin:0 2px 8px}.g52-h b{display:block;font-family:var(--disp);font-weight:400;font-size:18px}.g52-h span{font-size:11.5px;color:var(--dim)}
+.g52-w{overflow-x:auto;margin:0 -4px;padding:0 4px}
+.g52 table{width:100%;border-collapse:separate;border-spacing:3px;font-variant-numeric:tabular-nums}
+.g52 th{text-align:left;font-weight:500;font-size:11.5px;color:var(--dim);white-space:nowrap;padding-right:4px;max-width:7.5em;overflow:hidden;text-overflow:ellipsis}
+.g52 td{text-align:center;font-size:12.5px;font-weight:600;height:26px;min-width:30px;border-radius:7px;background:rgba(201,169,110,calc(.06 + var(--a,0)*.75));color:var(--tx)}
+.g52 td.h{background:none;font-size:11px;font-weight:700;color:#C9A96E;height:auto;line-height:1.1}.g52 td.h small{display:block;font-weight:500;color:var(--dim);font-size:9.5px}
+.g52 td.t{background:none;border:1px solid var(--line)}.g52 td.t.ok{color:#C9A96E}.g52 td.t.lo{color:#FFC850}.g52 td.t.hi{color:#FF8A7A}
+.g52 tr.m td{background:none;color:var(--dim);font-weight:500;font-size:11.5px}.g52 tr.m td.lo{color:#FFC850}
+.g52 p{margin:8px 2px 0;font-size:11px;color:var(--dim)}.g52 p i{font-style:normal;font-weight:700}.g52 p i.ok{color:#C9A96E}.g52 p i.lo{color:#FFC850}.g52 p i.hi{color:#FF8A7A}
+.g52.solo .g52-h b{display:none}
+
 </style>
 </head>
 <body>
@@ -4465,7 +4478,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="51";
+const APPV="52";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4477,6 +4490,8 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🧠</i><p><b>Чат помнит разговор</b>спросил про жим — дальше можно «а в приседе?», «как его делать?», «замени его» без названия упражнения</p></div>
+ <div><i>🟨</i><p><b>Неделя одним взглядом</b>таблица «мышцы × дни» в конструкторе и в разборе программы: где сколько подходов, где перебор, где пусто, сколько минут каждый день</p></div>
  <div><i>🗺</i><p><b>Дорожная карта</b>план тренера на 6 месяцев в «Прогрессе»: когда дойдёшь до 95 кг, что дальше (выход из дефицита, качественная масса), блоки тренировок, прогноз силы на 1–2–3 месяца и вехи с датами. В чате: «что будет через 3 месяца»</p></div>
  <div><i>💬</i><p><b>Чат: +25 тем</b>алкоголь, вода, крепатура, живот, креатин, разминка, «вес стоит», «покажи мою программу», «сделай день ног», «перенеси тренировку», «сколько я вешу», «что растёт лучше всего» и другие</p></div>
  <div><i>✨</i><p><b>Ответы тренера красивее</b>аватар Анубиса, заголовки, аккуратные списки вместо сплошного текста</p></div>
@@ -7176,7 +7191,7 @@ const _brain47=brain;
 brain=function(q){const raw=nz(q);let t=raw;try{t=nz(fix36(q).t);}catch(e){}const T=raw+" | "+t;
  try{
  /* разговор */
- if(/^(как дела|как ты|ты как|как сам|что нового|как жизнь)/.test(raw)){const nd=nextDay();const day=W().days[nd.di].t.split(" · ")[0].toLowerCase();const sw=streakWeeks();const r=wRate?wRate(21):null;
+ if(/^(как дела|как ты|ты как|как сам|что нового|как жизнь)(\s|$|\?|!|,)/.test(raw)){const nd=nextDay();const day=W().days[nd.di].t.split(" · ")[0].toLowerCase();const sw=streakWeeks();const r=wRate?wRate(21):null;
   return{t:`Всё по плану. ${nd.off===0?"Сегодня":nd.off===1?"Завтра":"Ближайшая"} тренировка — ${day}, ~${estMin(itemsFor(nd.di))} мин.\n${sw?`Серия: ${sw} ${pl(sw,"неделя","недели","недель")} подряд без пропусков.\n`:""}${r!==null?`Вес: ${r<0?"уходит":"прибавляется"} ${f1_47(Math.abs(r))} кг в неделю.`:""}`,a:[A("Что сегодня","chatAsk('что сегодня')"),A("Итоги недели","chatAsk('итоги недели')")]};}
  if(/мотив|лень|не хочу (идти|тренир)|нет сил идти|не охота|неохота|нет настроения/.test(T)){const n=(DB.hist||[]).length;const b=(DB.bw||[]).slice().sort((x,y)=>x.d<y.d?-1:1);const dw=b.length>1?b[b.length-1].w-b[0].w:0;
   const ids=Object.keys(DB.log||{}).filter(id=>EX[id]&&(DB.log[id]||[]).length>=3);let top=null;ids.forEach(id=>{const T=eqT32(EX[id]);if(/^(bw|assist)$/.test(T)||/с весом/.test(EX[id].n))return;const l=DB.log[id];const a=sessE1(id,l[0],T),b=sessE1(id,l[l.length-1],T);if(a&&b){const p=(b-a)/a*100;if(p<150&&(!top||p>top[1]))top=[id,p];}});
@@ -7522,9 +7537,37 @@ const _brain51=brain;
 brain=function(q){const t=nz(q);try{if(/дорожн|план на (полгода|6 мес|месяц|год)|что будет через|через (\d+|три|два|пару) ?мес|через полгода|прогноз сил|какой (будет )?жим через|долгосрочн/.test(t)){const R=road51();
  return{t:`<b>Дорожная карта</b>\n${R.ph.map((p,i)=>`${i+1}. ${p.n}: ${dd51(p.from)} — ${dd51(p.to)}, ${p.txt}`).join("\n")}${R.lifts.length?`\n\n<b>Прогноз силы через 3 месяца:</b>\n${R.lifts.map(x=>`• ${EX[x.id].n}: ${Math.round(x.f.cur)} → ${Math.round(x.f.m3)} кг`).join("\n")}`:""}${R.ms.length?`\n\n<b>Ближайшие вехи:</b>\n${R.ms.slice(0,4).map(m=>`• ${m.t} — ≈ ${dd51(m.d)}`).join("\n")}`:""}`,a:[A("Открыть карту","chatClose();roadOpen51()")]};}}catch(e){}return _brain51(q);};
 
+/* ===== v52: чат помнит разговор («а в приседе?», «как его делать?»), неделя одним взглядом в конструкторе ===== */
+const CTX52={id:null,q:null,g:null};
+function fallback52(r){return !r||/^(Не совсем понял|Не уверен, что понял)/.test(String(r.t||""));}
+function stem52(w){return w.toLowerCase().replace(/ё/g,"е").slice(0,4);}
+const MW52=["груд","спин","широч","ног","плеч","дельт","рук","бице","триц","ягод","икр","пресс","квад","трап","предп","поясн"];
+function intent52(q,id){const ns=id&&EX[id]?nz(EX[id].n).split(/\s+/).map(stem52):[];return nz(q).split(/\s+/).filter(w=>{const W=w.replace(/ё/g,'е');if(W.length<3)return true;if(MW52.some(m=>W.startsWith(m)))return false;return !ns.some(n=>n.length>=3&&(W.startsWith(n.slice(0,3))&&n.slice(0,3)===W.slice(0,3)));}).join(" ");}
+const PR52=/(^|\s)(его|её|ее|это упражнение|этого упражнения|в нём|в нем|по нему|им|этом)(?=\s|$|\?)/;
+const _brain52=brain;
+brain=function(q){const raw=nz(q);let r=null,id=null;try{
+ if(CTX52.id&&PR52.test(raw)){const q2=raw.replace(PR52," ").replace(/\s+/g," ").trim()+" "+EX[CTX52.id].n.toLowerCase();const r2=_brain52(q2);if(!fallback52(r2)){r=r2;id=CTX52.id;}}
+ if(!r&&/^(а|и|ну|ещё|еще)\s/.test(raw)&&CTX52.q){const tail=raw.replace(/^(а|и|ну|ещё|еще)\s+/,"");let te=null;try{te=findEx(tail);}catch(e){}const tg=grpOf36(tail);
+  if(te||tg){const r2=_brain52(tail+" "+(CTX52.qi||intent52(CTX52.q,CTX52.id)));if(!fallback52(r2)){r=r2;id=te;}}}
+ }catch(e){}
+ if(!r)r=_brain52(q);
+ try{if(!fallback52(r)){if(!id){try{id=findEx(q);}catch(e){}}if(id)CTX52.id=id;if(!/^(а|и|ну|ещё|еще)\s/.test(raw)&&!PR52.test(raw)){CTX52.q=raw;CTX52.qi=intent52(raw,id);}}}catch(e){}return r;};
+/* ---- неделя одним взглядом: мышцы × дни ---- */
+function grid52(P,c){const days=P[0].days;const G=BIG31.concat(SMALL33).filter((g,i,a)=>a.indexOf(g)===i);const M=days.map(d=>effVol49([d]));const tot=effVol49(days);
+ const rows=G.filter(g=>tot[g]).map(g=>{let lo=0,hi=0;try{[lo,hi]=rng33(g,c);}catch(e){}const z=tot[g]<lo-1?"lo":tot[g]>hi+3?"hi":"ok";
+  return`<tr><th>${g}</th>${M.map(m=>{const v=m[g]||0;const a=Math.min(1,v/8);return`<td style="background:rgba(201,169,110,${v?(0.14+a*0.7).toFixed(2):"0.04"});color:${a>0.55?"#0A0A0A":"inherit"}">${v?String(v).replace(".",","):""}</td>`;}).join("")}<td class="t ${z}">${String(tot[g]).replace(".",",")}</td></tr>`;}).join("");
+ const mins=days.map(d=>estMin(d.items));const DN=(c.days||[]).slice().sort((a,b)=>((a+6)%7)-((b+6)%7)).map(d=>["Вс","Пн","Вт","Ср","Чт","Пт","Сб"][d%7]);
+ return`<div class="g52"><div class="g52-h"><b>Неделя одним взглядом</b><span>подходы на мышцу в каждый день · с учётом базы</span></div><div class="g52-w"><table><tr><th></th>${days.map((d,i)=>`<td class="h">${DN[i]||"Д"+(i+1)}<small>${d.t.split(" · ")[0].slice(0,6).toLowerCase()}</small></td>`).join("")}<td class="h">всего</td></tr>${rows}
+ <tr class="m"><th>минут</th>${mins.map(m=>`<td class="${m>c.time+5?"lo":""}">${m}</td>`).join("")}<td></td></tr></table></div><p>Чем ярче клетка, тем больше подходов. Итог: <i class="ok">в норме</i> <i class="lo">мало</i> <i class="hi">много</i>.</p></div>`;}
+const _gv52=genView;
+genView=function(){_gv52.apply(this,arguments);try{const o=document.getElementById("exd");if(!o||!GP||!GQ||o.querySelector(".g52"))return;const v=o.querySelector(".v49");if(v)v.insertAdjacentHTML("beforebegin",grid52(GP,GQ));}catch(e){}};
+/* и в разборе текущей программы — кнопкой */
+function myGrid52(){const o=exd31();const P=curProg36();const c=cfg36();o.innerHTML=`<div class="exd-in"><button class="x" onclick="closeExD()" aria-label="Закрыть">✕</button><span class="exd-g">твоя программа</span><h2>Неделя одним взглядом</h2>${grid52(P,c).replace('class="g52"','class="g52 solo"')}<button class="dn-home" onclick="closeExD();chatOpen();chatAsk('разбор моей программы')">Разбор программы в чате</button></div>`;}
+const _rv52=review36;review36=function(){const r=_rv52();try{r.a=(r.a||[]).concat([A("Неделя одним взглядом","chatClose();myGrid52()")]);}catch(e){}return r;};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","roadOpen51","ckOpen48","ckPick48","ckDone48","fit47","cmp47","addEx47Do","tcat46","eqf46","opt45Do","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","myGrid52","roadOpen51","ckOpen48","ckPick48","ckDone48","fit47","cmp47","addEx47Do","tcat46","eqf46","opt45Do","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
