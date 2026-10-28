@@ -4953,7 +4953,7 @@ function chatOpen(){CH.open=true;let o=document.getElementById("chat21");if(!o){
  <div class="ch-sug">${sugg().map(s=>`<button onclick="chatAsk('${s}')">${s}</button>`).join("")}</div>
  <form class="ch-bar" onsubmit="event.preventDefault();chatSend()"><input id="chIn" placeholder="Спроси или надиктуй 🎤" autocomplete="off" enterkeyhint="send">${SR21?`<button type="button" class="ch-mic" onclick="chatMic()" aria-label="Голос">🎤</button>`:""}<button class="ch-go" aria-label="Отправить">➤</button></form></div>`;
  o.classList.add("on");chatPaint();}
-function chatClose(){CH.open=false;const o=document.getElementById("chat21");if(o)o.classList.remove("on");}
+function chatClose(){try{micStop(false);}catch(e){}CH.open=false;const o=document.getElementById("chat21");if(o)o.classList.remove("on");}
 function chatPaint(){const l=document.getElementById("chList");if(!l)return;
  l.innerHTML=CH.msgs.map((m,i)=>`<div class="ch-m ${m.who}"><div>${String(m.t).replace(/\n/g,"<br>")}</div>${m.a&&m.a.length&&i===CH.msgs.length-1?`<div class="ch-a">${m.a.map(a=>`<button onclick="${a.js.replace(/"/g,"&quot;")}">${a.l}</button>`).join("")}</div>`:""}</div>`).join("");
  l.scrollTop=l.scrollHeight;}
@@ -4961,10 +4961,18 @@ function chatSay(t,a){CH.msgs.push({who:"b",t,a});chatPaint();}
 function chatAsk(q){CH.msgs.push({who:"u",t:q.replace(/</g,"&lt;")});chatPaint();const l=document.getElementById("chList");
  l.insertAdjacentHTML("beforeend",`<div class="ch-m b typing"><div><i></i><i></i><i></i></div></div>`);l.scrollTop=l.scrollHeight;
  setTimeout(()=>{let r;try{r=brain(q);}catch(e){r={t:"Что-то пошло не так, спроси по-другому."};}CH.msgs.push({who:"b",t:r.t,a:r.a});chatPaint();},380+Math.random()*300);}
-function chatSend(){const i=document.getElementById("chIn");const v=(i.value||"").trim();if(!v)return;i.value="";chatAsk(v);}
+function chatSend(){if(MIC){micStop(true);return;}const i=document.getElementById("chIn");const v=(i.value||"").trim();if(!v)return;i.value="";chatAsk(v);}
 const SR21=window.SpeechRecognition||window.webkitSpeechRecognition;
-function chatMic(){if(!SR21)return;try{const r=new SR21();r.lang="ru-RU";r.interimResults=false;const b=document.querySelector(".ch-mic");if(b)b.classList.add("rec");
- r.onresult=e=>{const t=e.results[0][0].transcript;chatAsk(t);};r.onend=()=>{if(b)b.classList.remove("rec");};r.start();}catch(e){}}
+let MIC=null,MICT=null,MICTXT="";
+function micStop(send){clearTimeout(MICT);const r=MIC;MIC=null;const b=document.querySelector(".ch-mic");if(b){b.classList.remove("rec");b.textContent="🎤";}
+ if(r){try{r.onresult=null;r.onend=null;r.onerror=null;r.abort();}catch(e){}}const i=document.getElementById("chIn");
+ if(send&&MICTXT.trim()){if(i)i.value="";chatAsk(MICTXT.trim());}else if(i&&!send)i.placeholder="Спроси или надиктуй 🎤";MICTXT="";}
+function chatMic(){if(!SR21)return;if(MIC){micStop(true);return;}
+ try{const r=new SR21();MIC=r;MICTXT="";r.lang="ru-RU";r.interimResults=true;r.continuous=false;r.maxAlternatives=1;
+  const b=document.querySelector(".ch-mic"),i=document.getElementById("chIn");if(b){b.classList.add("rec");b.textContent="■";}if(i){i.value="";i.placeholder="Говори… нажми ■, чтобы отправить";}
+  const arm=ms=>{clearTimeout(MICT);MICT=setTimeout(()=>micStop(true),ms);};arm(8000);
+  r.onresult=e=>{let t="",fin=false;for(let k=0;k<e.results.length;k++){t+=e.results[k][0].transcript;if(e.results[k].isFinal)fin=true;}MICTXT=t;if(i)i.value=t;if(fin)micStop(true);else arm(1800);};
+  r.onerror=()=>micStop(!!MICTXT);r.onend=()=>{if(MIC===r)micStop(true);};r.start();}catch(e){micStop(false);}}
 /* плавающая кнопка */
 const _render21=render;render=function(){const r=_render21.apply(this,arguments);try{let f=document.getElementById("fab21");
  if(!f){f=document.createElement("button");f.id="fab21";f.setAttribute("aria-label","Спросить тренера");f.innerHTML='<span>🧠</span><b>Спроси</b>';f.onclick=chatOpen;document.body.appendChild(f);}
