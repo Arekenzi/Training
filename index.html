@@ -1555,6 +1555,20 @@ body.light .c50l li{border-top-color:rgba(0,0,0,.06)}
 .ref54{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 14px;padding:14px;border-radius:20px;border:1px solid rgba(201,169,110,.35);background:var(--surface);color:var(--tx);font:inherit;text-align:left;cursor:pointer}
 .ref54 i{font-style:normal;font-size:24px}.ref54 div{flex:1}.ref54 b{display:block;font-size:15px}.ref54 span{display:block;font-size:12px;color:var(--dim);margin-top:2px}.ref54 em{font-style:normal;font-size:22px;color:#C9A96E}
 
+/* v55 */
+.sets55{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:8px 0 2px}
+.sets55 i{font-style:normal;min-width:30px;height:30px;padding:0 9px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;color:var(--dim);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.sets55 i.c{color:#C9A96E;border-color:#C9A96E;box-shadow:0 0 0 3px rgba(201,169,110,.15)}
+.sets55 i.d{background:rgba(201,169,110,.16);border-color:rgba(201,169,110,.45);color:#F5E6C8}.sets55 i.d b{font-family:var(--cond);font-size:14px;letter-spacing:.02em}
+.sets55 i.d.h{border-color:rgba(255,138,122,.55)}.sets55 i.d.e{border-color:rgba(160,220,160,.45)}
+@media (max-height:700px){.sets55{margin:4px 0 0}.sets55 i{height:26px;min-width:26px;font-size:11.5px}}
+.fold55{margin:0 0 12px;border-radius:20px;background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.fold55>summary{list-style:none;display:flex;align-items:center;gap:10px;padding:15px 16px;cursor:pointer}.fold55>summary::-webkit-details-marker{display:none}
+.fold55>summary div{flex:1;min-width:0}.fold55>summary b{display:block;font-size:15px}.fold55>summary span{display:block;font-size:12.5px;color:var(--dim);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fold55>summary i{font-style:normal;font-size:22px;color:#C9A96E;transition:transform .2s}.fold55[open]>summary i{transform:rotate(90deg)}
+.fold55>:not(summary){margin:0 8px 8px!important;border:0!important;background:transparent!important}
+.gl55{padding-top:12px!important;padding-bottom:12px!important}
+
 </style>
 </head>
 <body>
@@ -4504,7 +4518,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="54";
+const APPV="55";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4516,6 +4530,8 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🏋️</i><p><b>Подходы на экране тренировки</b>под упражнением видно все подходы: сделанные — с весом и повторами, текущий подсвечен, тяжёлые отмечены</p></div>
+ <div><i>📊</i><p><b>«Прогресс» как дашборд</b>сверху самое важное: карта, итоги месяца, рост силы, вес. Баланс мышц, календарь, итоги недели и полгода — свёрнуты, в заголовке главное</p></div>
  <div><i>🧭</i><p><b>Новый дизайн: навигация</b>Анубис-тренер — в центре нижней панели, вкладка «Сегодня» вместо «Зал», справочник упражнений — в «Ещё»</p></div>
  <div><i>📱</i><p><b>Главный экран короче</b>план, заметки тренера, чек-ин, блок и дорожная карта — в одной ленте, листается вбок. Дни недели — тоже карусель</p></div>
  <div><i>🎯</i><p><b>Умный подбор упражнений</b>тренер оценивает каждого кандидата: нагрузка в растяжении, бережность к суставам, твой рост силы, разнообразие, что есть в зале — и берёт лучшее, а не первое в списке. Видно в предпросмотре программы</p></div>
@@ -7674,6 +7690,35 @@ vGym=function(){_vGym54.apply(this,arguments);try{if(session)return;const app=do
  /* резервная копия — тонкой строкой внизу */
  const bk=app.querySelector(".bk7");if(bk){const t=bk.querySelector("b,h3,strong");const btn=bk.querySelector("button");const slim=document.createElement("div");slim.className="bk54";slim.innerHTML=`<span>💾 ${t?t.textContent:"Резервная копия"}</span>`;if(btn){btn.className="bk54b";slim.appendChild(btn);}bk.replaceWith(slim);
   const tail=app.querySelector("details.fold37:last-of-type");if(tail)tail.insertAdjacentElement("beforebegin",slim);}
+ }catch(e){}};
+
+/* ===== v55: редизайн, этап 2 — подходы на экране тренировки, «Прогресс» как дашборд ===== */
+/* ---- тренировка: строка подходов текущего упражнения ---- */
+function sets55(){if(!session)return"";const it=itemsFor(session.di);const x=it[session.fx];if(!x)return"";const st=session.sets[x.id]||{};let cur=-1;const ch=[];
+ for(let i=0;i<x.s;i++){const s=st["s"+i];if(s&&s.ok){ch.push(`<i class="d ${s.rpe==="hard"?"h":s.rpe==="easy"?"e":""}"><b>${fmtKg(+s.w||0)}×${s.r}</b></i>`);}else{if(cur<0)cur=i;ch.push(`<i class="${cur===i?"c":""}">${i+1}</i>`);}}
+ const extra=Object.keys(st).filter(k=>/^s\d+$/.test(k)&&+k.slice(1)>=x.s&&st[k]&&st[k].ok).length;if(extra)ch.push(`<i class="d x"><b>+${extra}</b></i>`);
+ return`<div class="sets55">${ch.join("")}</div>`;}
+function put55(){const fx=document.getElementById("fx");if(!fx||!session)return;const old=fx.querySelector(".sets55");if(old)old.remove();const t=fx.querySelector(".row40")||fx.querySelector(".fx-mid .ring");if(t)t.insertAdjacentHTML("afterend",sets55());}
+const _fxRender55=fxRender;fxRender=function(){_fxRender55.apply(this,arguments);try{put55();}catch(e){}};
+const _anb55=anbFx40;anbFx40=function(){_anb55.apply(this,arguments);try{put55();}catch(e){}};
+/* ---- «Прогресс»: короче и по важности ---- */
+function fold55(el,title,sub,key){if(!el)return;const d=document.createElement("details");d.className="fold55";if((DB.open55||{})[key])d.open=true;
+ d.innerHTML=`<summary><div><b>${title}</b>${sub?`<span>${sub}</span>`:""}</div><i>›</i></summary>`;el.parentNode.insertBefore(d,el);d.appendChild(el);
+ d.addEventListener("toggle",()=>{DB.open55=DB.open55||{};DB.open55[key]=d.open?1:0;try{save();}catch(e){}});}
+const _vProg55=vProg;
+vProg=function(){_vProg55.apply(this,arguments);try{if(progSub!=="o")return;const app=document.getElementById("app");if(!app||app.querySelector(".fold55"))return;const q=s=>app.querySelector(s);
+ /* порядок: карта → месяц → рост силы → вес → неделя → баланс → календарь → полгода → цели → история */
+ const rd=q(".rd51c"),mo=q(".mo22"),wr=q(".wr"),lag=q(".lag30"),hm=q(".hm25"),gl=q(".gl22"),st=q(".st7"),wc=q(".wcard");
+ const secs=[...app.querySelectorAll(".sec")];const secOf=t=>secs.find(s=>s.querySelector("h2")&&s.querySelector("h2").textContent.trim()===t);
+ const sLift=secOf("Рост силы"),lift=q(".lf47"),sCal=secOf("Календарь"),cal=sCal&&sCal.nextElementSibling;
+ const anchor=q(".seg-p")||q(".seg");if(!anchor)return;let at=anchor;const put=el=>{if(el){at.insertAdjacentElement("afterend",el);at=el;}};
+ put(rd);put(mo);put(st);put(sLift);put(lift);put(wc);put(wr);put(lag);put(sCal);put(cal);put(hm);put(gl);
+ /* свернуть большие блоки, в заголовке — главное */
+ if(lag){const t=(lag.querySelector(".lg-t")||{}).textContent||"";const m=t.match(/Отстаёт:\s*([^—.]+)/);fold55(lag,"Баланс мышц",m?"отстаёт: "+m[1].trim():"сила по группам за 6 недель","lag");}
+ if(cal&&sCal){const n=(cal.innerText.match(/(\d+) из (\d+) тренировок/)||[]);sCal.style.display="none";fold55(cal,"Календарь",n[0]||"","cal");}
+ if(hm){const n=(hm.innerText.match(/(\d+) трениров/)||[]);fold55(hm,"Тренировки за полгода",n[0]||"","hm");}
+ if(wr){const h=(wr.innerText.split("\n").slice(0,3).join(" · ")).replace(/ИТОГИ НЕДЕЛИ\s*·?\s*/i,"");fold55(wr,"Итоги недели",h.slice(0,60),"wr");}
+ if(gl&&/Поставь цель/.test(gl.innerText)){gl.classList.add("gl55");}
  }catch(e){}};
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
