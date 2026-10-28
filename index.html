@@ -1427,6 +1427,36 @@ img[src^="data:image/jpeg"]{object-position:50% 12%!important}
 .warn46{border-color:rgba(255,138,122,.4)!important;background:rgba(255,138,122,.08)!important}.warn46 b{color:#FF8A7A!important}
 .ph46-l{position:absolute;left:10px;right:10px;top:10px;text-align:center;font-size:11.5px;color:var(--gold,#C9A96E);background:rgba(10,10,10,.6);border-radius:10px;padding:5px 8px}
 
+/* v47 */
+.pace47{display:flex;align-items:center;gap:8px;margin:6px 0 2px;padding:6px 10px;border-radius:12px;background:rgba(201,169,110,.08);border:1px solid rgba(201,169,110,.18);font-size:12px;color:var(--dim)}
+.pace47 span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pace47.late{background:rgba(255,200,80,.1);border-color:rgba(255,200,80,.35);color:var(--tx)}
+.pace47 button{flex:0 0 auto;font:inherit;font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px;border:0;background:#C9A96E;color:#0A0A0A;cursor:pointer}
+.lf47{margin-top:4px}
+.lf47-s{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.lf47-s div{padding:12px 8px;border-radius:16px;background:var(--surface);border:1px solid var(--line);text-align:center}
+.lf47-s b{display:block;font-family:var(--cond);font-size:26px;line-height:1;color:#C9A96E}.lf47-s .dn b{color:#FF8A7A}
+.lf47-s span{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.lf47-c{display:flex;gap:6px;overflow-x:auto;margin:0 0 10px;scrollbar-width:none}.lf47-c::-webkit-scrollbar{display:none}
+.lf47-c button{flex:0 0 auto;font:inherit;font-size:12.5px;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--tx);cursor:pointer}
+.lf47-c button.on{background:#C9A96E;border-color:#C9A96E;color:#0A0A0A;font-weight:700}
+.lr47{display:flex;align-items:center;gap:12px;width:100%;margin-bottom:8px;padding:10px 12px 10px 10px;border-radius:18px;background:var(--surface);border:1px solid var(--line);color:var(--tx);font:inherit;text-align:left;cursor:pointer}
+.lr47 .th{flex:0 0 52px;width:52px;height:52px}
+.lr47-x{flex:1;min-width:0}.lr47-x b{display:block;font-size:14px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lr47-x span{display:block;margin-top:3px;font-size:11.5px;color:var(--dim)}
+.lr47>i{flex:0 0 74px;display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-style:normal;color:var(--dim)}
+.lr47>i svg{width:70px;height:22px}.lr47>i em{font-style:normal;font-family:var(--cond);font-size:16px;font-weight:700}
+.lr47>i.up{color:#C9A96E}.lr47>i.dn{color:#FF8A7A}
+.more47{display:block;width:100%;margin:2px 0 8px;padding:12px;border-radius:14px;border:1px dashed var(--line);background:transparent;color:var(--dim);font:inherit;font-size:13px;cursor:pointer}
+.lf47-n{margin:4px 2px 0;font-size:11px;color:var(--dim)}
+.cmp47{display:block;width:100%;margin:0 0 12px;padding:13px;border-radius:16px;border:1px solid rgba(201,169,110,.35);background:rgba(201,169,110,.07);color:var(--tx);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.cmp47b{margin:0 0 14px;padding:14px;border-radius:18px;background:var(--surface);border:1px solid var(--line);font-size:13px}
+.cmp47b>b{display:block;font-family:var(--disp);font-weight:400;font-size:18px;margin-bottom:8px}
+.cmp47b table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}.cmp47b th{font-size:11px;color:var(--dim);font-weight:500;text-align:right;padding:4px 0}
+.cmp47b td{padding:5px 0;border-top:1px solid var(--line);text-align:right}.cmp47b td:first-child{text-align:left;color:var(--dim)}.cmp47b th:first-child{text-align:left}
+.cmp47b tr.sc td{color:var(--tx);font-weight:600}.cmp47b tr.sc td:first-child{color:var(--tx)}
+.cmp47b td.lo{color:#FFC850}.cmp47b td.hi{color:#FF8A7A}.cmp47b td.ok{color:#C9A96E}
+.cmp47b p{margin:10px 0 0;color:var(--dim);font-size:12px;line-height:1.45}
+
 </style>
 </head>
 <body>
@@ -4376,7 +4406,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="46";
+const APPV="47";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4388,6 +4418,11 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>💬</i><p><b>Чат понимает больше</b>«сравни неделю с прошлой», «план на неделю», «почему не растёт жим», «сколько я пропустил», «добавь упражнение на бицепс», «убери шраги», «что такое RIR», болезнь, сон, мотивация, еда до и после, кардио</p></div>
+ <div><i>⏱</i><p><b>Темп тренировки</b>в тренировке видно, когда закончишь. Отстаёшь от плана — кнопка «Уложиться» сожмёт оставшееся</p></div>
+ <div><i>🌊</i><p><b>Волна объёма</b>на 5–6 неделе блока +1 подход в изоляции — объём растёт к пику, потом разгрузка</p></div>
+ <div><i>📈</i><p><b>Рост силы</b>в «Прогрессе»: растут / держатся / просели, фильтр по группам мышц, вместо длинного списка</p></div>
+ <div><i>⚖️</i><p><b>Сравнение программ</b>новая против текущей: оценка, время, подходы на каждую мышцу</p></div>
  <div><i>📚</i><p><b>База упражнений 2.0</b>65 новых упражнений: маятниковый и белт-присед, Байесиан, махи в тренажёре, Y-подъёмы, тяги с упором грудью и другие. Конструктор теперь знает все упражнения базы. В справочнике — фильтры «Подходят мне», «Новые» и по снаряду</p></div>
  <div><i>🗂</i><p><b>29 готовых программ</b>сила + объём (PHUL), всё тело волной, торс/конечности, специализации на грудь, спину, плечи, руки и ноги, «Бережём суставы», возвращение после перерыва. Разбиты по категориям</p></div>
  <div><i>⚙️</i><p><b>«Оптимизировать программу»</b>в чате: «разбор моей программы» → кнопка. Больше 10 подходов на мышцу за тренировку — излишек уходит на другой день (мышца работает 2 раза в неделю), недостающее добирается. Всё отменяется одной кнопкой</p></div>
@@ -7039,9 +7074,158 @@ brain=function(q){const t=nz(fix36(q).t);
  if(/специализац|отстающ.*программ|программ.*на (грудь|спину|плечи|руки|ноги)/.test(t)){const L=TPL.filter(x=>(x.cat||[]).includes("spec"));return{t:`<b>Программы с акцентом</b> — мышца тренируется 2 раза в неделю 6–8 недель, остальное на поддержке:\n${L.map(x=>`• ${x.n}`).join("\n")}`,a:[A("Выбрать","chatClose();genOpen();setTimeout(()=>tcat46('spec'),60)")]};}
  return _brain46(q);};
 
+/* ===== v47: чат понимает больше, темп тренировки, волна объёма в блоке, «Рост силы» по группам, сравнение программ ===== */
+const f1_47=v=>String(Math.round(v*10)/10).replace(".",",");
+function wkRange47(off){const m=new Date();m.setHours(0,0,0,0);m.setDate(m.getDate()-((m.getDay()+6)%7)-7*off);const e=new Date(m);e.setDate(m.getDate()+6);return[dkey(m),dkey(e)];}
+function wkStats47(off){const[a,b]=wkRange47(off);const h=(DB.hist||[]).filter(x=>x.d>=a&&x.d<=b);let sets=0,ton=0;const vol={};
+ Object.keys(DB.log||{}).forEach(id=>{if(!EX[id])return;(DB.log[id]||[]).forEach(e=>{if(e.d<a||e.d>b)return;const ws=e.sets.filter(s=>!s.warm);sets+=ws.length;ws.forEach(s=>ton+=(+s.w||0)*(+s.r||0));const g=grp(EX[id]);vol[g]=(vol[g]||0)+ws.length;});});
+ return{n:h.length,sets,ton,vol,min:h.reduce((s,x)=>s+(+x.dur||0),0),prs:h.reduce((s,x)=>s+(x.prs||0),0),a,b};}
+function plan47(){const n=Object.keys(DMAP).length||3;const L=[];const now=new Date();for(let k=0;k<7;k++){const d=new Date(now);d.setDate(now.getDate()+k);const dd=d.getDay();if(!(dd in DMAP))continue;const di=DMAP[dd];
+  const done=k===0&&DB.done&&DB.done[weekNow()+"-"+di];const it=itemsFor(di);L.push({k,d,di,done,it,min:estMin(it)});}return{n,L};}
+function mainId47(word){const ids=Object.keys(DB.log||{}).filter(id=>EX[id]&&EX[id].n.toLowerCase().startsWith(word));if(!ids.length)return null;return ids.sort((a,b)=>(DB.log[b]||[]).length-(DB.log[a]||[]).length)[0];}
+function exFor47(q){const t=nz(q);if(/(^|\s)жим(а|у|ом)?(\s|$)/.test(t)&&!/гантел|ногами|наклон|узк|тренаж|смит|хаммер|франц/.test(t))return DB.log.bp?"bp":mainId47("жим")||findEx(q);return findEx(q);}
+function plat47(id){const e=EX[id],T=eqT32(e);const l=(DB.log[id]||[]).slice(-6);if(l.length<3)return{t:`По «${e.n}» пока мало тренировок (${l.length}) — нужно хотя бы 3, чтобы понять, растёт ли сила.`};
+ const v=l.map(x=>sessE1(id,x,T)).filter(Boolean);const first=v[0],last=v[v.length-1],ch=(last-first)/first*100;const reps=l.map(x=>x.sets.filter(s=>!s.warm).map(s=>+s.r||0));
+ const drop=reps.slice(-2).some(r=>r.length>=3&&r[r.length-1]<=r[0]*0.7);const why=[],todo=[];
+ const w=wkStats47(1);const g=grp(e);let lo=0;try{lo=rng33(g,cfg36())[0];}catch(x){}
+ if(lo&&w.vol[g]!==undefined&&w.vol[g]<lo){why.push(`мало объёма: ${w.vol[g]} подходов на ${g.toLowerCase()} за прошлую неделю при норме от ${lo}`);todo.push(`добавить подходы — напиши «подтяни ${g.toLowerCase()}»`);}
+ if(drop){why.push("повторы сильно падают к последнему подходу — не хватает отдыха");todo.push("отдых между подходами +30–60 с (тренер уже добавляет сам)");}
+ const r=typeof wRate==="function"?wRate(21):null;if(r!==null&&r<-0.9){why.push(`вес уходит быстро (${f1_47(Math.abs(r))} кг в неделю) — на дефиците сила растёт медленнее`);todo.push("на сушке держать вес на снаряде — уже хороший результат");}
+ if((DB.limits||{})[id]&&(DB.limits[id]||[]).length>=2)why.push("несколько раз упирался в предел");
+ if(!why.length)why.push("всё по плану: объём в норме, повторы держатся — так бывает 2–3 недели перед прибавкой");
+ todo.push(ch<1?"если через 2 тренировки без роста — тренер сам сменит диапазон повторов, затем упражнение":"продолжать: рост есть");
+ return{t:`<b>${e.n}: ${ch>=1?`растёт, +${Math.round(ch)}%`:ch<=-2?`просело на ${Math.round(-ch)}%`:"стоит на месте"}</b> за ${l.length} ${pl(l.length,"тренировку","тренировки","тренировок")} (расчётный максимум ${Math.round(first)}→${Math.round(last)} кг)\n\n<b>Почему:</b>\n${why.map(x=>"• "+x).join("\n")}\n\n<b>Что делать:</b>\n${todo.map(x=>"• "+x).join("\n")}\n• сон 7+ часов и белок ${target().p} г в день`,a:[A("Чем заменить",`chatAsk('чем заменить ${e.n.toLowerCase()}')`)]};}
+function addEx47(g){const c=cfg36();c.inj=userInj36();DB.volFix=DB.volFix||{};let added=null;
+ WEEKS.forEach(w=>{const al=DB.volFix[w.code]=DB.volFix[w.code]||{extra:[]};al.extra=al.extra||[];const days=w.days.map((d,di)=>(d.items||[]).map(x=>({oid:x.id,id:swapOf(x.id)})));
+  const used=new Set(days.flat().map(x=>x.id).concat(al.extra.map(e=>e.it.id)));let di=days.findIndex(d=>d.some(x=>grp(EX[x.id])===g));if(di<0)di=0;
+  const id=added||[...(POOL[g]||[]).map(p=>p[0])].find(k=>EX[k]&&!used.has(k)&&allow44(c,g,k)&&!EX[k].lib);if(!id)return;added=id;
+  const ref=days[di][days[di].length-1];const it=Object.assign({},(w.days[di].items||[]).find(x=>x.id===ref.oid)||{},{id,s:3,lo:10,hi:12,r:"10–12",rest:75,rir:"1–2",drop:0,ss:0,vfix:"new"});
+  const last=[...days[di]].reverse().find(x=>grp(EX[x.id])!=="Пресс")||ref;al.extra.push({di,after:last.oid,it});});
+ if(added){DB.volFixD=today();save();render();}return added;}
+function addEx47Do(g){const id=addEx47(g);chatSay(id?`Добавил «${EX[id].n}» 3×10–12 в день, где уже тренируется ${g.toLowerCase()} — на обе недели.`:`Не нашёл подходящего упражнения на ${g.toLowerCase()} с твоими ограничениями.`,id?[A("Вернуть как было","volFixUndo43()")]:[]);}
+const _brain47=brain;
+brain=function(q){const raw=nz(q);let t=raw;try{t=nz(fix36(q).t);}catch(e){}const T=raw+" | "+t;
+ try{
+ /* разговор */
+ if(/^(как дела|как ты|ты как|как сам|что нового|как жизнь)/.test(raw)){const nd=nextDay();const day=W().days[nd.di].t.split(" · ")[0].toLowerCase();const sw=streakWeeks();const r=wRate?wRate(21):null;
+  return{t:`Всё по плану. ${nd.off===0?"Сегодня":nd.off===1?"Завтра":"Ближайшая"} тренировка — ${day}, ~${estMin(itemsFor(nd.di))} мин.\n${sw?`Серия: ${sw} ${pl(sw,"неделя","недели","недель")} подряд без пропусков.\n`:""}${r!==null?`Вес: ${r<0?"уходит":"прибавляется"} ${f1_47(Math.abs(r))} кг в неделю.`:""}`,a:[A("Что сегодня","chatAsk('что сегодня')"),A("Итоги недели","chatAsk('итоги недели')")]};}
+ if(/мотив|лень|не хочу (идти|тренир)|нет сил идти|не охота|неохота|нет настроения/.test(T)){const n=(DB.hist||[]).length;const b=(DB.bw||[]).slice().sort((x,y)=>x.d<y.d?-1:1);const dw=b.length>1?b[b.length-1].w-b[0].w:0;
+  const ids=Object.keys(DB.log||{}).filter(id=>EX[id]&&(DB.log[id]||[]).length>=3);let top=null;ids.forEach(id=>{const T=eqT32(EX[id]);if(/^(bw|assist)$/.test(T)||/с весом/.test(EX[id].n))return;const l=DB.log[id];const a=sessE1(id,l[0],T),b=sessE1(id,l[l.length-1],T);if(a&&b){const p=(b-a)/a*100;if(p<150&&(!top||p>top[1]))top=[id,p];}});
+  return{t:`<b>Посмотри, что ты уже сделал:</b>\n• ${n} ${pl(n,"тренировка","тренировки","тренировок")}${dw<0?`\n• −${f1_47(-dw)} кг веса`:""}${top?`\n• «${EX[top[0]].n}»: сила +${Math.round(top[1])}%`:""}\n\nПравило 10 минут: приди и сделай разминку и первое упражнение. Если через 10 минут всё ещё нет сил — поставлю лёгкий режим, и это тоже зачтётся в серию. Одна сделанная тренировка лучше идеальной пропущенной.`,a:[A("Лёгкий режим","chatAsk('я устал сегодня')")]};}
+ /* болезнь и сон */
+ if(/заболел|болею|простуд|температур|насморк|грипп|орви|кашля|кашель|горло болит/.test(T)){
+  return{t:`<b>Правило шеи:</b>\n• Симптомы только выше шеи (насморк, лёгкое горло), без температуры — можно лёгкую тренировку: веса −10–20 %, без отказа, короче.\n• Температура, ломота, кашель, слабость — <b>не тренируйся</b>. Нагрузка при температуре опасна для сердца. Отдых, вода, сон.\n• После болезни с температурой — 1–2 лёгкие тренировки, потом обычный режим.\n\nПропуск из-за болезни не сломает прогресс: сила держится 2–3 недели без тренировок.`,a:[A("Лёгкий режим","chatAsk('я устал сегодня')"),A("У меня 45 минут","chatAsk('у меня 45 минут')")]};}
+ if(/не выспал|плохо спал|мало спал|спал \d|бессонн/.test(T))return _brain47("я устал сегодня");
+ if(/^как (ты )?спал|^спал(ось)?\??$/.test(raw))return{t:"Как спалось? От сна зависит, сколько веса сегодня брать.",a:[A("Плохо, меньше 6 часов","chatAsk('плохо спал')"),A("Нормально","chatSay('Отлично — работаем по плану.')")]};
+ if(/(^|\s)сон|сна(\s|$)|как спать|сколько спать|высыпат/.test(raw))return{t:`<b>Сон — главный «препарат» для роста.</b>\n• 7–9 часов. Меньше 6 — сила падает, а при дефиците калорий уходит больше мышц вместо жира.\n• Ложись в одно время, за час — без яркого экрана, в комнате прохладно и темно.\n• Кофеин — не позже чем за 8 часов до сна.\n\nЕсли не выспался — напиши «плохо спал», и тренер облегчит ближайшую тренировку.`};
+ /* питание вокруг тренировки */
+ if(/(до|перед|после) (трениров|зала|зал)|что (съесть|поесть|есть) (до|перед|после)|предтрен/.test(T)){const tg=target();const after=/после/.test(T);
+  return{t:after?`<b>После тренировки</b> (в течение 1–2 часов):\n• 40 г белка: 180 г куриной грудки, 200 г творога или протеин + еда\n• 60–80 г углеводов: рис, гречка, картофель, фрукты\n• вода 0,5–1 л\n\nВ сумме за день: ${tg.k} ккал, белок ${tg.p} г.`:`<b>До тренировки</b> (за 1,5–2 часа):\n• 30–40 г белка: курица, рыба, яйца, творог\n• 50–70 г медленных углеводов: рис, гречка, овсянка\n• мало жира и клетчатки — чтобы не тяжело\n• за 30–60 мин можно кофе или банан\n\nТренируешься натощак — сила будет ниже: хотя бы банан и протеин за 40 минут.`};}
+ /* кардио */
+ if(/(нужн|сколько|какое|как делать).{0,12}кардио|кардио.{0,10}(нужн|сколько|когда)/.test(T)){const tg=target();
+  return{t:`<b>Кардио при твоей цели (рельеф, ${f1_47(bwNow())}→95 кг):</b>\n• Главное — шаги: 8–10 тыс. в день. Это ~300–400 ккал и почти не мешает восстановлению.\n• 2–3 раза в неделю по 20–30 мин в лёгком темпе (можешь говорить, пульс ~110–130). Лучше после силовой или в дни отдыха.\n• Интервалы — не чаще 1 раза в неделю и не перед днём ног.\n• Кардио не заменяет дефицит: норма ${tg.k} ккал важнее.`};}
+ /* похудеть быстрее */
+ if(/(похудеть|худеть|сбросить|скинуть).{0,15}(быстр|скорее)|ускорить (похуд|сушк)|быстрее (похуд|худе)/.test(T)){const r=wRate?wRate(21):null;const fast=r!==null&&r<=-0.9;
+  return{t:fast?`Сейчас вес уходит ${f1_47(Math.abs(r))} кг в неделю — это уже верхняя граница. Быстрее — уйдут мышцы и сила. Ускорять не буду.`:`<b>Безопасный максимум — около 1 % веса в неделю (~1 кг).</b>${r!==null?` Сейчас: ${r<0?"−":"+"}${f1_47(Math.abs(r))} кг в неделю.`:""}\n\nЧто можно сделать:\n• +2000 шагов в день — около −100 ккал, без вреда силе\n• убрать 150 ккал из углеводов вечером — кнопка ниже\n• белок не трогать: ${target().p} г\n\nБыстрее 1 кг в неделю не надо: вместе с жиром уйдут мышцы.`,a:fast?[]:[A("Убрать 150 ккал","DB.kcalAdj=(DB.kcalAdj||0)-150;save();render();chatSay('Готово: норма теперь '+target().k+' ккал. Через 2 недели проверю темп.',[A('Вернуть','DB.kcalAdj=(DB.kcalAdj||0)+150;save();render();chatSay(\\'Вернул прежнюю норму.\\')')])")]};}
+ /* цель по весу */
+ if(/(сколько|долго).{0,20}(до цели|осталось)|до цели по весу|когда (дойду|буду) .{0,6}9\d/.test(T)&&!/жим|тяг|присед/.test(T)){const w=bwNow(),left=w-95,r=wRate?wRate(28):null;
+  if(left<=0)return{t:`Цель 95 кг достигнута: сейчас ${f1_47(w)} кг. Можно ставить новую или переходить на поддержание.`};const wk=r&&r<-0.1?Math.ceil(left/Math.abs(r)):null;const d=wk?new Date(Date.now()+wk*7*864e5):null;
+  return{t:`Сейчас ${f1_47(w)} кг, цель 95 кг — осталось <b>${f1_47(left)} кг</b>.${r!==null?`\nТемп за 4 недели: ${r<0?"−":"+"}${f1_47(Math.abs(r))} кг в неделю.`:""}${d?`\nПри таком темпе — примерно через ${wk} ${pl(wk,"неделю","недели","недель")}, к ${d.toLocaleDateString("ru-RU",{day:"numeric",month:"long"})}.`:"\nТемпа пока не видно: взвешивайся раз в неделю утром натощак."}`};}
+ /* сравнение недель */
+ if(/сравни.{0,20}недел|недел.{0,20}(с|и) прошл|прошлой недел.{0,10}(сравн|лучше|хуже)|эта неделя .{0,10}прошл/.test(T)){const a=wkStats47(0),b=wkStats47(1);const ar=(x,y)=>x>y?"⬆":x<y?"⬇":"=";
+  const gs=BIG31.filter(g=>a.vol[g]||b.vol[g]).map(g=>`${g}: ${b.vol[g]||0}→${a.vol[g]||0}`);
+  return{t:`<b>Эта неделя / прошлая</b>\n• Тренировок: ${a.n} / ${b.n} ${ar(a.n,b.n)}\n• Рабочих подходов: ${a.sets} / ${b.sets} ${ar(a.sets,b.sets)}\n• Тоннаж: ${f1_47(a.ton/1000)} / ${f1_47(b.ton/1000)} т ${ar(a.ton,b.ton)}\n• Рекордов: ${a.prs} / ${b.prs}\n• Минут в зале: ${a.min} / ${b.min}${gs.length?`\n\n<b>Подходы по мышцам</b> (прошлая→эта):\n${gs.map(x=>"• "+x).join("\n")}`:""}${a.n<b.n?"\n\nНеделя ещё идёт — сравнивать честно можно в воскресенье.":""}`};}
+ /* пропуски */
+ if(/пропуст|пропуск|сколько.{0,10}(прогул|не был)/.test(T)&&!/подход/.test(T)){const n=Object.keys(DMAP).length||3;let plan=0,done=0;const L=[];for(let k=1;k<=4;k++){const s=wkStats47(k);plan+=n;done+=Math.min(n,s.n);L.push(`${s.a.slice(8,10)}.${s.a.slice(5,7)}: ${Math.min(n,s.n)} из ${n}`);}
+  const pct=plan?Math.round(done/plan*100):0;return{t:`<b>За 4 недели: ${done} из ${plan} тренировок (${pct}%)</b>, пропущено ${plan-done}.\n${L.reverse().map(x=>"• "+x).join("\n")}\n\n${pct>=90?"Отличная регулярность — это главный фактор роста.":pct>=70?"Хорошо. Один пропуск в неделю тренер компенсирует сам.":"Пропусков много. Лучше короче, но чаще: скажи «у меня 45 минут» — сожму тренировку."}`};}
+ /* план на неделю */
+ if(/план на неделю|на этой неделе|расписание|что на неделе|тренировки на неделю/.test(T)){const P=plan47();const DN=["вс","пн","вт","ср","чт","пт","сб"];
+  return{t:`<b>Ближайшие 7 дней</b>\n${P.L.map(x=>`• ${x.k===0?"сегодня":x.k===1?"завтра":DN[x.d.getDay()]+" "+x.d.getDate()}: ${W().days[x.di].t.split(" · ")[0].toLowerCase()}${x.done?" ✅":""} — ${x.it.length} упр., ~${x.min} мин`).join("\n")}\n\nВыходные — восстановление: шаги 8–10 тыс., сон 7+ часов.`,a:[A("Что в следующей тренировке","chatAsk('что в следующей тренировке')")]};}
+ /* рекорды — опечатка «лучше» */
+ if(/лучш(ие|ее|ий)? (результат|вес)|мои лучш|топ результат/.test(raw))return _brain47("мои рекорды");
+ /* почему не растёт */
+ if(/не раст|не идёт|не идет|стоит на месте|застой|плато|не прибав|не увелич/.test(T)){const id=exFor47(q);if(id)return plat47(id);}
+ /* легче / тяжелее вариант */
+ if(/(сделать|сделай|как).{0,20}(легче|проще|тяжелее|сложнее)|(легче|проще|тяжелее|сложнее) вариант/.test(T)){const id=findEx(q);if(id){const e=EX[id],easy=/легче|проще/.test(T);const al=altsFor(id).slice(0,8);const T0=eqT32(e);
+   const pick=al.filter(a=>easy?/^(stack|plate|smith|assist)$/.test(eqT32(EX[a]))||/гравитрон|австрал|отжимания от скамьи|тренаж/.test(EX[a].n.toLowerCase()):/^(bar|db|bw|land)$/.test(eqT32(EX[a]))).slice(0,3);
+   const tip=easy?(/подтяг/.test(e.n.toLowerCase())?"• негативы: запрыгни наверх и опускайся 4–5 секунд, 3×5\n• резиновая петля под колени\n• подтягивания в гравитроне с противовесом\n":"• вес −10–15 %, 2–3 повтора в запасе\n• медленный негатив 3 с — легче суставам при меньшем весе\n"):"• пауза 1–2 с в самой трудной точке\n• медленный негатив 3–4 с\n• +1 подход или +2 повтора до того, как добавлять вес\n";
+   return{t:`<b>${e.n} — ${easy?"как сделать легче":"как сделать тяжелее"}</b>\n${tip}${pick.length?`\n${easy?"Более простые":"Более сложные"} варианты:\n${pick.map(a=>"• "+EX[a].n).join("\n")}`:""}`,a:pick.slice(0,2).map(a=>A(EX[a].n,`chatClose();exDetail('${a}')`))};}}
+ /* добавить упражнение */
+ if(/(добав|включи|поставь).{0,25}(упражнен|на |бицепс|трицепс|грудь|спин|плеч|ног|пресс|икр|ягодиц|дельт)/.test(T)&&!/подход/.test(T)){const g=grpOf36(t)||(/плеч/.test(t)?"Средняя дельта":/ног/.test(t)?"Квадрицепс":null);
+  if(g)return{t:`Добавить упражнение на <b>${g.toLowerCase()}</b> в программу? Подберу то, которого у тебя ещё нет, с учётом суставов, 3×10–12, в день, где эта мышца уже работает.`,a:[A("Добавить",`addEx47Do('${g}')`)]};}
+ /* убрать упражнение */
+ if(/^(убери|убрать|удали|выкинь|не хочу)\s/.test(raw)&&!/навсегда|подход/.test(raw)){const id=findEx(q);if(id){const e=EX[id];
+  return{t:`Что сделать с «${e.n}»?\n• <b>Заменить</b> — на похожее упражнение на ту же мышцу.\n• <b>Убрать навсегда</b> — тренер больше не предложит его нигде и сразу поставит замену.`,a:[A("Заменить",`chatAsk('чем заменить ${e.n.toLowerCase()}')`),A("Убрать навсегда",`chatAsk('больше не предлагай ${e.n.toLowerCase()}')`)]};}}
+ /* термины */
+ if(/что так(ое|ой|ая)|что значит|что означает|^rir|^rpe/.test(raw)){const w=raw.replace(/что (такое|такой|такая|значит|означает)/,"").trim();
+  const map={rir:"Запас повторов",rpe:"Запас повторов","запас":"Запас повторов","отказ":"Отказ","дроп":"Дроп-сет","суперсет":"Суперсет","негатив":"Негатив","тоннаж":"Тоннаж","дефицит":"Дефицит калорий","профицит":"Профицит","разминоч":"Разминочный подход","рабоч":"Рабочий подход"};
+  let hit=null;for(const k in map)if(w.includes(k)){hit=GLOSS.find(g=>g[0]===map[k]);break;}if(!hit)hit=GLOSS.find(g=>w.length>2&&g[0].toLowerCase().includes(w.split(" ")[0]));
+  if(/1пм|1 пм|одноповтор/.test(w))return{t:"<b>1ПМ — разовый максимум</b>\nВес, который ты поднял бы ровно 1 раз. Тренер не заставляет его проверять: считает по формуле из твоих подходов (вес × повторы × запас). По нему видно рост силы, даже когда работаешь на 10 повторов."};
+  if(hit)return{t:`<b>${hit[0]}</b>\n${hit[1]}`+(map.rir===hit[0]||/запас/.test(hit[0].toLowerCase())?"\n\nВ программе он пишется как «запас 1–2»: остановись, когда чувствуешь, что смог бы ещё 1–2 повтора.":"")};}
+ }catch(e){}
+ return _brain47(q);};
+/* подсказки в чате */
+const _sugg47=sugg;sugg=function(){const s=_sugg47();return["Сравни неделю с прошлой","План на неделю","Почему не растёт жим","Сколько я пропустил"].concat(s).slice(0,10);};
+
+/* ---- 2. Темп тренировки: прогноз финиша и «уложиться» ---- */
+function pace47(){if(!session)return null;const it=itemsFor(session.di);if(!it.length)return null;session.plan47=session.plan47||estMin(it);
+ const el=(Date.now()-session.t0)/60000;let rem=0,doneS=0,allS=0;it.forEach(x=>{const st=session.sets[x.id]||{};const d=st.fin?x.s:Object.keys(st).filter(k=>/^s\d+$/.test(k)&&st[k]&&st[k].ok).length;doneS+=Math.min(d,x.s);allS+=x.s;
+  if(!st.fin)rem+=Math.max(0,x.s-d)*(40+(x.rest||60))/60+(d?0:1.5);});
+ const end=el+rem,plan=session.goal47||session.plan47;return{el,end,plan,over:end-plan,pct:allS?doneS/allS:0,left:allS-doneS};}
+function fit47(){const p0=pace47();if(!p0)return;const goal=Math.max(Math.round(p0.el+10),session.plan47);session.goal47=goal;let B=session.plan47;
+ for(let k=0;k<20;k++){session.budget=B;const p=pace47();if(p.end<=goal+2||B<=25)break;B-=5;}save();render();}
+const _fxRender47=fxRender;
+fxRender=function(){_fxRender47.apply(this,arguments);try{const fx=document.getElementById("fx");if(!fx||!session||fx.querySelector(".pace47"))return;const p=pace47();if(!p||p.el<3)return;
+ const fin=new Date(Date.now()+Math.max(0,p.end-p.el)*60000);const hh=fin.getHours()+":"+String(fin.getMinutes()).padStart(2,"0");const late=p.over>=8&&p.left>=4;
+ const h=`<div class="pace47 ${late?"late":""}"><span>⏱ ${Math.round(p.el)} мин · финиш ≈ ${hh}${late?` · +${Math.round(p.over)} мин`:""}</span>${late?`<button onclick="fit47()">Уложиться</button>`:""}</div>`;
+ const top=fx.querySelector(".fx-top");if(top)top.insertAdjacentHTML("afterend",h);}catch(e){}};
+
+/* ---- 3. Волна объёма в блоке: недели 5–6 — +1 подход в изоляции, если восстанавливаешься ---- */
+function volWave47(){if(!DB.start||isDeload())return 0;const B=blk41();if(B.wb!==5&&B.wb!==6)return 0;if(DB.tiredNext||(DB.cur&&DB.cur.budget))return 0;return 1;}
+const _if47=itemsFor;
+itemsFor=function(di){const a=_if47(di);try{if(!volWave47()||(session&&session.budget))return a;const seen={},per={};a.forEach(x=>{const g=grp(EX[x.id]);per[g]=(per[g]||0)+x.s;});
+ return a.map(x=>{const g=grp(EX[x.id]);if(!BIG31.includes(g)||seen[g]||per[g]>=10)return x;const p=(POOL[g]||[]).find(q=>q[0]===x.id);const iso=p?p[1]==="i":!/жим|тяга|подтяг|присед|гакк/.test(EX[x.id].n.toLowerCase());if(!iso)return x;seen[g]=1;return Object.assign({},x,{s:x.s+1,wave47:1});});}catch(e){return a;}};
+const _blk47=blk41;
+blk41=function(){const B=_blk47();if(B.ph==="Накопление"&&(B.wb===5||B.wb===6))B.txt+=". Неделя объёма: +1 подход в первой изоляции на каждую большую мышцу";return B;};
+if(typeof wlCard==="function"){const _wl47=wlCard;wlCard=function(x,n,it){let h=_wl47(x,n,it);if(x&&x.wave47)h=h.replace('<div class="wl-tx"><span>','<div class="wl-tx"><span>🌊 +1 подход (неделя объёма) · ');return h;};}
+
+/* ---- 4. Прогресс: «Рост силы» по группам вместо бесконечного списка ---- */
+let LF47="all",LN47=8,HN47=6;
+const LG47=[["all","Все"],["ch","Грудь",["Грудь"]],["bk","Спина",["Широчайшие","Середина спины","Трапеции","Поясница"]],["lg","Ноги",["Квадрицепс","Бицепс бедра","Ягодицы","Икры"]],["sh","Плечи",["Передняя дельта","Средняя дельта","Задняя дельта"]],["ar","Руки",["Бицепс","Трицепс","Предплечья"]]];
+function liftRows47(){const since=dkAgo(42);return Object.keys(DB.log||{}).filter(id=>EX[id]&&(DB.log[id]||[]).length).map(id=>{const T=eqT32(EX[id]);const l=DB.log[id];const last=l[l.length-1];
+  const prev=l.slice(0,-1).reverse().find(e=>e.d<=dkAgo(21)&&(!last.wk||!e.wk||e.wk===last.wk))||l.filter(e=>e.d>=since)[0];const a=prev?sessE1(id,prev,T):0,b=sessE1(id,last,T);const ch=a&&b&&prev!==last?(b-a)/a*100:null;
+  const ser=l.slice(-10).map(e=>sessE1(id,e,T)).filter(Boolean);return{id,ch,e1:b,ser,last:last.d,n:l.length};});}
+function liftsHTML47(){const R=liftRows47();if(!R.length)return"";const G=LG47.find(g=>g[0]===LF47)||LG47[0];const rows=R.filter(r=>!G[2]||G[2].includes(grp(EX[r.id]))).sort((x,y)=>(y.ch===null?-99:y.ch)-(x.ch===null?-99:x.ch)||(y.last>x.last?1:-1));
+ const up=R.filter(r=>r.ch!==null&&r.ch>=1.5).length,dn=R.filter(r=>r.ch!==null&&r.ch<=-3).length,eq=R.length-up-dn;
+ const sp=v=>{if(v.length<2)return"";const mn=Math.min(...v),mx=Math.max(...v),r=mx-mn||1;return `<svg viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points="${v.map((x,i)=>`${(i/(v.length-1)*100).toFixed(1)},${(23-(x-mn)/r*20).toFixed(1)}`).join(" ")}" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`;};
+ return `<div class="lf47"><div class="lf47-s"><div><b>${up}</b><span>растут</span></div><div><b>${eq}</b><span>держатся</span></div><div class="${dn?"dn":""}"><b>${dn}</b><span>просели</span></div></div>
+ <div class="lf47-c">${LG47.map(g=>`<button class="${g[0]===LF47?"on":""}" onclick="LF47='${g[0]}';LN47=8;render()">${g[1]}</button>`).join("")}</div>
+ ${rows.slice(0,LN47).map(r=>`<button class="lr47" onclick="exDetail('${r.id}')">${thumb(r.id)}<div class="lr47-x"><b>${EX[r.id].n}</b><span>1ПМ ≈ ${Math.round(r.e1)} кг · ${r.n} ${pl(r.n,"раз","раза","раз")}</span></div><i class="${r.ch===null?"":r.ch>=1.5?"up":r.ch<=-3?"dn":""}">${sp(r.ser)}<em>${r.ch===null?"новое":(r.ch>0?"+":"")+Math.round(r.ch)+"%"}</em></i></button>`).join("")}
+ ${rows.length>LN47?`<button class="more47" onclick="LN47=999;render()">Показать все (${rows.length})</button>`:""}<p class="lf47-n">Рост — по расчётному максимуму за 3–6 недель, тяжёлая неделя сравнивается с тяжёлой.</p></div>`;}
+const _vProg47=vProg;
+vProg=function(){_vProg47.apply(this,arguments);try{const app=document.getElementById("app");if(!app)return;const h=[...app.querySelectorAll(".sec h2")].find(x=>x.textContent==="Рост весов");if(!h)return;
+ const sec=h.parentNode;h.textContent="Рост силы";const lifts=[];let n=sec.nextElementSibling;while(n&&n.classList.contains("lift")){lifts.push(n);n=n.nextElementSibling;}lifts.forEach(x=>x.remove());sec.insertAdjacentHTML("afterend",liftsHTML47());
+ /* история — последние 6 */
+ const hh=[...app.querySelectorAll(".sec h2")].find(x=>x.textContent==="История");if(hh){const items=[];let m=hh.parentNode.nextElementSibling;while(m&&m.classList.contains("hist7")){items.push(m);m=m.nextElementSibling;}
+  if(items.length>HN47){items.slice(HN47).forEach(x=>x.style.display="none");items[HN47-1].insertAdjacentHTML("afterend",`<button class="more47" onclick="HN47=999;render()">Вся история (${items.length})</button>`);}}}catch(e){}};
+
+/* ---- 5. Сравнение новой программы с текущей ---- */
+function cmp47(){const o=document.getElementById("exd");if(!o||!GP||!GQ)return;const box=o.querySelector(".cmp47b");if(box){box.remove();return;}
+ const c=cfg36();const cur=curProg36();let q1=null,q2=null;try{q1=quality33(cur,c);}catch(e){}try{q2=quality33(GP,GQ);}catch(e){}
+ const vol=P=>{const v={};P[0].days.forEach(d=>d.items.forEach(x=>{const g=grp(EX[x.id]);v[g]=(v[g]||0)+x.s;}));return v;};const v1=vol(cur),v2=vol(GP);
+ const mins=P=>Math.round(P[0].days.reduce((a,d)=>a+estMin(d.items),0)/P[0].days.length);
+ const rows=BIG31.concat(["Трицепс","Бицепс"]).filter((g,i,a)=>a.indexOf(g)===i&&(v1[g]||v2[g])).map(g=>{let lo=0,hi=0;try{[lo,hi]=rng33(g,c);}catch(e){}const z=v=>v<lo?"lo":v>hi+3?"hi":"ok";return `<tr><td>${g}</td><td class="${z(v1[g]||0)}">${v1[g]||0}</td><td class="${z(v2[g]||0)}">${v2[g]||0}</td><td>${lo}–${hi}</td></tr>`;}).join("");
+ const low47=BIG31.filter(g=>{try{return (v2[g]||0)>0&&(v2[g]||0)<rng33(g,c)[0];}catch(e){return false;}}).map(g=>g.toLowerCase());const html=`<div class="cmp47b"><b>Новая или текущая?</b><table><tr><th></th><th>Сейчас</th><th>Новая</th><th>Норма</th></tr>
+ <tr class="sc"><td>Оценка тренера</td><td>${q1?q1.score:"—"}</td><td>${q2?q2.score:"—"}</td><td></td></tr><tr class="sc"><td>Тренировка, мин</td><td>${mins(cur)}</td><td>${mins(GP)}</td><td>до ${GQ.time}</td></tr>
+ <tr class="sc"><td>Дней в неделю</td><td>${cur[0].days.length}</td><td>${GP[0].days.length}</td><td></td></tr>${rows}</table>
+ <p>Подходы в неделю на мышцу (тяжёлая неделя). ${q2&&q1?(q2.score>q1.score+3?"Новая программа сильнее текущей — можно включать.":q2.score<q1.score-3?"Текущая программа сильнее — менять стоит, только если нужна другая схема.":"По качеству примерно равны — выбирай по удобству."):""}${low47.length?` В новой мало подходов на ${low47.join(", ")} — после включения нажми в чате «разбор моей программы» → «Оптимизировать».`:""}</p></div>`;
+ const at=o.querySelector(".cmp47")||o.querySelector(".pro44")||o.querySelector(".gn-why");if(at)at.insertAdjacentHTML("afterend",html);}
+const _genView47=genView;
+genView=function(){_genView47.apply(this,arguments);try{const o=document.getElementById("exd");if(!o||!GP||o.querySelector(".cmp47"))return;const at=o.querySelector(".pro44")||o.querySelector(".gn-why");if(at)at.insertAdjacentHTML("afterend",`<button class="cmp47" onclick="cmp47()">⚖️ Сравнить с моей текущей программой</button>`);}catch(e){}};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","tcat46","eqf46","opt45Do","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","fit47","cmp47","addEx47Do","tcat46","eqf46","opt45Do","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
