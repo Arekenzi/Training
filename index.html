@@ -1409,6 +1409,14 @@ body.light .hello>div:first-child:before{color:#9A7A45}
 img[src^="data:image/jpeg"]{object-position:50% 12%!important}
 .fx-ph img[src^="data:image/jpeg"],.exd-shot img[src^="data:image/jpeg"],.zoom img[src^="data:image/jpeg"],.fxa40 img{object-position:50% 50%!important}
 
+/* v44 */
+.pro44{margin:0 0 14px;padding:14px;border-radius:18px;background:var(--surface);border:1px solid rgba(201,169,110,.2);font-size:13px;line-height:1.45}
+.p44-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}.p44-h b{font-family:var(--disp);font-weight:400;font-size:18px}.p44-h em{font-style:normal;color:var(--gold);font-weight:700}
+.pro44>div:not(.p44-h){display:flex;gap:8px;padding:3px 0}.pro44 i{font-style:normal;width:16px;flex:0 0 16px;font-weight:700}
+.pro44 .y i{color:var(--gold)}.pro44 .n{color:#FF8A7A}.pro44 details{margin-top:8px}.pro44 summary{color:var(--dim);cursor:pointer;font-size:12.5px}.pro44 details p{margin:4px 0;color:var(--dim);font-size:12.5px}
+.wn-old{margin-top:6px}.wn-old summary{list-style:none;cursor:pointer;color:var(--dim);font-size:13px;padding:10px 0;text-align:center}.wn-old summary::-webkit-details-marker{display:none}
+.p44-h{padding-right:52px}
+
 </style>
 </head>
 <body>
@@ -4358,7 +4366,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="43";
+const APPV="44";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4370,6 +4378,8 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🎓</i><p><b>Программа как у профи</b>конструктор проверяет, что закрыты все зоны: верх груди, тяги сверху и к поясу, махи, задняя дельта, бицепс и трицепс в растяжении. Не больше 10 подходов на мышцу за тренировку. Недостающее исправляет сам</p></div>
+ <div><i>❓</i><p><b>«Зачем жим на наклонной?»</b>тренер объяснит роль любого упражнения в твоей программе</p></div>
  <div><i>✅</i><p><b>Точнее и понятнее</b>«Разбор моей программы» в чате теперь может сам добрать подходы мышцам, которым не хватает объёма. Сила в отчётах сравнивается с такой же неделей (тяжёлая с тяжёлой). Запас «0» пишется как «до отказа», исправлены падежи и числа</p></div>
  <div><i>📈</i><p><b>Волна нагрузки по блоку</b>9 недель: вход → накопление → пик → разгрузка. Запас повторов меняется по фазе, и тренер считает веса под неё. Карточка блока — на главной</p></div>
  <div><i>🔍</i><p><b>Разбор после тренировки</b>процент выполнения плана, где выросла сила, где упали повторы (тогда отдых станет дольше), где будет прибавка</p></div>
@@ -6477,6 +6487,71 @@ function polishDom43(root){if(!root)return;const w=document.createTreeWalker(roo
 const _render43=render;render=function(){const r=_render43.apply(this,arguments);try{polishDom43(document.getElementById("app"));polishDom43(document.getElementById("fx"));}catch(e){}return r;};
 const _brain43=brain;brain=function(q){const r=_brain43(q);if(r&&r.t)r.t=polish43(r.t);return r;};
 const _chatPaint43=chatPaint;chatPaint=function(){_chatPaint43();try{polishDom43(document.getElementById("chList"));}catch(e){}};
+
+/* ===== v44: программа как у профи — покрытие всех зон мышц, лимит подходов за тренировку, растяжение под нагрузкой; «зачем это упражнение»; короткое «Что нового» ===== */
+/* ---- правила покрытия: что обязательно должно быть в неделе ---- */
+const COV44=[
+ ["Грудь","верх груди",id=>sub29(EX[id])==="up"&&/press|fly/.test(pat29(EX[id]))],
+ ["Грудь","середина груди — жим",id=>sub29(EX[id])!=="up"&&pat29(EX[id])==="press"],
+ ["Широчайшие","вертикальная тяга",id=>pat29(EX[id])==="vpull"],
+ ["Середина спины","горизонтальная тяга",id=>pat29(EX[id])==="row"],
+ ["Квадрицепс","присед / жим ногами",id=>/squat|lunge/.test(pat29(EX[id]))],
+ ["Бицепс бедра","сгибание ног",id=>pat29(EX[id])==="legcurl"],
+ ["Средняя дельта","махи в стороны",id=>pat29(EX[id])==="raise"],
+ ["Задняя дельта","задняя дельта",id=>/rear/.test(pat29(EX[id]))||/к лицу|обратн.*развед/.test(EX[id].n.toLowerCase())],
+ ["Бицепс","бицепс в растяжении (наклонная, Байесиан)",id=>pat29(EX[id])==="curl"&&/наклонн|байес|за спин/.test(EX[id].n.toLowerCase())&&!/лицом вниз/.test(EX[id].n.toLowerCase())],
+ ["Трицепс","длинная головка (из-за головы / французский)",id=>/из-за головы|французск|над головой/.test(EX[id].n.toLowerCase())]];
+const STRETCH44=/наклонн.*сгиб|сгибани.*наклонн|сведени.*наклонн|из-за головы|французск|румынск|сгибания ног сидя|пуловер|разведени.*лёжа|сведени.*на наклонной|выпад|болгарск|сисси|глубок|икры стоя|байес/;
+function allow44(c,g,id){const e=EX[id];if(!e||(DB.ban||{})[id]||(c.no||[]).includes(id))return false;const p=(POOL[g]||[]).find(q=>q[0]===id);
+ if(p){if(!eqOK(c,p[2]))return false;if((c.inj||[]).some(j=>p[3].split(" ").includes(j)))return false;}else{if(!e.img)return false;const t=(e.n||"").toLowerCase();if((c.inj||[]).some(j=>PAINRE[j]&&PAINRE[j].test(t)))return false;}
+ const miss=Object.keys(HAVE35).filter(k=>!(c.have||Object.keys(HAVE35)).includes(k));const t=((e.eq||"")+" "+e.n).toLowerCase();if(miss.some(k=>HAVE35[k][1].test(t)))return false;return true;}
+function fix44(P,c){const notes=[];sync35(c);
+ P.forEach((w,wi)=>{if(wi===1&&P[1]===P[0])return;const ids=()=>w.days.flatMap((d,di)=>d.items.map((x,j)=>({x,di,j,g:grp(EX[x.id])})));
+  /* 1. покрытие зон */
+  COV44.forEach(([g,lbl,test])=>{const all=ids(),mine=all.filter(o=>o.g===g);if(!mine.length||mine.some(o=>test(o.x.id)))return;
+   const used=all.map(o=>o.x.id);const pool=[...(POOL[g]||[]).map(p=>p[0]),...Object.keys(EX).filter(k=>grp(EX[k])===g)].filter((v,i,a)=>a.indexOf(v)===i);
+   const cand=pool.find(id=>!used.includes(id)&&test(id)&&allow44(c,g,id));if(!cand)return;
+   const keep=new Set();COV44.filter(r=>r[0]===g&&r[2]!==test).forEach(r=>{const hit=mine.filter(o=>r[2](o.x.id));if(hit.length===1)keep.add(hit[0].x.id);});
+   const victim=mine.slice().reverse().find(o=>!keep.has(o.x.id)&&o.j>0)||mine.slice().reverse().find(o=>!keep.has(o.x.id));if(!victim)return;
+   notes.push(`${wi?"Лёгкая":"Тяжёлая"} неделя: «${EX[victim.x.id].n}» → «${EX[cand].n}» — не было: ${lbl}`);victim.x.id=cand;});
+  /* 1б. растяжение под нагрузкой: минимум 3 упражнения */
+  [["Бицепс бедра","legcurl"],["Широчайшие","pullover"],["Грудь","fly"],["Квадрицепс","legext"]].forEach(([g,pt])=>{const all=ids();if(all.filter(o=>STRETCH44.test(EX[o.x.id].n.toLowerCase())).length>=3)return;
+   const isI=id=>{const q=(POOL[g]||[]).find(z=>z[0]===id);return q?q[1]==='i':!/жим|тяга|подтяг|присед|гакк|выпад|протяжк/.test(EX[id].n.toLowerCase());};const mine=all.filter(o=>o.g===g&&o.j>0&&isI(o.x.id)&&!STRETCH44.test(EX[o.x.id].n.toLowerCase())&&!COV44.some(r=>r[0]===g&&r[2](o.x.id)&&all.filter(z=>z.g===g&&r[2](z.x.id)).length===1));if(!mine.length)return;
+   const used=all.map(o=>o.x.id);const v=mine[mine.length-1];const vp=pat29(EX[v.x.id]);
+   const cand=[...(POOL[g]||[]).map(p=>p[0]),...Object.keys(EX).filter(k=>grp(EX[k])===g)].find(id=>!used.includes(id)&&STRETCH44.test(EX[id].n.toLowerCase())&&isI(id)&&(pat29(EX[id])===vp||pat29(EX[id])===pt)&&allow44(c,g,id));if(!cand)return;
+   notes.push(`${wi?"Лёгкая":"Тяжёлая"} неделя: «${EX[v.x.id].n}» → «${EX[cand].n}» — нагрузка в растяжении растит мышцу сильнее`);v.x.id=cand;});
+  /* 2. не больше 10 рабочих подходов на мышцу за тренировку */
+  w.days.forEach(d=>{const by={};d.items.forEach(x=>{const g=grp(EX[x.id]);(by[g]=by[g]||[]).push(x);});
+   Object.keys(by).forEach(g=>{let tot=by[g].reduce((a,x)=>a+x.s,0);if(tot<=10)return;const was=tot;let guard=0;while(tot>10&&guard++<20){const x=by[g].slice().sort((a,b)=>b.s-a.s)[0];if(x.s<=2)break;x.s--;tot--;}
+    notes.push(`${d.t.split(" · ")[0][0]+d.t.split(" · ")[0].slice(1).toLowerCase()}: ${g.toLowerCase()} ${was}→${tot} подходов — больше 10 за тренировку уже не даёт роста, только усталость`);});});});
+ return notes;}
+function audit44(P){const out=[];const w=P[0];const all=w.days.flatMap(d=>d.items.map(x=>x.id));
+ COV44.forEach(([g,lbl,test])=>{if(!all.some(id=>grp(EX[id])===g))return;out.push([all.some(test),lbl]);});
+ const st=all.filter(id=>STRETCH44.test(EX[id].n.toLowerCase())).length;out.push([st>=3,`упражнения с нагрузкой в растяжении: ${st} (нужно 3+)`]);
+ const over=[];w.days.forEach(d=>{const by={};d.items.forEach(x=>{const g=grp(EX[x.id]);by[g]=(by[g]||0)+x.s;});Object.keys(by).forEach(g=>{if(by[g]>10)over.push(`${g.toLowerCase()} ${by[g]}`);});});out.push([!over.length,over.length?`за одну тренировку больше 10 подходов на мышцу: ${over.join(", ")} — лишнее уходит в усталость, а не в рост`:"не больше 10 подходов на мышцу за тренировку"]);
+ return out;}
+const _gp44=genProgram;let NOTES44=[];
+genProgram=function(c){const P=_gp44(c);try{NOTES44=fix44(P,c);}catch(e){NOTES44=[];}return P;};
+const _gv44=genView;
+genView=function(){_gv44.apply(this,arguments);try{const o=document.getElementById("exd");if(!o||!GP||o.querySelector(".pro44"))return;const A=audit44(GP);const ok=A.filter(x=>x[0]).length;
+ const why=o.querySelector(".gn-why");if(!why)return;why.insertAdjacentHTML("afterend",`<div class="pro44"><div class="p44-h"><b>Проверка профи</b><em>${ok}/${A.length}</em></div>
+ ${A.map(([y,l])=>`<div class="${y?"y":"n"}"><i>${y?"✓":"✗"}</i>${l}</div>`).join("")}
+ ${NOTES44.length?`<details><summary>Что тренер поправил сам (${NOTES44.length})</summary>${NOTES44.map(n=>`<p>• ${n}</p>`).join("")}</details>`:""}</div>`);}catch(e){}};
+/* ---- разбор текущей программы: та же проверка ---- */
+const _rv44=review36;
+review36=function(){const r=_rv44();try{const A=audit44(curProg36()).filter(x=>!x[0]);if(A.length)r.t=r.t.replace("<b>Что улучшить:</b>",`<b>Проверка профи — что не так:</b>\n${A.map(x=>"• "+x[1]).join("\n")}\n\n<b>Что улучшить:</b>`);}catch(e){}return r;};
+/* ---- чат: «зачем это упражнение» ---- */
+const ZONE44={up:"верх",mid:"середина",low:"низ",inner:"внутренняя часть",ham:"брахиалис (толщина руки)",long:"длинная головка",short:"короткая головка (пик)",comp:"базовая работа",push:"разгибание",narrow:"узкий хват — низ широчайших",wide:"широкий хват — ширина спины"};
+const ROLE44={press:"базовый жим",row:"горизонтальная тяга — толщина спины",vpull:"вертикальная тяга — ширина спины",squat:"базовое движение на ноги",lunge:"одностороннее движение на ноги",hinge:"наклон с прямой спиной — задняя цепь",legcurl:"сгибание ног — бицепс бедра",legext:"изолированно квадрицепс",fly:"сведение — растяжение и сжатие груди",raise:"махи — ширина плеч",rear:"задняя дельта — здоровье плеч и осанка",curl:"сгибание — бицепс",ext:"разгибание — трицепс",shrug:"шраги — трапеции",bridge:"разгибание бедра — ягодицы",pullover:"пуловер — широчайшие в растяжении",calfst:"икры стоя",calfseat:"икры сидя (камбаловидная)",flex:"пресс",legraise:"нижний пресс",core:"мышцы кора"};
+const _brain44=brain;
+brain=function(q){const t=nz(fix36(q).t);
+ if(/зачем|для чего|что даёт|что дает|что качает|на что/.test(t)){const id=findEx(q);if(id){const e=EX[id],f=feat(id),it=progItem36(id);const cov=COV44.filter(r=>r[2](id)).map(r=>r[1]);const st=STRETCH44.test(e.n.toLowerCase());
+  return{t:`<b>${e.n}</b>\n• Мышца: ${e.m}${f.s&&ZONE44[f.s]?` — ${ZONE44[f.s]}`:""}\n• Роль: ${ROLE44[f.p]||"вспомогательное"}${cov.length?`\n• Закрывает в программе: ${cov.join(", ")}`:""}${st?"\n• Нагружает мышцу в растяжении — это один из самых сильных стимулов роста":""}${e.f?"\n• Можно доводить до отказа — суставы в безопасности":"\n• Не доводи до отказа: оставляй 1–2 повтора — свободный вес или сложная техника"}${it?`\n• У тебя: ${it.s}×${it.r}, отдых ${it.rest||60} с`:"\n• Сейчас этого упражнения нет в твоей программе"}`,a:[A("Техника",`chatAsk('как делать ${e.n.replace(/'/g,"")}')`),A("Чем заменить",`chatAsk('чем заменить ${e.n.replace(/'/g,"")}')`)]};}}
+ return _brain44(q);};
+/* ---- «Что нового»: только свежее, остальное свернуто ---- */
+function trimWN44(){try{const l=document.querySelector(".wn .wn-l");if(!l||l.querySelector(".wn-old"))return;const it=[...l.children];if(it.length<=3)return;const rest=it.slice(3);
+ const d=document.createElement("details");d.className="wn-old";d.innerHTML=`<summary>Прошлые обновления (${rest.length}) ›</summary>`;rest.forEach(x=>d.appendChild(x));l.appendChild(d);}catch(e){}}
+setTimeout(trimWN44,720);setTimeout(trimWN44,1200);
 
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
