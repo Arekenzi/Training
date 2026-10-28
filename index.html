@@ -1457,6 +1457,23 @@ img[src^="data:image/jpeg"]{object-position:50% 12%!important}
 .cmp47b td.lo{color:#FFC850}.cmp47b td.hi{color:#FF8A7A}.cmp47b td.ok{color:#C9A96E}
 .cmp47b p{margin:10px 0 0;color:var(--dim);font-size:12px;line-height:1.45}
 
+/* v48 */
+.b48{margin:6px 0 14px;padding:14px;border-radius:18px;background:linear-gradient(160deg,rgba(201,169,110,.12),rgba(201,169,110,.03));border:1px solid rgba(201,169,110,.3);text-align:left}
+.b48-h{display:flex;align-items:center;gap:10px;margin-bottom:8px}.b48-h img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1px solid rgba(201,169,110,.5)}
+.b48-h span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#C9A96E}.b48-h b{font-family:var(--disp);font-weight:400;font-size:20px}
+.b48-g{padding:7px 0;border-top:1px solid rgba(255,255,255,.06)}.b48-g b{display:block;font-size:14px}.b48-g span{display:block;font-family:var(--cond);font-size:18px;color:var(--tx)}
+.b48-g em{font-style:normal;font-family:inherit;font-size:12px;color:#C9A96E;margin-left:4px}.b48-g em.d{color:#FFC850}.b48-g i{display:block;font-style:normal;font-size:11.5px;color:var(--dim)}
+.b48-c{margin-top:8px;font-size:12.5px;line-height:1.45;color:var(--dim)}.b48-c b{color:var(--tx);margin-right:6px}
+.b48-w{margin-top:8px}.b48-w p{margin:4px 0;font-size:12.5px;line-height:1.4;color:var(--dim)}
+.ck48c{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 12px;padding:14px;border-radius:20px;border:1px solid rgba(201,169,110,.45);background:linear-gradient(135deg,rgba(201,169,110,.16),rgba(201,169,110,.04));color:var(--tx);font:inherit;text-align:left;cursor:pointer}
+.ck48c i{font-style:normal;font-size:24px}.ck48c div{flex:1}.ck48c b{display:block;font-size:15px}.ck48c span{display:block;font-size:12.5px;color:var(--dim);margin-top:2px}.ck48c em{font-style:normal;font-size:22px;color:#C9A96E}
+.ck48-p{margin:0 0 6px;font-size:13px;color:var(--dim)}
+.ck48 .seg7{flex-wrap:wrap}
+.ck48-in{width:100%;margin-top:6px;padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--tx);font:inherit;font-size:18px}
+.ck48-d p{margin:0 0 10px;padding:12px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:13.5px;line-height:1.5}
+.ck48 .x{position:absolute;top:14px;right:14px}
+.ck48 .rdy-in{position:relative}
+
 </style>
 </head>
 <body>
@@ -4406,7 +4423,7 @@ const _closeSheet10=closeSheet;
 closeSheet=function(){const s=document.querySelector("#sheet .sheet-in"),sh=document.getElementById("sheet");if(s&&sh&&!sh.classList.contains("closing")&&!RM){sh.classList.add("closing");s.style.transition="transform .22s ease-in";s.style.transform="translateY(110%)";setTimeout(_closeSheet10,200);}else _closeSheet10();};
 
 /* ================= v11: заметный визуал + «что нового» ================= */
-const APPV="47";
+const APPV="48";
 /* каскадное появление карточек при смене вкладки */
 function stagger(root){if(RM||!root)return;const els=[...root.children].filter(e=>e.offsetHeight>0).slice(0,14);
  els.forEach((e,i)=>{e.classList.remove("stg");void e.offsetWidth;e.style.animationDelay=(i*55)+"ms";e.classList.add("stg");});
@@ -4418,6 +4435,9 @@ function whatsNew(){try{if(DB.seenV===APPV)return;}catch(e){return;}
  const o=document.createElement("div");o.className="wn";o.innerHTML=`<div class="wn-in">
  <div class="wn-v"><b>v${APPV}</b></div><span class="wn-k">обновление установлено</span><h2>Что нового</h2>
  <div class="wn-l">
+ <div><i>🎯</i><p><b>Брифинг тренера</b>перед стартом: цель дня в главных упражнениях (вес × повторы и что было в прошлый раз), фокус техники и на что обратить внимание</p></div>
+ <div><i>📝</i><p><b>Чек-ин с тренером</b>в выходные 5 вопросов о неделе: сон, силы, боль, голод, настрой. Тренер сам решает: облегчить неделю, включить разгрузку, поправить калории, заменить упражнения</p></div>
+ <div><i>💬</i><p><b>Ещё умнее чат</b>«оцени тренировку», «что делать на этой неделе», «чек-ин»</p></div>
  <div><i>💬</i><p><b>Чат понимает больше</b>«сравни неделю с прошлой», «план на неделю», «почему не растёт жим», «сколько я пропустил», «добавь упражнение на бицепс», «убери шраги», «что такое RIR», болезнь, сон, мотивация, еда до и после, кардио</p></div>
  <div><i>⏱</i><p><b>Темп тренировки</b>в тренировке видно, когда закончишь. Отстаёшь от плана — кнопка «Уложиться» сожмёт оставшееся</p></div>
  <div><i>🌊</i><p><b>Волна объёма</b>на 5–6 неделе блока +1 подход в изоляции — объём растёт к пику, потом разгрузка</p></div>
@@ -7223,9 +7243,74 @@ function cmp47(){const o=document.getElementById("exd");if(!o||!GP||!GQ)return;c
 const _genView47=genView;
 genView=function(){_genView47.apply(this,arguments);try{const o=document.getElementById("exd");if(!o||!GP||o.querySelector(".cmp47"))return;const at=o.querySelector(".pro44")||o.querySelector(".gn-why");if(at)at.insertAdjacentHTML("afterend",`<button class="cmp47" onclick="cmp47()">⚖️ Сравнить с моей текущей программой</button>`);}catch(e){}};
 
+/* ===== v48: тренер как человек — брифинг перед тренировкой и еженедельный чек-ин с решениями ===== */
+/* ---- 1. Брифинг: цель дня, фокус техники, на что обратить внимание ---- */
+function brief48(di){const it=itemsFor(di);const key=it.filter(x=>{const g=grp(EX[x.id]);const p=(POOL[g]||[]).find(q=>q[0]===x.id);return p?p[1]==="b":/жим|тяга|подтяг|присед|гакк/.test(EX[x.id].n.toLowerCase());}).slice(0,2);
+ const goals=[];(key.length?key:it.slice(0,2)).forEach(x=>{const e=EX[x.id];let n=null;try{n=nextW(x);}catch(z){}const l=(DB.log[x.id]||[]).slice(-1)[0];
+  const prev=l?l.sets.filter(s=>!s.warm&&!s.drop).map(s=>`${fmtKg(+s.w||0)}×${s.r}`).slice(0,4).join(", "):"";
+  goals.push(`<div class="b48-g"><b>${e.n}</b><span>${n&&n.w?`${wTxt32(e,n.w)} × ${x.r}${n.k==="up"?' <em>⬆ прибавка</em>':n.k==="down"?' <em class="d">⬇ облегчил</em>':""}`:`пробный подход, ${x.r} повт.`}</span>${prev?`<i>в прошлый раз: ${prev}</i>`:""}</div>`);});
+ const f=it[0]&&EX[it[0].id];const cue=f?((f.feel||"").split(/(?<=\.)\s/)[0]||(f.t||"").split(/(?<=\.)\s/)[0]):"";
+ const watch=[];it.forEach(x=>{if((DB.restAdj||{})[x.id])watch.push(`«${EX[x.id].n}»: в прошлый раз повторы падали — отдых +${DB.restAdj[x.id]} с, таймер уже настроен`);});
+ const lim=it.filter(x=>((DB.limits||{})[x.id]||[]).filter(d=>d>=dkAgo(30)).length).map(x=>EX[x.id].n);if(lim.length)watch.push(`недавно упирался в предел: ${lim.slice(0,2).join(", ")} — не гонись за весом, держи технику`);
+ if(DB.painNext&&DB.painNext.length)watch.push("ты жаловался на боль — упражнения, которые её нагружают, тренер заменит");
+ try{const B=blk41();if(B.ph==="Пик")watch.push("фаза «Пик»: последний подход можно ближе к отказу");if(B.ph==="Вход")watch.push("фаза «Вход»: запас +1 повтор, отрабатываем технику");}catch(z){}
+ if(DB.ckLight===weekKeyNow())watch.push("по итогам чек-ина эта неделя облегчена: −1 подход в изоляции");
+ return `<div class="b48"><div class="b48-h"><img src="${typeof ANBF!=="undefined"?ANBF:""}" alt="" onerror="this.remove()"><div><span>брифинг тренера</span><b>Цель на сегодня</b></div></div>${goals.join("")}
+ ${cue?`<div class="b48-c"><b>🎯 Фокус</b>${f.n}: ${cue}</div>`:""}${watch.length?`<div class="b48-w">${watch.slice(0,3).map(x=>`<p>⚠️ ${x}</p>`).join("")}</div>`:""}</div>`;}
+const _ro48=readyOpen;
+readyOpen=function(di){_ro48.apply(this,arguments);try{const o=document.querySelector("#rdy .rdy-in");if(!o||o.querySelector(".b48"))return;const h=o.querySelector("h2");if(h)h.insertAdjacentHTML("afterend",brief48(di));}catch(e){}};
+/* ---- 2. Еженедельный чек-ин ---- */
+function ckKey48(){const d=new Date();const wd=d.getDay();const m=new Date(d);m.setDate(d.getDate()-((wd+6)%7)+(wd===1?0:7));return dkey(m);}
+function ckDue48(){if(!(DB.hist||[]).length)return false;const wd=new Date().getDay();return(wd===0||wd===1||wd===6)&&!(DB.ck||{})[ckKey48()];}
+let CK48={};
+const CKQ48=[["sleep","Как спал на этой неделе?",[[0,"Плохо, <6 ч"],[1,"Нормально"],[2,"Хорошо, 7+ ч"]]],["energy","Энергия на тренировках?",[[0,"Тяжело"],[1,"Нормально"],[2,"Много сил"]]],
+ ["pain","Что-то беспокоит?",[["no","Ничего"],["sh","Плечо"],["lb","Поясница"],["kn","Колени"]]],["hunger","Голод на диете?",[[0,"Сильный"],[1,"Терпимо"],[2,"Нет"]]],["mood","Настрой?",[[0,"Хочу бросить"],[1,"Нормально"],[2,"Горю"]]]];
+function ckOpen48(){CK48={};const o=document.createElement("div");o.className="rdy ck48";o.id="ck48";
+ o.innerHTML=`<div class="rdy-in"><button class="x" onclick="document.getElementById('ck48').remove()" aria-label="Закрыть">✕</button><span class="wn-k">чек-ин с тренером · 30 секунд</span><h2>Как прошла неделя?</h2>
+ <p class="ck48-p">По ответам тренер поправит следующую неделю: объём, калории, упражнения.</p>
+ ${CKQ48.map(([k,t,op])=>`<div class="rq"><b>${t}</b><div class="seg7">${op.map(([v,l])=>`<button data-k="${k}" data-v="${v}" onclick="ckPick48(this)">${l}</button>`).join("")}</div></div>`).join("")}
+ <div class="rq"><b>Вес утром натощак, кг</b><input type="text" inputmode="decimal" id="ck48w" placeholder="${String(bwNow()).replace(".",",")}" class="ck48-in"></div>
+ <button class="cta" id="ck48go" onclick="ckDone48()">Готово</button></div>`;document.body.appendChild(o);}
+function ckPick48(b){b.parentNode.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));const v=b.dataset.v;CK48[b.dataset.k]=isNaN(+v)?v:+v;}
+function ckDone48(){const A=CK48,dec=[],k=ckKey48();const nxt=k>dkey(new Date());const wkN=weekNow()+(nxt?1:0);
+ const wi=document.getElementById("ck48w");const wv=wi&&parseFloat(String(wi.value).replace(",","."));if(wv>40&&wv<250){DB.bw=DB.bw||[];DB.bw=DB.bw.filter(x=>x.d!==today());DB.bw.push({d:today(),w:wv});dec.push(`⚖️ Записал вес ${String(wv).replace(".",",")} кг.`);}
+ const tired=(A.sleep===0&&A.energy===0)||(A.sleep===0&&A.energy!==2&&A.mood===0);let B=null;try{B=blk41();}catch(e){}
+ if(tired){if(B&&B.wb>=5&&B.wb<9&&!isDeload()){DB.dlNext=wkN;dec.push("🔋 Сон и силы на нуле, а ты уже в середине блока — следующая неделя будет разгрузочной: подходов вдвое меньше, вес −10 %. После неё обычно идут рекорды.");}
+  else{DB.ckLight=k;dec.push("🔋 Сон и силы на нуле — следующую неделю облегчу: −1 подход в каждом изолирующем упражнении, базу не трогаю.");}}
+ else if(A.sleep===0)dec.push("😴 Сон — главный резерв. Цель на неделю: ложиться на 30 минут раньше. Если не выспался перед тренировкой — отметь это перед стартом, веса снизятся сами.");
+ else if(A.energy===2&&A.sleep>=1)dec.push("🔥 Сил много — держим план. На последнем подходе изоляции разрешаю идти до отказа.");
+ if(A.pain&&A.pain!=="no"){DB.painNext=[A.pain];dec.push(`🩹 ${{sh:"Плечо",lb:"Поясница",kn:"Колени"}[A.pain]}: на ближайшей тренировке заменю всё, что нагружает эту зону. Если боль острая или держится больше недели — к врачу.`);}else if(DB.painNext&&A.pain==="no"){delete DB.painNext;}
+ const r=typeof wRate==="function"?wRate(14):null;
+ if(A.hunger===0&&r!==null&&r<-0.7){DB.kcalAdj=(DB.kcalAdj||0)+100;dec.push(`🍽 Голод сильный, а вес уходит быстро (${String(Math.abs(r).toFixed(1)).replace(".",",")} кг/нед) — добавил 100 ккал: норма теперь ${target().k}. Мышцы сохранятся лучше.`);}
+ else if(A.hunger===0)dec.push("🍽 Голод сильный: больше белка и овощей в объёме, вода до еды, 2 л в день. Калории пока не трогаю — темп нормальный.");
+ else if(A.hunger===2&&r!==null&&r>-0.25){DB.kcalAdj=(DB.kcalAdj||0)-100;dec.push(`🍽 Вес почти стоит, а голода нет — убрал 100 ккал: норма теперь ${target().k}.`);}
+ if(A.mood===0)dec.push("💬 Желание бросить — нормальная часть пути. Договоримся: на этой неделе минимум 2 тренировки, даже короткие. Скажи в чате «у меня 45 минут» — сожму.");
+ const w=wkStats47?wkStats47(new Date().getDay()===1?1:0):null;const n=Object.keys(DMAP).length||3;if(w)dec.push(w.n>=n?`✅ Неделя закрыта полностью: ${w.n} из ${n} тренировок, ${w.sets} подходов.`:`📅 Тренировок на неделе: ${w.n} из ${n}.${w.n<n?" Пропуск не страшен — главное не два подряд.":""}`);
+ if(!dec.length)dec.push("👌 Всё в норме — работаем по плану.");
+ DB.ck=DB.ck||{};DB.ck[k]={a:A,dec,d:today()};save();
+ const o=document.querySelector("#ck48 .rdy-in");if(o)o.innerHTML=`<button class="x" onclick="document.getElementById('ck48').remove();render()" aria-label="Закрыть">✕</button><span class="wn-k">чек-ин принят</span><h2>Решения тренера</h2><div class="ck48-d">${dec.map(x=>`<p>${x}</p>`).join("")}</div><button class="cta" onclick="document.getElementById('ck48').remove();render()">Понял</button>`;}
+/* облегчённая неделя по чек-ину */
+const _if48=itemsFor;
+itemsFor=function(di){const a=_if48(di);try{if(DB.ckLight!==weekKeyNow())return a;return a.map(x=>{const g=grp(EX[x.id]);const p=(POOL[g]||[]).find(q=>q[0]===x.id);const iso=p?p[1]==="i":false;return iso&&x.s>2?Object.assign({},x,{s:x.s-1}):x;});}catch(e){return a;}};
+/* карточка на главной */
+const _vGym48=vGym;
+vGym=function(){_vGym48.apply(this,arguments);try{if(session||!ckDue48())return;const app=document.getElementById("app");if(!app||app.querySelector(".ck48c"))return;const at=app.querySelector(".blk41")||app.querySelector(".bento")||app.querySelector(".sec");
+ if(at)at.insertAdjacentHTML("beforebegin",`<button class="ck48c" onclick="ckOpen48()"><i>📝</i><div><b>Чек-ин с тренером</b><span>5 вопросов о неделе — и тренер поправит следующую</span></div><em>›</em></button>`);}catch(e){}};
+/* чат */
+const _brain48=brain;
+brain=function(q){const t=nz(q);if(/чек-?ин|check-?in|опрос тренера|итоги для тренера/.test(t)){const c=(DB.ck||{})[ckKey48()];
+  return c?{t:`<b>Чек-ин этой недели уже есть.</b> Решения тренера:\n${c.dec.join("\n")}`,a:[A("Пройти заново","chatClose();delete DB.ck[ckKey48()];ckOpen48()")]}:{t:"Пять вопросов о неделе — сон, силы, боль, голод, настрой. По ответам поправлю следующую неделю.",a:[A("Пройти чек-ин","chatClose();ckOpen48()")]};}
+ if(/оцени.{0,20}трениров|как (я )?(потренировался|прошла тренировка|отработал)|разбор (последней )?тренировки/.test(t)){const h=(DB.hist||[]).slice(-1)[0];if(!h)return{t:"Тренировок ещё не было."};
+  const L=[];let up=0,dn=0;Object.keys(DB.log||{}).forEach(id=>{if(!EX[id])return;const l=DB.log[id];const i=l.findIndex(e=>e.d===h.d);if(i<1)return;const T=eqT32(EX[id]);const a=sessE1(id,l.slice(0,i).reverse().find(e=>!e.wk||!l[i].wk||e.wk===l[i].wk)||l[i-1],T),b=sessE1(id,l[i],T);if(!a||!b)return;const p=(b-a)/a*100;if(p>=1.5){up++;L.push(`✅ ${EX[id].n}: +${Math.round(p)}%`);}else if(p<=-4){dn++;L.push(`⚠️ ${EX[id].n}: −${Math.round(-p)}%`);}});
+  const verdict=up>=2&&!dn?"Сильная тренировка — прогресс в нескольких упражнениях.":dn>=2?"Тяжёлый день: сила просела. Причина обычно в сне или еде — проверь, и следующая будет лучше.":"Ровная рабочая тренировка — так и строится прогресс.";
+  return{t:`<b>Тренировка ${h.d.slice(8,10)}.${h.d.slice(5,7)}</b>: ${h.dur} мин · ${String(Math.round(h.ton/100)/10).replace(".",",")} т${h.prs?` · рекордов: ${h.prs}`:""}\n${verdict}${L.length?"\n\n"+L.slice(0,6).join("\n"):""}`,a:[A("Что в следующей тренировке","chatAsk('что в следующей тренировке')")]};}
+ if(/что (мне )?делать на (этой )?неделе|задач.{0,6}на неделю|цел[ьи] на неделю/.test(t)){const P=plan47();const B=blk41();const tg=target();
+  return{t:`<b>Задачи на неделю</b> — неделя ${B.wb} из 9, «${B.ph}»\n• Тренировки: ${P.L.map(x=>W().days[x.di].t.split(" · ")[0].toLowerCase()).join(", ")}\n• ${B.txt}\n• Еда: ${tg.k} ккал, белок ${tg.p} г каждый день\n• Шаги: 8–10 тыс. в день\n• Сон: 7+ часов\n• В воскресенье — чек-ин с тренером`};}
+ return _brain48(q);};
+
 ["setTab","openDay","tg","tick","setV","finEx","quitW","finishW","repPrev","plate","alts","doSwap",
 "addBw","startProg","setMenu","tgMeal","loadMeal","clearMeal","fList","addF","editG","delG","setWater","tCheck",
-"fillAll","noteUI","saveNote","zoom","unzoom","fit47","cmp47","addEx47Do","tcat46","eqf46","opt45Do","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
+"fillAll","noteUI","saveNote","zoom","unzoom","ckOpen48","ckPick48","ckDone48","fit47","cmp47","addEx47Do","tcat46","eqf46","opt45Do","volFixApply","volFixOff","volFixDo43","volFixUndo43","anbToggle","anbReady","wzNum35","wzSkip35","limStop33","limMore33","pain33","painAt33","gearSet","wzStart","wzPaint","wzSet","wzNone","wzGo","wzResult","tplOpen","progHub","hubPick","cfg31","exd31","pri30Toggle","pri30Auto","pri30Open","genSwap","genPick","genDel","genSets","genAddEx","genView","genShow","genOpenWith","ssToggle","icsOpen","icsGo","actStep","actCardio","menuAdd","chatOpen","chatClose","chatAsk","chatSend","chatSay","chatMic","chatAddFood","rpeDone","genOpen","genSet","genBuild","genApply","genPaint","rdyTime","busy17","cexForm","cexG","cexPic","cexSave","cexDel","addSet","allOk","streakInfo","shareOpen","shareDraw","shareGo","setProg","exDetail","closeExD","rdyPick","rdyPain","rdyStart","rdySkip","rdyClose","phReady","closeWN","bkFile","bkLoad","fxMenu","closeSheet","sheetAlts","sheetNote","sheetPlate","fxOpen","fxClose","fxGo","fxDone","fxStep","fxSkip","fxPrev","fxPause","fxAdj","tgSnd","closeDone","shotErr","pickAva","setQ","setG","openRef","calShift","setWk","swapFood","doFoodSwap","expTxt","bkp","rstUI","doRst","cp","tgR","setTheme","addKcal","startTimer"]
 .forEach(f=>window[f]=eval(f));
 load().then(render);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>{r.update&&r.update();}).catch(()=>{});});
